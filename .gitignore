@@ -1,0 +1,38 @@
+# Log and editor files, along with OS/filesystem artifacts
+*.log
+*~
+.DS_Store
+
+# ENV files with senstive confiration information
+.env
+.env.backup
+.env.production
+
+# IDE files
+/.idea
+/.vscode
+/.zed
+
+# Composer/NPM files
+/vendor
+/node_modules
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+
+# Test database
+storage/database.sqlite
+
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.nova
+/.phpunit.cache
+/auth.json
+/public/build
+/storage/*.key
+/storage/pail
+Homestead.json
+Homestead.yaml
+Thumbs.db
