@@ -20,8 +20,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
         'password',
+
+        'forum_last_login',
+        'osa',
+        'tos',
     ];
 
     /**
@@ -45,5 +52,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getGreeting()
+    {
+        return 'Hello';
+    }
+
+    public function getGreetingArray()
+    {
+        return [
+            'greeting' => $this->getGreeting(),
+            'name' => $this->name,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+        ];
+    }
+
+    public function getLastLogin()
+    {
+
     }
 }
