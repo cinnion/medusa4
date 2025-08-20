@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -23,7 +24,7 @@ class HomeControllerTest extends TestCase
 
     public function testAuthenticatedUserWithoutOsaGetsOsaPage(): void
     {
-        $user = \App\Models\User::factory()->create(['osa' => null]);
+        $user = User::factory()->create(['osa' => null]);
         Auth::shouldReceive('check')->andReturn(true);
         Auth::shouldReceive('user')->andReturn($user);
 
@@ -36,7 +37,7 @@ class HomeControllerTest extends TestCase
 
     public function testAuthenticatedUserWithOsaAndWithoutTosGetsTermsPage(): void
     {
-        $user = \App\Models\User::factory()->create(['osa' => 'accepted', 'tos' => false]);
+        $user = User::factory()->create(['osa' => 'accepted', 'tos' => false]);
         Auth::shouldReceive('check')->andReturn(true);
         Auth::shouldReceive('user')->andReturn($user);
 
@@ -48,7 +49,7 @@ class HomeControllerTest extends TestCase
 
     public function testAuthenticatedUserWithOsaAndTosGetsUserPage(): void
     {
-        $user = \App\Models\User::factory()->create(['osa' => 'accepted', 'tos' => true]);
+        $user = User::factory()->create(['osa' => 'accepted', 'tos' => true]);
         Auth::shouldReceive('check')->andReturn(true);
         Auth::shouldReceive('user')->andReturn($user);
 
@@ -67,7 +68,7 @@ class HomeControllerTest extends TestCase
 
     public function testOsaPageAuthGetsView(): void
     {
-        $user = \App\Models\User::factory()->create();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/osa');
 
