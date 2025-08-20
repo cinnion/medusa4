@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
 
-                                {!! html()->form('POST')->route( 'signin') !!}
+                                {{ html()->form('POST')->route('signin')->open() }}
                                 {{ html()->hidden('redirect_to', Request::url()) }}
                                 <div class="row">
                                     <div class="form-group col-sm-6">
@@ -141,7 +141,7 @@
                                                     class="fa fa-sign-in"></span></button>
                                     </div>
                                 </div>
-                                {!! html()->form()->close() !!}
+                                {{ html()->form()->close() }}
 
                                 <div class="row">
                                     <div class="col-sm-6 text-right">
