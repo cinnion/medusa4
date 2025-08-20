@@ -33,9 +33,4 @@ class HomeController extends Controller
     {
         return view('osa', ['showform' => false]);
     }
-
-    public function tos(): View
-    {
-        return view('tos');
-    }
 }

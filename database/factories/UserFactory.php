@@ -29,6 +29,14 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+
+            'rank' => 'Commander',
+            'first_name' => fake()->firstName(),
+            'middle_name' => fake()->optional()->firstName(),
+            'last_name' => fake()->lastName(),
+            'forum_last_login' => fake()->optional()->dateTimeBetween()?->getTimestamp(),
+            'osa' => fake()->optional()->dateTimeBetween('-1 year', 'now'),
+            'tos' => true,
         ];
     }
 

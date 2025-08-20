@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'rank',
         'name',
         'first_name',
         'middle_name',
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
 
+        'last_login',
         'forum_last_login',
         'osa',
         'tos',
@@ -63,6 +65,7 @@ class User extends Authenticatable
     {
         return [
             'greeting' => $this->getGreeting(),
+            'rank' => $this->rank,
             'name' => $this->name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
@@ -72,6 +75,6 @@ class User extends Authenticatable
 
     public function getLastLogin()
     {
-
+        return $this->last_login;
     }
 }

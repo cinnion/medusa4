@@ -71,9 +71,9 @@
 
     <p>The information in this section can also be found in relevant Admiralty Orders</p>
     @if($showform === true)
-        {!! Form::open(['route' => 'osa', 'method' => 'post']) !!}
-        {!! Form::hidden('id', Auth::user()->id) !!}
-        {!! Form::hidden('osa',1) !!}
+        {!! html()->form('POST')->route('osa')->open() !!}
+        {!! html()->hidden('id', Auth::user()->id) !!}
+        {!! html()->hidden('osa',1) !!}
 
         <p><em>By clicking "I Agree", you agee that you have read and understand this policy. If you click "I do not
                 agree",
@@ -86,6 +86,6 @@
                href="{!! route('signout') !!}"><span class="fa fa-times"></span> I do not agree </a>
             <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> I Agree</button>
         </div>
-        {!! Form::close() !!}
+        {!! html()->form()->close() !!}
     @endif
 @stop
