@@ -189,10 +189,9 @@
                                 src="https://seal.starfieldtech.com/getSeal?sealID=v0CA19iS5KO2zCDMQWVQcf848PG2A4U0OWBVbTgzfEuk6Lrf8ASy84CTVQ5M"></script></span>
 </footer>
 
-<script type="text/javascript" src="{!! asset('js/vendor.js')!!}?{{ time() }}"></script>
+<!-- jQuery/datatables -->
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/sc-1.4.3/datatables.min.js"></script>
 
-<script src="{!! asset('js/app.js')!!}?{{ time() }}"></script>
 @yield( 'scriptFooter' )
 </body>
 </html>
