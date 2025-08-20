@@ -24,13 +24,19 @@ public/hot
 # Test database
 storage/database.sqlite
 
-.phpactor.json
+# PHPUnit Coverage report and files
 .phpunit.result.cache
+/.phpunit.cache
+/public/coverage
+
+# Vite build results
+/public/build
+
+
+.phpactor.json
 /.fleet
 /.nova
-/.phpunit.cache
 /auth.json
-/public/build
 /storage/*.key
 /storage/pail
 Homestead.json
