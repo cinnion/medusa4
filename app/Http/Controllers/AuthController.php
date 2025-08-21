@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use function response;
 
@@ -28,6 +30,8 @@ class AuthController extends Controller
     public function signout()
     {
         Auth::logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        Session::flush();
+
+        return Redirect::intended('/');
     }
 }
