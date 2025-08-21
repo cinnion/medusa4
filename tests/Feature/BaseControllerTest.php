@@ -27,8 +27,6 @@ class BaseControllerTest extends TestCase
 
     public function testConstructorRedirectsGuestToRoot(): void
     {
-        $user = User::factory()->create();
-
         $this->actingAsGuest();
 
         $response = $this->get('/osa');

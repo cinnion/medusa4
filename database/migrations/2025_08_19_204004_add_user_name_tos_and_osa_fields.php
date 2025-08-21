@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('forum_last_login')->nullable();
             $table->date('osa');
             $table->boolean('tos');
+            $table->boolean('active');
         });
     }
 

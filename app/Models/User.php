@@ -24,13 +24,14 @@ class User extends Authenticatable
         'first_name',
         'middle_name',
         'last_name',
-        'email',
+        'email_address',
         'password',
 
         'last_login',
         'forum_last_login',
         'osa',
         'tos',
+        'active'
     ];
 
     /**
