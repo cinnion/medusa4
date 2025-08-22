@@ -20,13 +20,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'rank',
-        'name',
         'first_name',
         'middle_name',
         'last_name',
         'email_address',
         'password',
 
+        'previous_login',
         'last_login',
         'forum_last_login',
         'osa',
@@ -76,6 +76,17 @@ class User extends Authenticatable
 
     public function getPreviousLogin(): string
     {
-        return $this->last_login;
+        if (empty($this->previous_login) === true) {
+            return date('Y-m-d', strtotime('-2 weeks'));
+        }
+
+        return date('Y-m-d', strtotime($this->previous_login));
+    }
+
+    public function updateLastLogin(): void
+    {
+        $this->previous_login = $this->last_login;
+        $this->last_login = date('Y-m-d H:i:s');
+        $this->save();
     }
 }

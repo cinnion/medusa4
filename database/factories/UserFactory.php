@@ -23,6 +23,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $ranks = [
+            'Ensign',
+            'Lieutenant JG',
+            'Lieutenant',
+            'Lieutenant Commander',
+            'Commander',
+            'Captain JG',
+            'Captain',
+            'Commodore'
+        ];
+
         return [
             'name' => fake()->name(),
             'email_address' => fake()->unique()->safeEmail(),
@@ -30,10 +41,11 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
 
-            'rank' => 'Commander',
+            'rank' => $this->faker->randomElement($ranks),
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->optional()->firstName(),
             'last_name' => fake()->lastName(),
+            'previous_login' => null,
             'last_login' => null,
             'forum_last_login' => fake()->optional()->dateTimeBetween()?->getTimestamp(),
             'osa' => fake()->optional()->dateTimeBetween('-1 year', 'now'),

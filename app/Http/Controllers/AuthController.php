@@ -32,9 +32,7 @@ class AuthController extends Controller
             'password' => $password,
             'active' => 1,
         ])) {
-            User::find(Auth::id())->update([
-                'last_login' => now(),
-            ]);
+            Auth::user()->updateLastLogin();
 
 //            event(new LoginComplete(Auth::user()));
 

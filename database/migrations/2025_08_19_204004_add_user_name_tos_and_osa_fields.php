@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('middle_name');
             $table->string('last_name');
 
+            $table->timestamp('previous_login')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->integer('forum_last_login')->nullable();
             $table->date('osa');
