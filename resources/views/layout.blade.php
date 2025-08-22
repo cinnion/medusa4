@@ -33,7 +33,7 @@
                         {{ substr(Auth::user()->first_name, 0, 1) }}
                         .{{ strlen(Auth::user()->middle_name) ? ' ' . substr(Auth::user()->middle_name, 0, 1) . '. ' : ' ' }} {{ Auth::user()->last_name }}</strong></a>
                 <h5 class="Incised901Light ninety">Last
-                    Login: {!!date('d M Y @ g:i A T', strtotime(Auth::user()->getLastLogin()))!!}</h5>
+                    Login: {!!date('d M Y @ g:i A T', strtotime(Auth::user()->getPreviousLogin()))!!}</h5>
 
                 <h5 class="Incised901Light ninety"><span class="fa fa-exclamation-triangle yellow" data-toggle="tooltip"
                                                          data-placement="bottom"

@@ -74,7 +74,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function getLastLogin()
+    public function getPreviousLogin(): string
     {
         return $this->last_login;
     }
