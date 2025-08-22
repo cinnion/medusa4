@@ -23,28 +23,85 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $ranks = [
-            'Ensign',
-            'Lieutenant JG',
-            'Lieutenant',
-            'Lieutenant Commander',
-            'Commander',
-            'Captain JG',
-            'Captain',
-            'Commodore'
+        $grades = [
+            'E-1',
+            'E-2',
+            'E-3',
+            'E-4',
+            'E-5',
+            'E-6',
+            'E-7',
+            'E-8',
+            'E-9',
+            'E-10',
+            'W-1',
+            'W-2',
+            'W-3',
+            'W-4',
+            'W-5',
+            'O-1',
+            'O-2',
+            'O-3',
+            'O-4',
+            'O-5',
+            'O-6',
+            'F-1',
+            'F-2',
+            'F-3',
+            'F-4',
+            'F-5',
+            'F-6',
+        ];
+
+        $registration_status = [
+            'Pending',
+            'Active',
+            'Denied'
         ];
 
         return [
-            'name' => fake()->name(),
             'email_address' => fake()->unique()->safeEmail(),
             'email_verified_at' => null,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
 
-            'rank' => $this->faker->randomElement($ranks),
+            'rank' => [
+                'grade' => $this->faker->randomElement($grades),
+                'date_of_rank' => fake()->dateTimeBetween('-2 year')->format('Y-m-d'),
+            ],
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->optional()->firstName(),
             'last_name' => fake()->lastName(),
+            'suffix' => null,
+            'address1' => fake()->streetAddress(),
+            'address2' => null,
+            'city' => fake()->city(),
+            'state' => 'VA',
+            'postal_code' => fake()->postcode(),
+            'country' => fake()->countryCode(),
+            'phone_number' => fake()->optional()->phoneNumber(),
+
+            'dob' => fake()->dateTimeBetween('-60 year')->format('Y-m-d'),
+            'application_date' => fake()->dateTimeBetween('-2 year')->format('Y-m-d'),
+            'registration_date' => fake()->optional()->dateTimeBetween('-2 year')?->format('Y-m-d'),
+            'registration_status' => $this->faker->randomElement($registration_status),
+            'member_id' => fake()->optional()?->unique()?->numerify('RMN-####-##'),
+            'promotion_status' => fake()->boolean(20),
+            'points' => fake()->numerify('###'),
+
+            'awards' => [],
+            'history' => [],
+            'assignment' => [],
+            'peerages' => [],
+            'permissions' => [
+                'LOGOUT',
+                'CHANGE_PWD',
+                'EDIT_SELF',
+                'ROSTER',
+                'TRANSFER',
+            ],
+
+            'last_update' => fake()->dateTimeBetween()?->getTimestamp(),
             'previous_login' => null,
             'last_login' => null,
             'forum_last_login' => fake()->optional()->dateTimeBetween()?->getTimestamp(),

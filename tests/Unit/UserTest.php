@@ -43,7 +43,9 @@ class UserTest extends TestCase
     {
         // Arrange
         $user = User::factory()->create([
-            'rank' => 'Commander',
+            'rank' => [
+                'grade' => 'Commander',
+            ],
             'last_name' => 'Spock',
         ]);
 
