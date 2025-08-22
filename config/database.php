@@ -123,6 +123,18 @@ return [
                 'transactions' => env('DB_MONGODB_TRANSACTIONS_ENABLED', false),
             ]
         ],
+
+        'trmn_mongodb' => [
+            'driver' => 'mongodb',
+            'host' => env('TRMN_DB_HOST', 'localhost'),
+            'port' => env('TRMN_DB_PORT', '27017'),
+            'database' => env('TRMN_DB_DATABASE', 'laravel'),
+            'username' => env('TRMN_DB_USERNAME'),
+            'password' => env('TRMN_DB_PASSWORD'),
+            'options' => [
+                'transactions' => env('TRMN_DB_MONGODB_TRANSACTIONS_ENABLED', false),
+            ]
+        ],
     ],
 
     /*
