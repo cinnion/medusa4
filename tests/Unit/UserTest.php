@@ -32,7 +32,6 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Mockery;
 use Tests\TestCase;
 
 class UserTest extends TestCase
