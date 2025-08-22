@@ -57,19 +57,20 @@ class User extends Authenticatable
         ];
     }
 
-    public function getGreeting()
+    /**
+     * Stub getGreeting method.
+     *
+     * @return string
+     */
+    public function getGreeting(): string
     {
-        return 'Hello';
+        return $this->rank;
     }
 
     public function getGreetingArray()
     {
         return [
-            'greeting' => $this->getGreeting(),
-            'rank' => $this->rank,
-            'name' => $this->name,
-            'first_name' => $this->first_name,
-            'middle_name' => $this->middle_name,
+            'rank' => $this->getGreeting(),
             'last_name' => $this->last_name,
         ];
     }

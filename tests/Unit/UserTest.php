@@ -32,11 +32,28 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Mockery;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
+
+    public function testGetGreetingArrayReturnsCorrectArray(): void
+    {
+        // Arrange
+        $user = User::factory()->create([
+            'rank' => 'Commander',
+            'last_name' => 'Spock',
+        ]);
+
+        // Act
+        $array = $user->getGreetingArray();
+
+        // Assert
+        $this->assertEquals($array['rank'], 'Commander', 'Rank is incorrect');
+        $this->assertEquals($array['last_name'], 'Spock', 'Last name is incorrect');
+    }
 
     public function testUpdateFirstLoginLastLoginUpdatesRecordInDatabase(): void
     {
