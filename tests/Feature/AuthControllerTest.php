@@ -64,7 +64,7 @@ class AuthControllerTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testSigninWithValidCredentialsRedirectsToHomepage(): void
+    public function testSigninWithValidCredentialsNoRedirectRedirectsToHomepage(): void
     {
         $user = User::factory()->create([
             'email_address' => 'admin@example.com',
@@ -74,10 +74,33 @@ class AuthControllerTest extends TestCase
 
         $response = $this->post('/signin', ['email' => 'admin@example.com', 'password' => 'password123']);
 
-        $user_post = User::where(['email_address' => 'admin@example.com'])->get();
+        $user_post = User::where(['email_address' => 'admin@example.com'])->first();
 
         $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
+        $this->assertNotNull($user_post->last_login, 'Last_login not updated');
+        $this->assertEquals($user->id, Auth::id());
+    }
+
+    public function testSigninWithValidCredentialsWithRedirectToSigninRedirectsToHomepage(): void
+    {
+        $user = User::factory()->create([
+            'email_address' => 'admin@example.com',
+            'password' => bcrypt('password123'),
+            'active' => 1,
+        ]);
+
+        $response = $this->post('/signin', [
+            'email' => 'admin@example.com',
+            'password' => 'password123',
+            'x' => 'signin',
+        ]);
+
+        $user_post = User::where(['email_address' => 'admin@example.com'])->first();
+
+        $response->assertRedirect('/');
+        $this->assertAuthenticatedAs($user);
+        $this->assertNotNull($user_post->last_login, 'Last_login not updated');
         $this->assertEquals($user->id, Auth::id());
     }
 }
