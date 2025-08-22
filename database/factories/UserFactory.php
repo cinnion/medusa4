@@ -48,8 +48,8 @@ class UserFactory extends Factory
             'previous_login' => null,
             'last_login' => null,
             'forum_last_login' => fake()->optional()->dateTimeBetween()?->getTimestamp(),
-            'osa' => fake()->optional()->dateTimeBetween('-1 year', 'now'),
-            'tos' => true,
+            'osa' => fake()->optional()->dateTimeBetween('-1 year', 'now')?->format("Y-m-d H:i:s"),
+            'tos' => false,
             'active' => 0,
         ];
     }
