@@ -78,7 +78,7 @@ class MedusaConfig extends Model
      *
      * @return bool|null|mixed
      */
-    public static function get(string $key, $default = null, string $subkey = null)
+    public static function get(string $key, $default = null, ?string $subkey = null)
     {
         if (is_null($subkey) === true) {
             try {
