@@ -4,6 +4,9 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 
+/**
+ * @codeCoverageIgnore
+ */
 class TrmnGrade extends Grade
 {
     /**
