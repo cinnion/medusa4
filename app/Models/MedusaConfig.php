@@ -55,7 +55,7 @@ class MedusaConfig extends Model
      *
      * @return bool
      */
-    public static function remove(string $key)
+    public static function remove(string $key): bool
     {
         try {
             self::where('key', '=', $key)->delete();
