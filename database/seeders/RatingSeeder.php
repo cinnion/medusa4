@@ -94,6 +94,37 @@ class RatingSeeder extends Seeder
                 )
             ],
             [
+                'rate_code' => 'DIPLOMATIC',
+                'rate' => array(
+                    'description' => 'Diplomatic Corps',
+                    'CIVIL' =>
+                        array(
+                            'C-1' => 'Consulate Staff',
+                            'C-2' => 'Senior Consulate Staff',
+                            'C-3' => 'Junior Attaché',
+                            'C-4' => 'Attaché',
+                            'C-5' => 'Consular Attaché',
+                            'C-6' => 'Senior Consular Attaché',
+                            'C-7' => 'Third Secretary',
+                            'C-8' => 'Second Secretary',
+                            'C-9' => 'First Secretary',
+                            'C-10' => 'Senior Administrator',
+                            'C-11' => 'Foreign Service Officer',
+                            'C-12' => 'Vice Consul',
+                            'C-13' => 'Counselor',
+                            'C-14' => 'Minister-Counselor',
+                            'C-15' => 'Minister',
+                            'C-16' => 'Ambassador',
+                            'C-17' => 'Legate',
+                            'C-18' => 'Special Envoy',
+                            'C-19' => 'Permanent Representative',
+                            'C-20' => 'Minister Resident',
+                            'C-21' => 'Ambassador at Large',
+                            'C-22' => 'Home Secretary',
+                        ),
+                )
+            ],
+            [
                 'rate_code' => 'DECK',
                 'rate' => array(
                     'description' => 'RMMM Deck Division',
@@ -124,6 +155,38 @@ class RatingSeeder extends Seeder
                         ),
                 )
             ],
+            [
+                'rate_code' => 'CATERING',
+                'rate' => array(
+                    'description' => 'RMMM Catering Division',
+                    'RMMM' =>
+                        array(
+                            'C-1' => 'Apprentice Spacer',
+                            'C-2' => 'General Vessel Assistant',
+                            'C-3' => 'Steward Assistant',
+                            'C-4' => 'Second Cook',
+                            'C-5' => 'Steward',
+                            'C-6' => 'Baker',
+                            'C-7' => 'Chief Cook',
+                            'C-8' => 'Chief Steward',
+                            'C-9' => 'Patrolman',
+                            'C-10' => 'President',
+                            'C-11' => 'Junior Assistant Purser',
+                            'C-12' => 'Junior Purser',
+                            'C-13' => 'Purser',
+                            'C-14' => 'Entertainment Director',
+                            'C-15' => 'Cruise Director',
+                            'C-16' => 'Hotel Manager',
+                            'C-17' => 'Fleet Passenger Director',
+                            'C-18' => 'Superintendent',
+                            'C-19' => 'Managing Director',
+                            'C-20' => 'Owner',
+                            'C-21' => 'Board Director',
+                            'C-22' => 'Home Secretary',
+                        ),
+                )
+            ],
+
         ];
 
         foreach ($ratings as $rating) {

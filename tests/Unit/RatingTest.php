@@ -38,7 +38,7 @@ class RatingTest extends TestCase
 
         // Assert
         $this->assertIsArray($ratings, 'Ratings is not an array');
-        $this->assertCount(2, $ratings, 'Ratings does not contain 2 items');
+        $this->assertCount(3, $ratings, 'Ratings does not contain 2 items');
         $this->assertArrayHasKey('', $ratings, 'Ratings does not have key for empty string');
         $this->assertEquals('Select a Specialty', $ratings[''], 'Ratings empty string key does not have expected value');
         $this->assertArrayHasKey('LORDS', $ratings, 'Ratings does not have key for LORDS');
@@ -55,7 +55,7 @@ class RatingTest extends TestCase
 
         // Assert
         $this->assertIsArray($ratings, 'Ratings is not an array');
-        $this->assertCount(2, $ratings, 'Ratings does not contain 2 items');
+        $this->assertCount(3, $ratings, 'Ratings does not contain 2 items');
         $this->assertArrayHasKey('', $ratings, 'Ratings does not have key for empty string');
         $this->assertEquals('Select a Division', $ratings[''], 'Ratings empty string key does not have expected value');
         $this->assertArrayHasKey('DECK', $ratings, 'Ratings does not have key for DECK');
