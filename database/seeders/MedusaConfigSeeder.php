@@ -23,6 +23,27 @@ class MedusaConfigSeeder extends Seeder
                     'subkey1' => 'Some other value 1',
                     'subkey2' => 'Some other value 2'
                 ]
+            ], [
+                'key' => 'pp.requirements',
+                'value' => [
+                    'E-2' => [
+                        'tig' => 2,
+                        'line' => [
+                            'points' => 3,
+                            'exam' =>  [
+                                '(00)?01',
+                            ],
+                        ],
+                        'staff'  => [
+                            'points' => 3,
+                            'exam' => [],
+                        ],
+                        'service' => [
+                            'points' => 3,
+                            'exam' => [],
+                        ],
+                    ]
+                ]
             ]
         ]);
     }
