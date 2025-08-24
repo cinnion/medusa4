@@ -647,4 +647,25 @@ class GradeTest extends TestCase
         $this->assertCount(0, $grades, 'Grades does not contain 0 categories');
         $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
     }
+
+//    public function testProvisionalPaygradesCallsFilterGradesMethod()
+//    {
+//        // Arrange
+//        $mock = Mockery::mock(Grade::class)
+//            ->shouldAllowMockingProtectedMethods()
+//            ->makePartial();
+//
+//        $mock->shouldReceive('filterGrades')
+//            ->once()
+//            ->with('PROV')
+//            ->andReturn(['PROV-1' => 'Provisional Grade 1']);
+//
+//        // Act
+//        $grades = $mock->provisionalPaygrades();
+//
+//        // Assert
+//        $this->assertIsArray($grades, 'Grades is not an array');
+//        $this->assertCount(1, $grades, 'Grades does not contain 1 categories');
+//        $this->assertEquals(['PROV-1' => 'Provisional Grade 1'], $grades, 'Grades do not match expected structure and values');
+//    }
 }
