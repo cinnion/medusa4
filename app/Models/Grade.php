@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Grade extends Model
@@ -346,7 +347,7 @@ class Grade extends Model
     /**
      * Get the equivalent paygrade for the specified branch.
      *
-     * @param \App\User $user
+     * @param \App\Models\User $user
      * @param $newBranch
      *
      * @return string|false
@@ -392,9 +393,9 @@ class Grade extends Model
      * it will update the members record to record the their current military rank for military->civilian changes or
      * removing the record of their old.
      *
-     * @param \App\User $user
-     * @param \App\Branch $oldBranch
-     * @param \App\Branch $newBranch
+     * @param \App\Models\User $user
+     * @param \App\Models\Branch $oldBranch
+     * @param \App\Models\Branch $newBranch
      * @param bool $updateUser
      *
      * @return string
