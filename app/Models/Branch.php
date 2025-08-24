@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class Branch
@@ -15,9 +15,12 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
  * @property object created_at
  * @property object updated_at
  */
-class Branch extends Eloquent
+class Branch extends Model
 {
-    protected $fillable = ['branch', 'branch_name'];
+    protected $fillable = [
+        'branch',
+        'branch_name'
+    ];
 
     public static function getBranchList()
     {
@@ -54,7 +57,7 @@ class Branch extends Eloquent
 
         if ($includeCivilDivisions === true) {
             $branches['DIPLOMATIC'] = 'Diplomatic Corps';
-          $branches['INTEL'] = 'Special Intelligence Service';
+            $branches['INTEL'] = 'Special Intelligence Service';
         } else {
             $branches['CIVIL'] = 'Civil Service';
         }
