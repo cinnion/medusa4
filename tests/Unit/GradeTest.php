@@ -167,7 +167,7 @@ class GradeTest extends TestCase
 
         // Assert
         $this->assertIsArray($grades, 'Grades is not an array');
-        $this->assertCount(7, $grades, 'Grades does not contain 1 categories');
+        $this->assertCount(7, $grades, 'Grades does not contain 7 categories');
         $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
     }
 
@@ -192,7 +192,7 @@ class GradeTest extends TestCase
 
         // Assert
         $this->assertIsArray($grades, 'Grades is not an array');
-        $this->assertCount(7, $grades, 'Grades does not contain 1 categories');
+        $this->assertCount(7, $grades, 'Grades does not contain 7 categories');
         $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
     }
 
@@ -247,4 +247,404 @@ class GradeTest extends TestCase
         $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
     }
 
+    public function testGetGradesForBranchUnFilteredRMNReturnsAllRMNGrades()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);;
+
+        $expectedGrades = [
+            [
+                'E-1',
+                'Spacer 3rd Class',
+            ],
+            [
+                'E-2',
+                'Spacer 2nd Class',
+            ],
+            [
+                'E-3',
+                'Spacer 1st Class',
+            ],
+            [
+                'E-4',
+                'Petty Officer 3rd Class',
+            ],
+            [
+                'E-5',
+                'Petty Officer 2nd Class',
+            ],
+            [
+                'E-6',
+                'Petty Officer 1st Class',
+            ],
+            [
+                'E-7',
+                'Chief Petty Officer',
+            ],
+            [
+                'E-8',
+                'Senior Chief Petty Officer',
+            ],
+            [
+                'E-9',
+                'Master Chief Petty Officer',
+            ],
+            [
+                'E-10',
+                'Senior Master Chief Petty Officer',
+            ],
+            [
+                'WO-1',
+                'Warrant Officer',
+            ],
+            [
+                'WO-2',
+                'Warrant Officer 1st Class',
+            ],
+            [
+                'WO-3',
+                'Chief Warrant Officer',
+            ],
+            [
+                'WO-4',
+                'Senior Chief Warrant Officer',
+            ],
+            [
+                'WO-5',
+                'Master Chief Warrant Officer',
+            ],
+            [
+                'O-1',
+                'Ensign',
+            ],
+            [
+                'O-2',
+                'Lieutenant (JG)',
+            ],
+            [
+                'O-3',
+                'Lieutenant (SG)',
+            ],
+            [
+                'O-4',
+                'Lieutenant Commander',
+            ],
+            [
+                'O-5',
+                'Commander',
+            ],
+            [
+                'O-6-A',
+                'Captain (JG)',
+            ],
+            [
+                'O-6-B',
+                'Captain (SG)',
+            ],
+            [
+                'F-1',
+                'Commodore',
+            ],
+            [
+                'F-2-A',
+                'Rear Admiral of the Red',
+            ],
+            [
+                'F-2-B',
+                'Rear Admiral of the Green',
+            ],
+            [
+                'F-3-A',
+                'Vice Admiral of the Red',
+            ],
+            [
+                'F-3-B',
+                'Vice Admiral of the Green',
+            ],
+            [
+                'F-4-A',
+                'Admiral of the Red',
+            ],
+            [
+                'F-4-B',
+                'Admiral of the Green',
+            ],
+            [
+                'F-5-A',
+                'Fleet Admiral of the Red',
+            ],
+            [
+                'F-5-B',
+                'Fleet Admiral of the Green',
+            ],
+            [
+                'F-6',
+                'Admiral of the Fleet',
+            ],
+        ];
+
+        // Act
+        $grades = Grade::getGradesForBranchUnFiltered('RMN');
+
+        // Assert
+        $this->assertIsArray($grades, 'Grades is not an array');
+        $this->assertCount(32, $grades, 'Grades does not contain 32 categories');
+        $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
+    }
+
+    public function testGetGradesForBranchUnFilteredDiplomaticReturnsAllDiplomaticGrades()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);;
+
+        $expectedGrades = [
+            [
+                'C-1',
+                'Consulate Staff',
+            ],
+            [
+                'C-2',
+                'Senior Consulate Staff',
+            ],
+            [
+                'C-3',
+                'Junior Attaché',
+            ],
+            [
+                'C-4',
+                'Attaché',
+            ],
+            [
+                'C-5',
+                'Consular Attaché',
+            ],
+            [
+                'C-6',
+                'Senior Consular Attaché',
+            ],
+            [
+                'C-7',
+                'Third Secretary',
+            ],
+            [
+                'C-8',
+                'Second Secretary',
+            ],
+            [
+                'C-9',
+                'First Secretary',
+            ],
+            [
+                'C-10',
+                'Senior Administrator',
+            ],
+            [
+                'C-11',
+                'Foreign Service Officer',
+            ],
+            [
+                'C-12',
+                'Vice Consul',
+            ],
+            [
+                'C-13',
+                'Counselor',
+            ],
+            [
+                'C-14',
+                'Minister-Counselor',
+            ],
+            [
+                'C-15',
+                'Minister',
+            ],
+            [
+                'C-16',
+                'Ambassador',
+            ],
+            [
+                'C-17',
+                'Legate',
+            ],
+            [
+                'C-18',
+                'Special Envoy',
+            ],
+            [
+                'C-19',
+                'Permanent Representative',
+            ],
+            [
+                'C-20',
+                'Minister Resident',
+            ],
+            [
+                'C-21',
+                'Ambassador at Large',
+            ],
+            [
+                'C-22',
+                'Home Secretary',
+            ],
+        ];
+
+        // Act
+        $grades = Grade::getGradesForBranchUnFiltered('DIPLOMATIC');
+
+        // Assert
+        $this->assertIsArray($grades, 'Grades is not an array');
+        $this->assertCount(22, $grades, 'Grades does not contain 22 categories');
+        $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
+    }
+
+    /**
+     * INTEL has no grades associated with it in the seeders.
+     */
+    public function testGetGradesForBranchUnFilteredIntelReturnsEmptyArray()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);;
+
+        $expectedGrades = [
+        ];
+
+        // Act
+        $grades = Grade::getGradesForBranchUnFiltered('INTEL');
+
+        // Assert
+        $this->assertIsArray($grades, 'Grades is not an array');
+        $this->assertCount(0, $grades, 'Grades does not contain 0 categories');
+        $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
+    }
+    public function testGetGradesForBranchUnFilteredDECKReturnsAllDECKGrades()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);;
+
+        $expectedGrades = [
+            [
+                'C-1',
+                'Apprentice Spacer',
+            ],
+            [
+                'C-2',
+                'General Vessel Assistant',
+            ],
+            [
+                'C-3',
+                'Ordinary Spacer',
+            ],
+            [
+                'C-4',
+                'Senior Ordinary Spacer',
+            ],
+            [
+                'C-5',
+                'Efficient Spacer',
+            ],
+            [
+                'C-6',
+                'Able Spacer',
+            ],
+            [
+                'C-7',
+                'Leading Spacer',
+            ],
+            [
+                'C-8',
+                'Certified Bosun',
+            ],
+            [
+                'C-9',
+                'Patrolman',
+            ],
+            [
+                'C-10',
+                'President',
+            ],
+            [
+                'C-11',
+                'Fourth Officer',
+            ],
+            [
+                'C-12',
+                'Third Officer',
+            ],
+            [
+                'C-13',
+                'Second Officer',
+            ],
+            [
+                'C-14',
+                'Senior Second Officer',
+            ],
+            [
+                'C-15',
+                'First Officer',
+            ],
+            [
+                'C-16',
+                'Master',
+            ],
+            [
+                'C-17',
+                'Fleet Manager',
+            ],
+            [
+                'C-18',
+                'Superintendent',
+            ],
+            [
+                'C-19',
+                'Managing Director',
+            ],
+            [
+                'C-20',
+                'Owner',
+            ],
+            [
+                'C-21',
+                'Board Director',
+            ],
+            [
+                'C-22',
+                'Home Secretary',
+            ],
+        ];
+
+        // Act
+        $grades = Grade::getGradesForBranchUnFiltered('DECK');
+
+        // Assert
+        $this->assertIsArray($grades, 'Grades is not an array');
+        $this->assertCount(22, $grades, 'Grades does not contain 22 categories');
+        $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
+    }
+
+    public function testGetGradesForBranchUnFilteredFOOReturnsEmptyArray()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);;
+
+        $expectedGrades = [
+        ];
+
+        // Act
+        $grades = Grade::getGradesForBranchUnFiltered('FOO');
+
+        // Assert
+        $this->assertIsArray($grades, 'Grades is not an array');
+        $this->assertCount(0, $grades, 'Grades does not contain 0 categories');
+        $this->assertEquals($expectedGrades, $grades, 'Grades do not match expected structure and values');
+    }
 }

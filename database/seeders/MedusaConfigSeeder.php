@@ -17,24 +17,41 @@ class MedusaConfigSeeder extends Seeder
             [
                 'key' => 'some.key',
                 'value' => 'Some value'
-            ], [
+            ],
+            [
                 'key' => 'some.other-with-sub-key',
                 'value' => [
                     'subkey1' => 'Some other value 1',
                     'subkey2' => 'Some other value 2'
                 ]
-            ], [
+            ],
+            [
+                'key' => 'memberlist.branches',
+                'value' => array(
+                    'RMN' => 'RMN',
+                    'RMMC' => 'RMMC',
+                    'RMA' => 'RMA',
+                    'GSN' => 'GSN',
+                    'RHN' => 'RHN',
+                    'IAN' => 'IAN',
+                    'SFC' => 'SFC',
+                    'RMACS' => 'RMACS',
+                    'CIVIL' => 'Civilian',
+                    'RMMM' => 'Merchant Marine',
+                ),
+            ],
+            [
                 'key' => 'pp.requirements',
                 'value' => [
                     'E-2' => [
                         'tig' => 2,
                         'line' => [
                             'points' => 3,
-                            'exam' =>  [
+                            'exam' => [
                                 '(00)?01',
                             ],
                         ],
-                        'staff'  => [
+                        'staff' => [
                             'points' => 3,
                             'exam' => [],
                         ],

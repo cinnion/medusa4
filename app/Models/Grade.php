@@ -120,7 +120,14 @@ class Grade extends Model
         return $grades;
     }
 
-    public static function getGradesForBranchUnFiltered($branch)
+    /**
+     * Get a list of pay grades and their titles suitable for DataTables, unfiltered, for the branch specified.
+     *
+     * @param string $branch The branch to get pay grades for
+     *
+     * @return array An array of pay grades and their titles suitable for DataTables
+     */
+    public static function getGradesForBranchUnFiltered(string $branch): array
     {
         $branches = MedusaConfig::get('memberlist.branches');
 
@@ -141,12 +148,18 @@ class Grade extends Model
             switch ($branch) {
                 case 'INTEL':
                 case 'DIPLOMATIC':
-                    $payGrades = Rating::where('rate_code', $branch)->first()->rate['CIVIL'];
+                    $payGrades = Rating::where('rate_code', $branch)->first()?->rate['CIVIL'];
+                    if (is_null($payGrades) === true) {
+                        $payGrades = [];
+                    }
                     ksort($payGrades, SORT_NATURAL);
                     break;
 
                 default:
-                    $payGrades = Rating::where('rate_code', $branch)->first()->rate['RMMM'];
+                    $payGrades = Rating::where('rate_code', $branch)->first()?->rate['RMMM'];
+                    if (is_null($payGrades) === true) {
+                        $payGrades = [];
+                    }
                     ksort($payGrades, SORT_NATURAL);
                     break;
             }
@@ -155,7 +168,14 @@ class Grade extends Model
         return self::formatPayGradesForDataTables($payGrades);
     }
 
-    private static function formatPayGradesForDataTables($payGrades)
+    /**
+     * Helper method to format pay grades for DataTables.
+     *
+     * @param array $payGrades Associative array of pay grades and their titles
+     *
+     * @return array
+     */
+    private static function formatPayGradesForDataTables(array $payGrades): array
     {
         $retVal = [];
 
