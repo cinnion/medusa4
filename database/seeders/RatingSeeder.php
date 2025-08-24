@@ -76,6 +76,54 @@ class RatingSeeder extends Seeder
                         ),
                 )
             ],
+            [
+                'rate_code' => 'LORDS',
+                'rate' => array(
+                    'description' => 'House of Lords',
+                    'CIVIL' =>
+                        array(
+                            'C-4' => 'Administrative Specialist',
+                            'C-5' => 'Clerk',
+                            'C-9' => 'Aide',
+                            'C-10' => 'Chief Aide',
+                            'C-11' => 'Local Office Staffer',
+                            'C-16' => 'Chief of Staff',
+                            'C-20' => 'Member of the Lords',
+                            'C-22' => 'Lord Speaker',
+                        ),
+                )
+            ],
+            [
+                'rate_code' => 'DECK',
+                'rate' => array(
+                    'description' => 'RMMM Deck Division',
+                    'RMMM' =>
+                        array(
+                            'C-1' => 'Apprentice Spacer',
+                            'C-2' => 'General Vessel Assistant',
+                            'C-3' => 'Ordinary Spacer',
+                            'C-4' => 'Senior Ordinary Spacer',
+                            'C-5' => 'Efficient Spacer',
+                            'C-6' => 'Able Spacer',
+                            'C-7' => 'Leading Spacer',
+                            'C-8' => 'Certified Bosun',
+                            'C-9' => 'Patrolman',
+                            'C-10' => 'President',
+                            'C-11' => 'Fourth Officer',
+                            'C-12' => 'Third Officer',
+                            'C-13' => 'Second Officer',
+                            'C-14' => 'Senior Second Officer',
+                            'C-15' => 'First Officer',
+                            'C-16' => 'Master',
+                            'C-17' => 'Fleet Manager',
+                            'C-18' => 'Superintendent',
+                            'C-19' => 'Managing Director',
+                            'C-20' => 'Owner',
+                            'C-21' => 'Board Director',
+                            'C-22' => 'Home Secretary',
+                        ),
+                )
+            ],
         ];
 
         foreach ($ratings as $rating) {
