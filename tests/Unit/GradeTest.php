@@ -668,4 +668,30 @@ class GradeTest extends TestCase
 //        $this->assertCount(1, $grades, 'Grades does not contain 1 categories');
 //        $this->assertEquals(['PROV-1' => 'Provisional Grade 1'], $grades, 'Grades do not match expected structure and values');
 //    }
+
+    public function testIsPaygradeValidWithBranchValidBranchAndPaygradeReturnsTrue()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+
+        // Act
+        $isValid = Grade::isPaygradeValidForBranch('E-5', 'RMN');
+
+        // Assert
+        $this->assertTrue($isValid, 'E-5 is not a valid paygrade for RMN');
+    }
+
+    public function testIsPaygradeValidWithBranchInvalidBranchAndPaygradeHandlesExceptionReturnsFalse()
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+
+        // Act
+        $isValid = Grade::isPaygradeValidForBranch('FOO', 'RMN');
+
+        // Assert
+        $this->assertFalse($isValid, 'FOO is not a valid paygrade for RMN');
+    }
 }
