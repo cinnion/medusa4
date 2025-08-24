@@ -100,18 +100,18 @@ class Grade extends Model
      *
      * {@inheritdoc} self::gradesForBranch
      *
-     * @param $branchID
-     * @param $filter
+     * @param string $branchID The branch to get pay grades for
+     * @param string|null $filter Valid values are null, E, O, F, W, C and P
+     * @param bool $suffix If true, the pay grade will be appended to the title in parentheses
      *
-     * @return array
+     * @return array An associative array of pay grades and their titles suitable for an HTML select
      */
-    public static function gradesForBranchForSelect($branchID, $filter, $suffix = true)
+    public static function gradesForBranchForSelect(string $branchID, string $filter, ?bool $suffix = true): array
     {
         $grades = [];
 
         foreach (self::gradesForBranch($branchID, $filter) as $grade) {
-            $grades[$grade->grade] = self::mbTrim($grade->rank[$branchID]).($suffix ? ' ('.$grade->grade.')' :
-                    '');
+            $grades[$grade->grade] = self::mbTrim($grade->rank[$branchID]) . ($suffix ? ' (' . $grade->grade . ')' : '');
         }
 
         // Sort by the array key, which is the paygrade
