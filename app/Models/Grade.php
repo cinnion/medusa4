@@ -76,17 +76,14 @@ class Grade extends Model
     }
 
     /**
-     * Get the pay grades for a branch.
+     * Get a list of pay grades and their titles suitable for creating an HTML select, grouped by type.
      *
-     * @param $branchID
-     * @param null $filter Valid values are null, E, O, F, W, C, and P
+     * @param string $branchID The branch to get pay grades for
      *
-     * @return array
+     * @return array An associative array of pay grades and their titles suitable for an HTML select, grouped by type
      */
-    public static function getGradesForBranch($branchID)
+    public static function getGradesForBranch(string $branchID): array
     {
-        //$grades[''] = 'Select a rank';
-
         foreach (self::$gradeFilters as $filter => $filterName) {
             $tmp = self::gradesForBranchForSelect($branchID, $filter);
 
