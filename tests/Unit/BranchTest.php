@@ -4,10 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Branch;
 use Database\Seeders\BranchSeeder;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class BranchTest extends TestCase
 {
+    use DatabaseMigrations;
+
     public function testGetBranchListReturnsExpectedList(): void
     {
         // Arrange
@@ -187,6 +190,27 @@ class BranchTest extends TestCase
 
         // Act
         $branches = Branch::getEnhancedBranchList(['include_rmmm_divisions' => false]);
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetNavalBranchListReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "RHN" => "Republic of Haven Navy",
+            "RMN" => "Royal Manticoran Navy",
+        ];
+
+        // Act
+        $branches = Branch::getNavalBranchList();
 
         // Assert
         $this->assertIsArray($branches);

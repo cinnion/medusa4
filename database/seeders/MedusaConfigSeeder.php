@@ -26,6 +26,18 @@ class MedusaConfigSeeder extends Seeder
                 ]
             ],
             [
+                'key' => 'chapter.naval',
+                'value' => array(
+                    0 => 'RMN',
+                    1 => 'GSN',
+                    2 => 'IAN',
+                    3 => 'RHN',
+                    4 => 'RMMM',
+                    5 => 'RMACS',
+                    6 => 'CIVIL',
+                ),
+            ],
+            [
                 'key' => 'memberlist.branches',
                 'value' => array(
                     'RMN' => 'RMN',
