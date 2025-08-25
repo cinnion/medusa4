@@ -43,3 +43,9 @@ storage/database.sqlite
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+#
+# Doug's junk files for seeders
+#
+database/dev_seeders
+database/seeders.prod
