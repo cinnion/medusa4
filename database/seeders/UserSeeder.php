@@ -14,10 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            GradeSeeder::class,
-        ]);
-
         User::factory()->create([
             'name' => 'Admin User',
             'email_address' => 'admin@example.com',

@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            UserSeeder::class,
+            BranchSeeder::class,
+            GradeSeeder::class,
             MedusaConfigSeeder::class,
+            RatingSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
