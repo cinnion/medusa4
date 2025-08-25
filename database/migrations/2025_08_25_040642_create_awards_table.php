@@ -14,6 +14,18 @@ return new class extends Migration
         Schema::create('awards', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->integer('display_order')->default(0);
+            $table->string('name')->unique();
+            $table->string('code')->unique();
+            $table->string('post_nominal')->nullable();
+            $table->string('replaces')->nullable();
+            $table->string('location');
+            $table->boolean('multiple')->default(false);
+            $table->string('group_label')->nullable();
+            $table->string('image')->nullable();
+            $table->string('branch')->nullable();
+            $table->string('star_nation')->nullable();
         });
     }
 

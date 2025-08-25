@@ -1,9 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-//use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class Award.
@@ -19,7 +18,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
  * @property string image
  * @property string branch
  */
-class Award extends Eloquent
+class Award extends Model
 {
     protected $fillable = [
         'display_order',
