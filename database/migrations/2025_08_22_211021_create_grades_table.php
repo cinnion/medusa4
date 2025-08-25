@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        if (!Schema::hasTable('grades')) {
+            Schema::create('grades', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
 
-            $table->string('grade')->unique();
-            $table->json('rank');
-        });
+                $table->string('grade')->unique();
+                $table->json('rank');
+            });
+        } else {
+            echo "Table 'grades' already exists. Skipping migration.\n";
+        }
     }
 
     /**

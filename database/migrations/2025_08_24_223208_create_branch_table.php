@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('branch', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        if (!Schema::hasTable('branch')) {
+            Schema::create('branch', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
 
-            $table->string('branch', 10)->unique();
-            $table->string('branch_name', 100);
-            $table->json('equivalent');
+                $table->string('branch', 10)->unique();
+                $table->string('branch_name', 100);
+                $table->json('equivalent');
 
-        });
+            });
+        } else {
+            echo "Table 'branch' already exists. Skipping migration.\n";
+        }
     }
 
     /**
