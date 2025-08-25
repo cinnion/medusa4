@@ -49,3 +49,8 @@ Thumbs.db
 #
 database/dev_seeders
 database/seeders.prod
+
+#
+# Emacs mergetool files
+#
+*.orig
