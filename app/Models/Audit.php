@@ -1,12 +1,22 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\Model as Model;
 
-class Audit extends Eloquent
+class Audit extends Model
 {
-    protected $fillable = ['member_id', 'action', 'collection_name', 'document_id', 'document_values', 'from_where'];
+    /***
+     * @var string[] The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'member_id',
+        'action',
+        'collection_name',
+        'document_id',
+        'document_values',
+        'from_where'
+    ];
 
     protected $table = 'audit_trail';
 }
