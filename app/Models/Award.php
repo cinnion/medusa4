@@ -15,8 +15,12 @@ use MongoDB\Laravel\Eloquent\Model;
  * @property string location
  * @property bool multiple
  * @property string group_label
- * @property string image
+ * @property int points
  * @property string branch
+ * @property string image
+ * @property string star_nation
+ * @property \MongoDB\BSON\UTCDateTime created_at
+ * @property \MongoDB\BSON\UTCDateTime updated_at
  */
 class Award extends Model
 {
@@ -29,8 +33,9 @@ class Award extends Model
         'location',
         'multiple',
         'group_label',
-        'image',
+        'points',
         'branch',
+        'image',
         'star_nation',
     ];
 
