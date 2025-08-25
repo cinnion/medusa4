@@ -216,4 +216,33 @@ class BranchTest extends TestCase
         $this->assertIsArray($branches);
         $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
     }
+
+    public function testGetBranchNameRMNReturnsExpectedName(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+        $branchCode = 'RMN';
+        $expectedBranchName = 'Royal Manticoran Navy';
+
+        // Act
+        $branchName = Branch::getBranchName($branchCode);
+
+        // Assert
+        $this->assertEquals($expectedBranchName, $branchName, 'The branch name does not match the expected value.');
+    }
+
+    public function testGetBranchNameRMMMReturnsExpectedName(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+        $branchCode = 'RMMM';
+        $expectedBranchName = 'Royal Manticoran Merchant Marine';
+
+        // Act
+        $branchName = Branch::getBranchName($branchCode);
+
+        // Assert
+        $this->assertEquals($expectedBranchName, $branchName, 'The branch name does not match the expected value.');
+    }
+
 }
