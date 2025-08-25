@@ -245,4 +245,261 @@ class BranchTest extends TestCase
         $this->assertEquals($expectedBranchName, $branchName, 'The branch name does not match the expected value.');
     }
 
+    public function testIsMilitaryBranchWithRMNReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMN';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected RMN to be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithRMMCReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMMC';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected RMMC to be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithRMAReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMA';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected RMA to be identified as a military branch.');
+    }
+    public function testIsMilitaryBranchWithGSNReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'GSN';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected GSN to be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithRHNReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RHN';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected RHN to be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithIANReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'IAN';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertTrue($isMilitary, 'Expected IAN to be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithCIVILReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'CIVIL';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertFalse($isMilitary, 'Expected CIVIL to NOT be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithSFCReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'SFC';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertFalse($isMilitary, 'Expected SFC to NOT be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithRMMMReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMMM';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertFalse($isMilitary, 'Expected RMMM to NOT be identified as a military branch.');
+    }
+
+    public function testIsMilitaryBranchWithRMACSReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMACS';
+
+        // Act
+        $isMilitary = $branch->isMilitaryBranch();
+
+        // Assert
+        $this->assertFalse($isMilitary, 'Expected RMACS to NOT be identified as a military branch.');
+    }
+
+    public function testIsCivilianBranchWithRMNReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMN';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected RMN to NOT be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithRMMCReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMMC';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected RMMC to NOT be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithRMAReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMA';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected RMA to NOT be identified as a civilian branch.');
+    }
+    public function testIsCivilianBranchWithGSNReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'GSN';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected GSN to NOT be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithRHNReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RHN';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected RHN to NOT be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithIANReturnsFalse(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'IAN';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertFalse($isCivilian, 'Expected IAN to NOT be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithCIVILReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'CIVIL';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertTrue($isCivilian, 'Expected CIVIL to be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithSFCReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'SFC';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertTrue($isCivilian, 'Expected SFC to be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithRMMMReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMMM';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertTrue($isCivilian, 'Expected RMMM to be identified as a civilian branch.');
+    }
+
+    public function testIsCivilianBranchWithRMACSReturnsTrue(): void
+    {
+        // Arrange
+        $branch = new Branch();
+        $branch->branch = 'RMACS';
+
+        // Act
+        $isCivilian = $branch->isCivilianBranch();
+
+        // Assert
+        $this->assertTrue($isCivilian, 'Expected RMACS to be identified as a civilian branch.');
+    }
 }

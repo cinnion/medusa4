@@ -6,7 +6,7 @@ use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class Branch
- * @package App
+ * @package App\Models
  *
  * @property string id
  * @property string branch
@@ -17,11 +17,19 @@ use MongoDB\Laravel\Eloquent\Model;
  */
 class Branch extends Model
 {
+    /**
+     * @var string[] The attributes that are mass assignable.
+     */
     protected $fillable = [
         'branch',
         'branch_name'
     ];
 
+    /**
+     * Get a list of branches for use in a select element.
+     *
+     * @return array
+     */
     public static function getBranchList()
     {
         foreach (self::all(['branch', 'branch_name']) as $branch) {
@@ -35,7 +43,19 @@ class Branch extends Model
         return $branches;
     }
 
-    public static function getEnhancedBranchList(array $options = [])
+    /**
+     * Get an enhanced list of branches for use in a select element.
+     *
+     * This includes options for Civil Service and RMMM divisions.
+     *
+     * Options:
+     *  - include_civil_divisions (bool) Include Diplomatic Corps and Special Intelligence Service as options. Default true.
+     *  - include_rmmm_divisions (bool) Include RMMM Divisions as options. Default true.
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function getEnhancedBranchList(array $options = []): array
     {
         // Default options
         $includeCivilDivisions = true;
@@ -77,7 +97,12 @@ class Branch extends Model
         return $branches;
     }
 
-    public static function getNavalBranchList()
+    /**
+     * Get a list of naval branches for use in a select element.
+     *
+     * @return string[]
+     */
+    public static function getNavalBranchList(): array
     {
         foreach (self::whereIn('branch', MedusaConfig::get('chapter.naval', ['RMN', 'GSN', 'IAN', 'RHN']))
                      ->get(['branch', 'branch_name']) as $branch) {
@@ -91,7 +116,13 @@ class Branch extends Model
         return $branches;
     }
 
-    public static function getBranchName($branch)
+    /**
+     * Get the full branch name from the branch code.
+     *
+     * @param string $branch The branch code.
+     * @return string The full branch name.
+     */
+    public static function getBranchName(string $branch): string
     {
         $res = self::where('branch', $branch)->first();
 
@@ -103,7 +134,7 @@ class Branch extends Model
      *
      * @return bool
      */
-    public function isMilitaryBranch()
+    public function isMilitaryBranch(): bool
     {
         $militaryBranches = [
             'RMN',
@@ -122,7 +153,7 @@ class Branch extends Model
      *
      * @return bool
      */
-    public function isCivilianBranch()
+    public function isCivilianBranch(): bool
     {
         $civilianBranches = [
             'CIVIL',
