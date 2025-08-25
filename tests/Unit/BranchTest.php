@@ -2,15 +2,194 @@
 
 namespace Tests\Unit;
 
+use App\Models\Branch;
+use Database\Seeders\BranchSeeder;
 use Tests\TestCase;
 
 class BranchTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     */
-    public function test_example(): void
+    public function testGetBranchListReturnsExpectedList(): void
     {
-        $this->assertTrue(true);
+        // Arrange
+        $this->seed(BranchSeeder::class);
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "CIVIL" => "Civil Service",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "SFC" => "Sphinx Forestry Commission",
+        ];
+
+        // Act
+        $branches = Branch::getBranchList();
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetBranchEnhancedListDefaultReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "DIPLOMATIC" => "Diplomatic Corps",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "BASIC" => "RMMM BASIC Division",
+            "CATERING" => "RMMM Catering Division",
+            "DECK" => "RMMM Deck Division",
+            "ENG" => "RMMM Engineering Division",
+            "MEDICAL" => "RMMM Medical Division",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "INTEL" => "Special Intelligence Service",
+            "SFC" => "Sphinx Forestry Commission",
+        ];
+
+        // Act
+        $branches = Branch::getEnhancedBranchList();
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetBranchEnhancedListCivilTrueReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "DIPLOMATIC" => "Diplomatic Corps",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "BASIC" => "RMMM BASIC Division",
+            "CATERING" => "RMMM Catering Division",
+            "DECK" => "RMMM Deck Division",
+            "ENG" => "RMMM Engineering Division",
+            "MEDICAL" => "RMMM Medical Division",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "INTEL" => "Special Intelligence Service",
+            "SFC" => "Sphinx Forestry Commission",
+        ];
+
+        // Act
+        $branches = Branch::getEnhancedBranchList(['include_civil_divisions' => true]);
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetBranchEnhancedListCivilFalseReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "BASIC" => "RMMM BASIC Division",
+            "CATERING" => "RMMM Catering Division",
+            "DECK" => "RMMM Deck Division",
+            "ENG" => "RMMM Engineering Division",
+            "MEDICAL" => "RMMM Medical Division",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "SFC" => "Sphinx Forestry Commission",
+            "CIVIL" => "Civil Service",
+        ];
+
+        // Act
+        $branches = Branch::getEnhancedBranchList(['include_civil_divisions' => false]);
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetBranchEnhancedListRmmmTrueReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "DIPLOMATIC" => "Diplomatic Corps",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "BASIC" => "RMMM BASIC Division",
+            "CATERING" => "RMMM Catering Division",
+            "DECK" => "RMMM Deck Division",
+            "ENG" => "RMMM Engineering Division",
+            "MEDICAL" => "RMMM Medical Division",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "INTEL" => "Special Intelligence Service",
+            "SFC" => "Sphinx Forestry Commission",
+        ];
+
+        // Act
+        $branches = Branch::getEnhancedBranchList(['include_rmmm_divisions' => true]);
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
+    }
+
+    public function testGetBranchEnhancedListRmmmFalseReturnsExpectedList(): void
+    {
+        // Arrange
+        $this->seed(BranchSeeder::class);
+
+        $expectedBranches = [
+            "" => "Select a Branch",
+            "DIPLOMATIC" => "Diplomatic Corps",
+            "GSN" => "Grayson Space Navy",
+            "IAN" => "Imperial Andermani Navy",
+            "RHN" => "Republic of Haven Navy",
+            "RMA" => "Royal Manticoran Army",
+            "RMACS" => "Royal Manticoran Astro Control Service",
+            "RMMC" => "Royal Manticoran Marine Corp",
+            "RMMM" => "Royal Manticoran Merchant Marine",
+            "RMN" => "Royal Manticoran Navy",
+            "INTEL" => "Special Intelligence Service",
+            "SFC" => "Sphinx Forestry Commission",
+        ];
+
+        // Act
+        $branches = Branch::getEnhancedBranchList(['include_rmmm_divisions' => false]);
+
+        // Assert
+        $this->assertIsArray($branches);
+        $this->assertEquals($expectedBranches, $branches, 'The branch list does not match the expected values.');
     }
 }
