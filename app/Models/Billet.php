@@ -4,11 +4,22 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 
+/**
+ * Class Billet.
+ *
+ * @property string billet_name
+ * @property \MongoDB\BSON\UTCDateTime created_at
+ * @property \MongoDB\BSON\UTCDateTime updated_at
+ */
 class Billet extends Model
 {
-    protected $fillable = ['billet_name'];
+    protected $fillable = [
+        'billet_name'
+    ];
 
-    public static $rules = ['billet_name' => 'required|unique:billets'];
+    public static $rules = [
+        'billet_name' => 'required|unique:billets'
+    ];
 
     public static function getBillets()
     {
