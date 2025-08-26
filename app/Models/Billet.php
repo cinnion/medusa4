@@ -37,6 +37,6 @@ class Billet extends Model
 
     public function getAssignedCount()
     {
-        return User::where('assignment.billet', '=', $this->billet_name)->count();
+        return User::where('assignment.billet', $this->billet_name)->count();
     }
 }

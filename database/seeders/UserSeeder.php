@@ -18,7 +18,21 @@ class UserSeeder extends Seeder
             'name' => 'Admin User',
             'email_address' => 'admin@example.com',
             'password' => Hash::make('password123'),
+            'member_id' => 'A0000001',
             'active' => 1,
+            'assignment' => [
+                'billet' => 'President',
+            ],
+        ]);
+        User::factory()->create([
+            'name' => 'Doug Needham',
+            'email_address' => 'doug@example.com',
+            'member_id' => 'A0000002',
+            'password' => Hash::make('password123'),
+            'active' => 1,
+            'assignment' => [
+                'billet' => 'Executive Officer',
+            ],
         ]);
     }
 }
