@@ -15,7 +15,7 @@ use MongoDB\Laravel\Eloquent\Model;
  * @property string location
  * @property bool multiple
  * @property string group_label
- * @property int points
+ * @property float points
  * @property string branch
  * @property string image
  * @property string star_nation
@@ -206,28 +206,27 @@ class Award extends Model
     }
 
     /**
-     * Get an awards display order.
+     * Get the display order for an award.
      *
-     * @param $code
+     * @param string $code
      *
-     * @return int|mixed
+     * @return int|null
      */
-    public static function getDisplayOrder($code)
+    public static function getDisplayOrder(string $code): int|null
     {
-        return self::where('code', '=', $code)->first()->display_order;
+        return self::where('code', $code)->first()?->display_order;
     }
 
     /**
-     * Get an award by the award code.
+     * Get the award by its code.
      *
-     * @param $code
+     * @param string $code
      *
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return Award|null
      */
-    public static function getAwardByCode($code)
+    public static function getAwardByCode(string $code): Award|null
     {
-        return self::where('code', '=', $code)
-            ->first();
+        return self::where('code', '=', $code)->first();
     }
 
     /**
@@ -235,11 +234,11 @@ class Award extends Model
      *
      * @param string $code
      *
-     * @return mixed
+     * @return float|null
      */
-    public static function getPointsForAward(string $code)
+    public static function getPointsForAward(string $code): float|null
     {
-        return self::where('code', $code)->first()->points;
+        return self::where('code', $code)->first()?->points;
     }
 
     /**
@@ -247,23 +246,23 @@ class Award extends Model
      *
      * @param string $code
      *
-     * @return mixed|string
+     * @return string|null
      */
-    public static function getAwardName(string $code)
+    public static function getAwardName(string $code): string|null
     {
-        return self::where('code', $code)->first()->name;
+        return self::where('code', $code)->first()?->name;
     }
 
     /**
-     * Get the name of the image to use.
+     * Get the name of the image to use for the award.
      *
      * @param string $code
      *
-     * @return mixed|string
+     * @return string|null
      */
-    public static function getAwardImage(string $code)
+    public static function getAwardImage(string $code): string|null
     {
-        return self::where('code', $code)->first()->image;
+        return self::where('code', $code)->first()?->image;
     }
 
     /**
@@ -274,7 +273,7 @@ class Award extends Model
      *
      * @return bool
      */
-    public static function updateDisplayOrder($code, $display_order)
+    public static function updateDisplayOrder(string $code, int $display_order): bool
     {
         $award = self::where('code', $code)->first();
         $award->display_order = $display_order;

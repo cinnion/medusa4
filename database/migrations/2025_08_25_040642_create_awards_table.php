@@ -27,7 +27,7 @@ return new class extends Migration
                 $table->string('image')->nullable();
                 $table->string('branch')->nullable();
                 $table->string('star_nation')->nullable();
-                $table->integer('points');
+                $table->float('points');
             });
         } else {
             echo "Table 'awards' already exists. Skipping migration.\n";

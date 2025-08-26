@@ -130,6 +130,7 @@ class AwardTest extends TestCase
         // Assert
         $this->assertNull($actual);
     }
+
     public function testGetAwardImageKnownAwardWithoutImageExpectName(): void
     {
         // Arrange
