@@ -210,4 +210,29 @@ class AwardTest extends TestCase
         // Assert
         $this->assertNull($actual);
     }
+
+    public function testUpdateDisplayOrderKnownAwardExpectTrue(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::updateDisplayOrder('OE', 99);
+
+        // Assert
+        $this->assertTrue($actual);
+        $this->assertEquals(99, Award::getDisplayOrder('OE'));
+    }
+
+    public function testUpdateDisplayOrderUnnownAwardExpectFalse(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::updateDisplayOrder('ZZ', 99);
+
+        // Assert
+        $this->assertFalse($actual);
+    }
 }

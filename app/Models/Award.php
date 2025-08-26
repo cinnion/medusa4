@@ -266,19 +266,19 @@ class Award extends Model
     }
 
     /**
-     * Update the award display order.
+     * Update the award display order for an award.
      *
-     * @param $code
-     * @param $display_order
+     * @param string $code
+     * @param int $display_order
      *
      * @return bool
      */
     public static function updateDisplayOrder(string $code, int $display_order): bool
     {
-        $award = self::where('code', $code)->first();
-        $award->display_order = $display_order;
-
         try {
+            $award = self::where('code', $code)->firstOrFail();
+            $award->display_order = $display_order;
+
             $award->save();
 
             return true;
