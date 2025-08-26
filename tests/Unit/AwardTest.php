@@ -130,4 +130,39 @@ class AwardTest extends TestCase
         // Assert
         $this->assertNull($actual);
     }
+    public function testGetAwardImageKnownAwardWithoutImageExpectName(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getAwardImage('OE');
+
+        // Assert
+        $this->assertNull($actual);
+    }
+
+    public function testGetAwardImageWithImageExpectImageName(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getAwardImage('AGHER');
+
+        // Assert
+        $this->assertEquals('AHER.png', $actual);
+    }
+
+    public function testGetAwardImageUnknownAwardExpectNull(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getAwardImage('ZZ');
+
+        // Assert
+        $this->assertNull($actual);
+    }
 }
