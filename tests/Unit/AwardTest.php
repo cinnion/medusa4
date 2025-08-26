@@ -34,6 +34,29 @@ class AwardTest extends TestCase
         $this->assertEquals('EM',  $awards[0]['group']['awards'][4]->code);
     }
 
+    public function testGetDisplayOrderKnownAwardExpect29(): void
     {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getDisplayOrder('OE');
+
+        // Assert
+        $this->assertEquals(29, $actual);
+    }
+
+    public function testGetDisplayOrderUnknownAwardExpectNull(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getDisplayOrder('ZZ');
+
+        // Assert
+        $this->assertNull($actual);
+    }
+
     }
 }
