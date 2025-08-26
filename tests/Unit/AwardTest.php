@@ -106,4 +106,28 @@ class AwardTest extends TestCase
         // Assert
         $this->assertNull($actual);
     }
+
+    public function testGetAwardNameKnownAwardExpectName(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getAwardName('OE');
+
+        // Assert
+        $this->assertEquals('Officer of the Order of Queen Elizabeth', $actual);
+    }
+
+    public function testGetAwardNameUnknownAwardExpectNull(): void
+    {
+        // Arrange
+        $this->seed(AwardSeeder::class);
+
+        // Act
+        $actual = Award::getAwardName('ZZ');
+
+        // Assert
+        $this->assertNull($actual);
+    }
 }
