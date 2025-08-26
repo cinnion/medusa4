@@ -43,23 +43,23 @@ class Award extends Model
      * Get the awards for the specified uniform location.
      *
      * @param $location
-     * @param array $limit
+     * @param string[] $limit
      *
-     * @return array
+     * @return Award[]
      */
-    public static function _getAwards($location, array $limit = [])
+    public static function _getAwards($location, array $limit = []): array
     {
         $awards = [];
 
-        $query = self::where('location', '=', $location);
+        $query = self::where('location', $location);
 
         if (count($limit) > 0) {
             $query = $query->whereIn('code', $limit);
         }
 
-        $query = $query->orderBy('display_order')->get();
+        $results = $query->orderBy('display_order')->get();
 
-        foreach ($query as $ribbon) {
+        foreach ($results as $ribbon) {
             $awards[$ribbon->code] = $ribbon;
         }
 
