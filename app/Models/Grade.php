@@ -264,6 +264,7 @@ class Grade extends Model
         return preg_replace('/^['.$trim_chars.']*(?U)(.*)['.$trim_chars.']*$/u', '\\1', $string);
     }
 
+    // @codeCoverageIgnoreStart
     /**
      * Shortcut method to get provisional SFC pay grades.
      *
@@ -323,6 +324,7 @@ class Grade extends Model
     {
         return self::filterGrades('C');
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * Check if the requested pay grade is valid for the specified branch.

@@ -100,6 +100,7 @@ class Award extends Model
         return $ribbons;
     }
 
+    // @codeCoverageIgnoreStart
     /**
      * Get any a list of all Aerospace Wings.
      *
@@ -204,6 +205,7 @@ class Award extends Model
     {
         return self::_getAwards('AWQ');
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * Get the display order for an award.

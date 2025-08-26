@@ -77,7 +77,6 @@ class AwardTest extends TestCase
         $this->assertTrue($awards[3]['group']['multiple']);
     }
 
-
     public function testGetDisplayOrderKnownAwardExpect29(): void
     {
         // Arrange
