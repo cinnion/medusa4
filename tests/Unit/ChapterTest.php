@@ -30,4 +30,90 @@ class ChapterTest extends TestCase
         $this->assertCount(2, $chapters);
         $this->assertEquals($expectedChapters, $chapters);
     }
+
+    public function testGetChaptersByTypeNonexistentTypeReturnsEmptyArray()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+
+        // Act
+        $chapters = Chapter::getChaptersByType('nonexistent_type');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(0, $chapters);
+    }
+
+    public function testGetChaptersByTypeSuReturnsExpectedChapters()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $expectedChapters = [
+            '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
+            '55fa1800e4bed82e078b47a2' => 'HMS Charon (Withdrawn)',
+            '55fa1800e4bed82e078b479e' => 'HMS Valhalla (Passed Away)',
+        ];
+
+        // Act
+        $chapters = Chapter::getChaptersByType('SU');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(3, $chapters);
+        $this->assertEquals($expectedChapters, $chapters);
+    }
+
+    public function testGetChaptersByTypeHeadquartersReturnsExpectedChapters()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $expectedChapters = [
+            '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)'
+        ];
+
+        // Act
+        $chapters = Chapter::getChaptersByType('headquarters');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(1, $chapters);
+        $this->assertEquals($expectedChapters, $chapters);
+    }
+
+    public function testGetChaptersByTypeFleetReturnsExpectedChapters()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $expectedChapters = [
+            '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd)',
+        ];
+
+        // Act
+        $chapters = Chapter::getChaptersByType('fleet');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(1, $chapters);
+        $this->assertEquals($expectedChapters, $chapters);
+    }
+
+    public function testGetChaptersByTypeStationReturnsExpectedChapters()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $expectedChapters = [
+            '55fa1800e4bed82e078b4794' => 'HMSS Hephaestus',
+            '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
+        ];
+
+        // Act
+        $chapters = Chapter::getChaptersByType('station');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(2, $chapters);
+        $this->assertEquals($expectedChapters, $chapters);
+    }
 }

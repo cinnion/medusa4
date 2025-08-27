@@ -36,9 +36,9 @@ class Chapter extends Model
     /**
      * Get a list of holding chapters.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public static function getHoldingChapters()
+    public static function getHoldingChapters(): array
     {
         $results =
             self::where('joinable', '!=', false)
@@ -61,14 +61,14 @@ class Chapter extends Model
     /**
      * Get a list of chapters by type.
      *
-     * @param $type
+     * @param string $type
      *
-     * @return array
+     * @return array<string, string>
      */
-    public static function getChaptersByType($type)
+    public static function getChaptersByType(string $type): array
     {
         $results =
-            self::where('chapter_type', '=', $type)
+            self::where('chapter_type', $type)
                 ->orderBy('chapter_name')
                 ->get();
 
@@ -78,17 +78,17 @@ class Chapter extends Model
             switch ($type) {
                 case 'SU':
                     $name =
-                        $chapter->chapter_name.' ('.$chapter->hull_number.')';
+                        $chapter->chapter_name . ' (' . $chapter->hull_number . ')';
                     break;
                 case 'headquarters':
                     $name =
-                        $chapter->chapter_name.' ('.$chapter->branch.')';
+                        $chapter->chapter_name . ' (' . $chapter->branch . ')';
                     break;
                 case 'fleet':
                     $fleet =
                         new NumberFormatter('en_US', NumberFormatter::ORDINAL);
                     $name =
-                        $chapter->chapter_name.' ('.$fleet->format($chapter->hull_number).')';
+                        $chapter->chapter_name . ' (' . $fleet->format($chapter->hull_number) . ')';
                     break;
                 default:
                     $name = $chapter->chapter_name;
