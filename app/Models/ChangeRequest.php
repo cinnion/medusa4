@@ -10,13 +10,13 @@ use MongoDB\Laravel\Eloquent\SoftDeletes;
  *
  * @property string user
  * @property string requestor
+ * @property string status
  * @property string req_type
  * @property string old_value
  * @property string new_value
- * @property string status
  * @property \Illuminate\Support\Carbon|null created_at
- * @property \Illuminate\Support\Carbon|null deleted_at
  * @property \Illuminate\Support\Carbon|null updated_at
+ * @property \Illuminate\Support\Carbon|null deleted_at
  */
 class ChangeRequest extends Model
 {
