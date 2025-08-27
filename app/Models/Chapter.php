@@ -20,7 +20,7 @@ class Chapter extends Model
         'decommission_date',
         'joinable',
         'idcards_printed',
-	'tool_tip',
+        'tool_tip',
     ];
 
     public static $rules = [
@@ -362,7 +362,7 @@ class Chapter extends Model
      *
      * @return User[]
      */
-    public function getAllCrewIncludingChildren(string $chapterId = null)
+    public function getAllCrewIncludingChildren(?string $chapterId = null)
     {
         if (empty($chapterId) === true) {
             $chapterId = $this->id;
@@ -651,7 +651,7 @@ class Chapter extends Model
      *
      * @return array
      */
-    public function getChapterIdWithChildren(string $id = null)
+    public function getChapterIdWithChildren(?string $id = null)
     {
         if (empty($id) === true) {
             $id = $this->id;
@@ -677,7 +677,7 @@ class Chapter extends Model
    *
    * @return mixed
    */
-    public function getNumActiveChildren(string $id = null)
+    public function getNumActiveChildren(?string $id = null)
     {
         if (empty($id) === true) {
             $id = $this->id;
@@ -765,7 +765,7 @@ class Chapter extends Model
      *
      * @return bool
      */
-    public function crewHasNewExams(string $id = null)
+    public function crewHasNewExams(?string $id = null)
     {
         if (empty($id) === true) {
             $id = $this->id;
