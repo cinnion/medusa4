@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utility\MedusaUtility;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use MongoDB\Laravel\Eloquent\Model;
@@ -103,11 +104,11 @@ class Chapter extends Model
     /**
      * Get all chapters with an option to skip unjoinable chapters.
      *
-     * @param bool $showUnjoinable
+     * @param ?bool $showUnjoinable
      *
-     * @return array
+     * @return array<string, array>
      */
-    public static function getFullChapterList($showUnjoinable = true)
+    public static function getFullChapterList(?bool $showUnjoinable = true): array
     {
         $chapters = [];
 
