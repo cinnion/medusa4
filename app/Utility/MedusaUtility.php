@@ -2,9 +2,9 @@
 
 namespace App\Utility;
 
-use App\Chapter;
-use App\MedusaConfig;
-use App\User;
+use App\Models\Chapter;
+use App\Models\MedusaConfig;
+use App\Models\User;
 
 class MedusaUtility
 {
@@ -15,7 +15,7 @@ class MedusaUtility
      *
      * @return string
      */
-    public static function ordinal($value)
+    public static function ordinal(string $value): string
     {
         $ordinal = new \NumberFormatter('en_US', \NumberFormatter::SPELLOUT);
         $ordinal->setTextAttribute(\NumberFormatter::DEFAULT_RULESET, '%spellout-ordinal');
@@ -26,11 +26,11 @@ class MedusaUtility
     /**
      * Get the new user welcome letter and replace the tokens.
      *
-     * @param \App\User $user
+     * @param User $user
      *
-     * @return mixed|null
+     * @return string|null
      */
-    public static function getWelcomeLetter(User $user)
+    public static function getWelcomeLetter(User $user): string|null
     {
         $letter = MedusaConfig::get('bupers.welcome', null);
 
