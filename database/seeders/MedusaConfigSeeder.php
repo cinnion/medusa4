@@ -148,76 +148,76 @@ class MedusaConfigSeeder extends Seeder
                         array(
                             'unjoinable' => false,
                             'label' => 'Holding Chapters',
-                            'call' => 'App\\Chapter::getHoldingChapters',
+                            'call' => 'App\\Models\\Chapter::getHoldingChapters',
                         ),
                     1 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Fleet Holding Chapters',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'fstation',
                         ),
                     2 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Headquarters',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'headquarters',
                         ),
                     3 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Bureaus',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'bureau',
                         ),
                     4 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Offices',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'office',
                         ),
                     5 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Academies',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'academy',
                         ),
                     6 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Institutes',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'institute',
                         ),
                     7 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Universities',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'university',
                         ),
                     8 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'University Systems',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'university_system',
                         ),
                     9 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Colleges',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'college',
                         ),
                     10 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Training Centers',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'center',
                         ),
                     11 =>
@@ -225,223 +225,223 @@ class MedusaConfigSeeder extends Seeder
                             'unjoinable' => true,
                             'label' => 'Fleets',
                             'url' => '/api/fleet',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'fleet',
                         ),
                     12 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Task Forces',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'task_force',
                         ),
                     13 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Task Groups',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'task_group',
                         ),
                     14 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Squadrons',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'squadron',
                         ),
                     15 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Marine Expeditionary Forces ',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'exp_force',
                         ),
                     16 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Divisions',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'division',
                         ),
                     17 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Separation Units',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'SU',
                         ),
                     18 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Keeps',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'keep',
                         ),
                     19 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Baronies',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'barony',
                         ),
                     20 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Counties',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'county',
                         ),
                     21 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Duchy',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'duchy',
                         ),
                     22 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Steadings',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'steadings',
                         ),
                     23 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Grand Duchy',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'grand_duchy',
                         ),
                     24 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RMN',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RMN',
                         ),
                     25 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RMMC',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RMMC',
                         ),
                     26 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RMA',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RMA',
                         ),
                     27 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'GSN',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'GSN',
                         ),
                     28 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'IAN',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'IAN',
                         ),
                     29 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RHN',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RHN',
                         ),
                     30 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'SFS',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'SFS',
                         ),
                     31 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'CIVIL',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'CIVIL',
                         ),
                     32 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'INTEL',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'INTEL',
                         ),
                     33 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RMMM',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RMMM',
                         ),
                     34 =>
                         array(
                             'unjoinable' => false,
                             'label' => 'RMACS',
-                            'call' => 'App\\Chapter::getChapters',
+                            'call' => 'App\\Models\\Chapter::getChapters',
                             'args' => 'RMACS',
                         ),
                     35 =>
                         array(
                             'unjoinable' => true,
                             'label' => 'Civilian Quadrants',
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'quadrant',
                         ),
                     36 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'label' => 'Civilian Clusters',
                             'args' => 'cluster',
                         ),
                     37 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'sector',
                             'label' => 'Civilian Sectors',
                         ),
                     38 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'region',
                             'label' => 'Civilian Regions',
                         ),
                     39 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'system',
                             'label' => 'Civilian Systems',
                         ),
                     40 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'civ_planetary',
                             'label' => 'Civilian Planetary',
                         ),
                     41 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'board',
                             'label' => 'Corporate Board',
                         ),
                     42 =>
                         array(
                             'unjoinable' => true,
-                            'call' => 'App\\Chapter::getChaptersByType',
+                            'call' => 'App\\Models\\Chapter::getChaptersByType',
                             'args' => 'committee',
                             'label' => 'Corporate Committee',
                         ),
