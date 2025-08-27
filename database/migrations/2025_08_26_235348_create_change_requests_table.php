@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('change_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string('user');
+            $table->string('requestor');
+            $table->string('req_type');
+            $table->string('old_value');
+            $table->string('new_value');
+            $table->string('status')->default('open');
+            $table->softDeletes();
         });
     }
 
