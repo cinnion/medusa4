@@ -14,6 +14,18 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string('chapter_name')->unique();
+            $table->string('branch');
+            $table->string('chapter_type');
+            $table->string('hull_number')->unique();
+            $table->string('ship_class');
+            $table->string('assigned_to');
+            $table->string('commission_date');
+            $table->string('decommission_date')->nullable();
+            $table->boolean('joinable');
+            $table->boolean('idcards_printed');
+            $table->string('tool_tip');
         });
     }
 
