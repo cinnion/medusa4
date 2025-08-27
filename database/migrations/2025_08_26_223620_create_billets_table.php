@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $this->string('billet_name')->unique();
+            $table->string('billet_name')->unique();
         });
     }
 
