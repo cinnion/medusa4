@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('chapter_name')->unique();
             $table->string('branch');
             $table->string('chapter_type');
-            $table->string('hull_number')->unique();
+            $table->string('hull_number');
             $table->string('ship_class');
             $table->string('assigned_to');
             $table->string('commission_date');
