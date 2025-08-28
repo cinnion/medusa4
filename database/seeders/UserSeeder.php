@@ -185,7 +185,7 @@ class UserSeeder extends Seeder
                     'code' => 'B',
                     'precedence' => '4',
                     'generation' => 'First',
-                    'lands' => 'Gilwell',
+                    'lands' => 'New Gilwell',
                     'filename' => 'yO7gfsNf6K9D3q0kjDUSnzunvyRqwImRcCE01rAQ.svg',
                     'courtesy' => true,
                     'peerage_id' => '61e5651b48b3b4.09993958',
