@@ -57,13 +57,37 @@ class UserSeeder extends Seeder
             'state_province' => 'GA',
         ]);
         User::factory()->create([
+            'id' => '565fd6f6e4bed8b7358b5195',
+            'email_address' => 'bridgitte@example.com',
+            'member_id' => 'A0000004',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => '2018-11-15',
+                    'billet' => 'Bosun',
+                    'primary' => true,
+                ],
+            ],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
+        ]);
+
+        User::factory()->create([
             'name' => 'Doug Needham',
             'email_address' => 'doug@example.com',
             'member_id' => 'A0000005',
             'password' => Hash::make('password123'),
             'active' => 1,
             'assignment' => [
-                'billet' => 'Executive Officer',
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => '2016-02-01',
+                    'billet' => 'Crewman',
+                    'primary' => true,
+		]
             ],
         ]);
     }
