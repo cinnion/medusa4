@@ -211,21 +211,19 @@ class UserSeeder extends Seeder
                 ],
             ],
             'peerages' => [
-                'peerages' => [
-                    [
-                        'title' => 'Dame',
-                        'code' => 'K',
-                        'precedence' => 8,
-                        'postnominal' => 'KDE',
-                        'peerage_id' => '56e50b7420b0a6.79326767',
-                    ],
-                    [
-                        'title' => 'Knight',
-                        'code' => 'K',
-                        'precedence' => 3,
-                        'postnominal' => 'KSK',
-                        'peerage_id' => '5d2125c68fcf33.52734261',
-                    ],
+                [
+                    'title' => 'Dame',
+                    'code' => 'K',
+                    'precedence' => 8,
+                    'postnominal' => 'KDE',
+                    'peerage_id' => '56e50b7420b0a6.79326767',
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK',
+                    'peerage_id' => '5d2125c68fcf33.52734261',
                 ],
             ],
             'city' => 'Columbus',

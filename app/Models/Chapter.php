@@ -389,9 +389,9 @@ class Chapter extends Model
      * @param ?bool $exact
      * @param ?bool $allow_courtesy
      *
-     * @return User|Array
+     * @return ?User
      */
-    public function getCommandBillet(string $billet, ?bool $exact = true, ?bool $allow_courtesy = true): User|Array
+    public function getCommandBillet(string $billet, ?bool $exact = true, ?bool $allow_courtesy = true): ?User
     {
         $query = User::where('assignment.chapter_id', $this->id)
             ->where('assignment.billet', '=', $billet);
@@ -405,7 +405,7 @@ class Chapter extends Model
         $users = $query->get();
 
         if (empty($users) === true) {
-            return [];
+            return null;
         }
 
         // Deal with edge cases where multiple users are assigned, and return the first one found.
@@ -421,12 +421,12 @@ class Chapter extends Model
     }
 
     /**
-     * @param $title
-     * @param $allow_courtesy
+     * @param string $title
+     * @param bool $allow_courtesy
      *
-     * @return User
+     * @return ?User
      */
-    public function findPeerByLand($title, $allow_courtesy)
+    public function findPeerByLand(string $title, bool $allow_courtesy): ?User
     {
         if (in_array($this->chapter_type, ['barony', 'county', 'steading', 'duchy', 'grand_duchy']) === true) {
             $query = User::where(
@@ -449,7 +449,7 @@ class Chapter extends Model
             )->first();
         }
 
-        return [];
+        return null;
     }
 
     /**

@@ -343,7 +343,7 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testGetCommandBilletAchillesInvalidBilletReturnsFalse()
+    public function testGetCommandBilletAchillesInvalidBilletReturnsNull()
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
@@ -354,6 +354,65 @@ class ChapterTest extends TestCase
         $result = $chapter->getCommandBillet('Bogus');
 
         // Assert
-        $this->assertEquals([], $result);
+        $this->assertNull($result);
+    }
+
+    public function testFindPeerByLandBaronExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
+        $expectedUser = User::where('email_address', 'david@example.com')->first();
+
+        // Act
+        $result = $chapter->findPeerByLand('Baron', false);
+
+        // Assert
+        $this->assertEquals($expectedUser->toArray(), $result->toArray());
+    }
+
+    public function testFindPeerByLandDameFalseExpectedArray()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'New Gilwell')->first();
+
+        // Act
+        $result = $chapter->findPeerByLand('Dame', false);
+
+        // Assert
+        $this->assertNull($result);
+    }
+
+    public function testFindPeerByLandDameTrueExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'New Gilwell')->first();
+        $expectedUser = User::where('email_address', 'misty@example.com')->first();
+
+        // Act
+        $result = $chapter->findPeerByLand('Dame', true);
+
+        // Assert
+        $this->assertEquals($expectedUser->toArray(), $result->toArray());
+    }
+
+    public function testFindPeerByLandKnightTrueExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Lochen Keep')->first();
+        $expectedUser = User::where('email_address', 'lochen@example.com')->first();
+
+        // Act
+        $result = $chapter->findPeerByLand('Knight', true);
+
+        // Assert
+        $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 }
