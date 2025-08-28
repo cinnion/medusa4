@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +17,6 @@ class UserSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email_address' => 'admin@example.com',
-            'password' => Hash::make('password123'),
             'member_id' => 'A0000001',
             'active' => 1,
             'assignment' => [
@@ -87,14 +85,12 @@ class UserSeeder extends Seeder
             'state_province' => 'GA',
             'registration_status' => 'Active',
         ]);
-
         User::factory()->create([
             '_id' => '55fa1859e4bed834078b563c',
             'first_name' => 'Doug',
             'last_name' => 'Needham',
             'email_address' => 'doug@example.com',
             'member_id' => 'A0000005',
-            'password' => Hash::make('password123'),
             'active' => 1,
             'assignment' => [
                 [
@@ -107,6 +103,96 @@ class UserSeeder extends Seeder
             ],
             'city' => 'Waynesboro',
             'state_province' => 'VA',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
+            'id' => '55fa1851e4bed834078b48ae',
+            'first_name' => 'David',
+            'last_name' => 'Weiner',
+            'email_address' => 'david@example.com',
+            'member_id' => 'A0000006',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => '2015-12-05',
+                    'billet' => 'Embarked Flag Officer',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => '5bd9bc7ea016bd4d9c2e3fd3',
+                    'chapter_name' => 'MEDUSA Data Operations Center',
+                    'date_assigned' => '2018-11-02',
+                    'billet' => 'Director',
+                    'additional' => true,
+                ],
+            ],
+            'peerages' => [
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK',
+                    'peerage_id' => '56df1772e4fe66.01975046',
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE',
+                    'peerage_id' => '56df178e2c4283.84628133',
+                ],
+                [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'precedence' => '4',
+                    'generation' => 'First',
+                    'lands' => 'Serpent Head Point',
+                    'filename' => '30CkOY4K6scIMNiOJuvEzcCOjEqLER76FXEPNoGm.svg',
+                    'peerage_id' => '5815525eb06345.25168304',
+                ]
+            ],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
+            '_id' => '55fa1852e4bed834078b4af0',
+            'first_name' => 'Misty',
+            'email_address' => 'misty@example.com',
+            'member_id' => 'A0000007',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b4576',
+                    'chapter_name' => 'HMS Galahad',
+                    'date_assigned' => '2020-10-20',
+                    'billet' => 'Embarked Flag Officer',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [
+                [
+                    'title' => 'Dame',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE',
+                    'peerage_id' => '59dea75b532062.65310246',
+                ],
+                [
+                    'title' => 'Baroness',
+                    'code' => 'B',
+                    'precedence' => '4',
+                    'generation' => 'First',
+                    'lands' => 'Gilwell',
+                    'filename' => 'yO7gfsNf6K9D3q0kjDUSnzunvyRqwImRcCE01rAQ.svg',
+                    'courtesy' => true,
+                    'peerage_id' => '61e5651b48b3b4.09993958',
+                ],
+            ],
+            'city' => 'Columbus',
+            'state_province' => 'OH',
             'registration_status' => 'Active',
         ]);
     }

@@ -102,7 +102,8 @@ class ChapterSeeder extends Seeder
                 'updated_at' => '2015-09-17 01:31:44',
                 'created_at' => '2015-09-17 01:31:44',
                 'id' => '55fa1800e4bed82e078b479e',
-            ],            [
+            ],
+            [
                 'chapter_name' => 'Admiralty House',
                 'chapter_type' => 'headquarters',
                 'hull_number' => 'AH',
@@ -122,6 +123,23 @@ class ChapterSeeder extends Seeder
                 'updated_at' => '2015-09-17 01:31:44',
                 'created_at' => '2015-09-17 01:31:44',
                 'id' => '55fa1800e4bed82e078b4772',
+            ],
+            [
+                'chapter_type' => 'barony',
+                'chapter_name' => 'Serpent Head Point',
+                'joinable' => false,
+                'updated_at' => '2017-07-31 15:38:42',
+                'created_at' => '2017-07-31 15:38:42',
+                'id' => '597f4f024b3df7b8212343f5',
+            ],
+            [
+                'chapter_name' => 'New Gilwell',
+                'chapter_type' => 'barony',
+                'commission_date' => '2021-12-31',
+                'joinable' => false,
+                'updated_at' => '2022-01-17 12:44:51',
+                'created_at' => '2022-01-17 12:44:51',
+                'id' => '61e564c39c6b7f0b29232f2c',
             ],
 
         ];
