@@ -123,7 +123,8 @@ class ChapterTest extends TestCase
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
-        $this->seed(MedusaConfigSeeder::class);;
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
         $expectedChapters = [
             'Holding Chapters' => [
                 '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
@@ -170,7 +171,7 @@ class ChapterTest extends TestCase
                 '597f4f024b3df7b82123441d' => 'New Montana',
             ],
             'RMN' => [
-                '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
@@ -207,7 +208,8 @@ class ChapterTest extends TestCase
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
-        $this->seed(MedusaConfigSeeder::class);;
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
         $expectedChapters = [
             'Holding Chapters' => [
                 '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
@@ -254,7 +256,7 @@ class ChapterTest extends TestCase
                 '597f4f024b3df7b82123441d' => 'New Montana',
             ],
             'RMN' => [
-                '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
@@ -290,14 +292,15 @@ class ChapterTest extends TestCase
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
-        $this->seed(MedusaConfigSeeder::class);;
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
         $expectedChapters = [
             'Holding Chapters' => [
                 '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
                 '55fa1800e4bed82e078b4794' => 'HMSS Hephaestus',
             ],
             'RMN' => [
-                '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
