@@ -203,7 +203,6 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-
     public function testGetFullChapterListTrueReturnsAllActiveChapters()
     {
         // Arrange
@@ -322,6 +321,105 @@ class ChapterTest extends TestCase
         $this->assertIsArray($chapters);
         $this->assertCount(12, $chapters);
         $this->assertEquals($expectedChapters, $chapters);
+    }
+
+    public function testGetChaptersDefaultsExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $expectedResults = [
+            '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent',
+        ];
+
+        // Act
+        $chapters = Chapter::getChapters();
+
+        // Assert
+        $this->assertEquals($expectedResults, $chapters);
+    }
+
+    public function testGetChaptersRMNExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $expectedResults = [
+            '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent',
+        ];
+
+        // Act
+        $chapters = Chapter::getChapters('RMN');
+
+        // Assert
+        $this->assertEquals($expectedResults, $chapters);
+    }
+
+    public function testGetChaptersIANExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $expectedResults = [
+        ];
+
+        // Act
+        $chapters = Chapter::getChapters('IAN');
+
+        // Assert
+        $this->assertEquals($expectedResults, $chapters);
+    }
+
+    public function testGetChaptersGAExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $expectedResults = [
+            '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
+        ];
+
+        // Act
+        $chapters = Chapter::getChapters('', 'GA');
+
+        // Assert
+        $this->assertEquals($expectedResults, $chapters);
+    }
+
+    public function testGetChaptersJoinableFalseExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $expectedResults = [
+            '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent',
+            '55fa1800e4bed82e078b4782' => 'Admiralty House',
+            '55fa1800e4bed82e078b478a' => 'Bureau of Communications (Columbus, OH)',
+            '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
+            '55fa1800e4bed82e078b47a2' => 'HMS Charon',
+            '55fa1800e4bed82e078b4794' => 'HMSS Hephaestus',
+            '55fa1800e4bed82e078b47a0' => 'HMS Tartarus',
+            '55fa1800e4bed82e078b479e' => 'HMS Valhalla',
+            '597f4f014b3df7b8212343c7' => 'Lochen Keep (Columbus, OH)',
+            '61e564c39c6b7f0b29232f2c' => 'New Gilwell',
+            '597f4f024b3df7b82123441d' => 'New Montana (Columbus, GA)',
+            '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd Fleet)',
+            '597f4f024b3df7b8212343f5' => 'Serpent Head Point (Atlanta, GA)',
+        ];
+
+        // Act
+        $chapters = Chapter::getChapters('', '0', false);
+
+        // Assert
+        $this->assertEquals($expectedResults, $chapters);
     }
 
     public function testGetCommandBilletAchillesCOReturnsExpectedUser()

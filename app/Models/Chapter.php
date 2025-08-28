@@ -128,40 +128,36 @@ class Chapter extends Model
     /**
      * Get chapters filtered by branch and location.
      *
-     * @param string $branch
-     * @param int $location
-     * @param bool $joinableOnly
+     * @param ?string $branch
+     * @param ?string $location
+     * @param ?bool $joinableOnly
      *
      * @return array
      */
-    public static function getChapters($branch = '', $location = 0, $joinableOnly = true)
+    public static function getChapters(?string $branch = '', ?string $location = '0', ?bool $joinableOnly = true): array
     {
         $nf = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
 
-        $holdingChapters =
-            MedusaConfig::get('chapter.holding');
+        $holdingChapters = MedusaConfig::get('chapter.holding');
 
         if (empty($branch) === false) {
-            $results =
-                self::where('branch', '=', strtoupper($branch))
-                    ->where('joinable', '!=', false)
-                    ->whereNull('decommission_date')
-                    ->orderBy(
-                        'chapter_name',
-                        'asc'
-                    )
-                    ->get();
+            $results = self::where('branch', strtoupper($branch))
+                ->where('joinable', '!=', false)
+                ->whereNull('decommission_date')
+                ->orderBy(
+                    'chapter_name',
+                    'asc'
+                )
+                ->get();
         } elseif ($joinableOnly === false) {
-            $results =
-                self::orderBy('chapter_name', 'asc')
-                    ->whereNull('decommission_date')
-                    ->get();
+            $results = self::orderBy('chapter_name', 'asc')
+                ->whereNull('decommission_date')
+                ->get();
         } else {
-            $results =
-                self::where('joinable', '!=', false)
-                    ->whereNull('decommission_date')
-                    ->orderBy('chapter_name', 'asc')
-                    ->get();
+            $results = self::where('joinable', '!=', false)
+                ->whereNull('decommission_date')
+                ->orderBy('chapter_name', 'asc')
+                ->get();
         }
 
         if (count($results) === 0) {
@@ -191,17 +187,15 @@ class Chapter extends Model
 
                 $append = '';
                 if (empty($co) === false && empty($co['city']) === false && empty($co['state_province']) == false) {
-                    $append =
-                        ' ('.$co['city'].', '.$co['state_province'].')';
+                    $append = ' (' . $co['city'] . ', ' . $co['state_province'] . ')';
                 }
 
                 if ($chapter->chapter_type == 'fleet') {
-                    $append =
-                        ' ('.$nf->format($chapter->hull_number).' Fleet)';
+                    $append = ' (' . $nf->format($chapter->hull_number) . ' Fleet)';
                 }
 
                 if ($location == '0' || $co['state_province'] == $location) {
-                    $chapters[$chapter->_id] = $chapter->chapter_name.$append;
+                    $chapters[$chapter->_id] = $chapter->chapter_name . $append;
                 }
             }
         }
