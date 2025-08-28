@@ -154,8 +154,13 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
                 '55fa1800e4bed82e078b479e' => 'HMS Valhalla (Passed Away)',
             ],
-            'Keeps' => [],
-            'Baronies' => [],
+            'Keeps' => [
+                '597f4f014b3df7b8212343c7' => 'Lochen Keep',
+            ],
+            'Baronies' => [
+                '61e564c39c6b7f0b29232f2c' => 'New Gilwell',
+                '597f4f024b3df7b8212343f5' => 'Serpent Head Point',
+            ],
             'Counties' => [],
             'Duchy' => [],
             'Steadings' => [],
@@ -229,8 +234,13 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
                 '55fa1800e4bed82e078b479e' => 'HMS Valhalla (Passed Away)',
             ],
-            'Keeps' => [],
-            'Baronies' => [],
+            'Keeps' => [
+                '597f4f014b3df7b8212343c7' => 'Lochen Keep',
+            ],
+            'Baronies' => [
+                '61e564c39c6b7f0b29232f2c' => 'New Gilwell',
+                '597f4f024b3df7b8212343f5' => 'Serpent Head Point',
+            ],
             'Counties' => [],
             'Duchy' => [],
             'Steadings' => [],
