@@ -160,6 +160,7 @@ class ChapterTest extends TestCase
             'Grand Duchy' => [],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
             'RMA' => [],
@@ -234,6 +235,7 @@ class ChapterTest extends TestCase
             'Grand Duchy' => [],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
             'RMA' => [],
@@ -276,6 +278,7 @@ class ChapterTest extends TestCase
             ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
             'RMMC' => [],
             'RMA' => [],
