@@ -141,7 +141,14 @@ class ChapterSeeder extends Seeder
                 'created_at' => '2022-01-17 12:44:51',
                 'id' => '61e564c39c6b7f0b29232f2c',
             ],
-
+            [
+                'chapter_type' => 'keep',
+                'chapter_name' => 'Lochen Keep',
+                'joinable' => false,
+                'updated_at' => '2017-07-31 15:38:41',
+                'created_at' => '2017-07-31 15:38:41',
+                'id' => '597f4f014b3df7b8212343c7',
+            ],
         ];
 
         foreach ($chapters as $chapter) {

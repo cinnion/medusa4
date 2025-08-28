@@ -195,5 +195,43 @@ class UserSeeder extends Seeder
             'state_province' => 'OH',
             'registration_status' => 'Active',
         ]);
+        User::factory()->create([
+            '_id' => '55fa1856e4bed834078b523c',
+            'last_name' => 'Lochen',
+            'email_address' => 'lochen@example.com',
+            'member_id' => 'A0000008',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b4576',
+                    'chapter_name' => 'HMS Galahad',
+                    'date_assigned' => '2020-10-20',
+                    'billet' => 'Embarked Flag Officer',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [
+                'peerages' => [
+                    [
+                        'title' => 'Dame',
+                        'code' => 'K',
+                        'precedence' => 8,
+                        'postnominal' => 'KDE',
+                        'peerage_id' => '56e50b7420b0a6.79326767',
+                    ],
+                    [
+                        'title' => 'Knight',
+                        'code' => 'K',
+                        'precedence' => 3,
+                        'postnominal' => 'KSK',
+                        'peerage_id' => '5d2125c68fcf33.52734261',
+                    ],
+                ],
+            ],
+            'city' => 'Columbus',
+            'state_province' => 'OH',
+            'registration_status' => 'Active',
+        ]);
+
     }
 }
