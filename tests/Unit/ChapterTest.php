@@ -422,6 +422,54 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
+    public function testGetNameAchillesExpectedResult()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+
+        // Act
+        $results = Chapter::getName('55fa1833e4bed832078b45dc');
+
+        // Assert
+        $this->assertEquals('HMS Achilles', $results);
+    }
+
+    public function testGetNameBadIdExpectedNull()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+
+        // Act
+        $results = Chapter::getName('abc123');
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetIdByNameAchillesExpectedResult()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+
+        // Act
+        $results = Chapter::getIdByName('HMS Achilles');
+
+        // Assert
+        $this->assertEquals('55fa1833e4bed832078b45dc', $results);
+    }
+
+    public function testGetIdByNameNonexistentExpectedNull()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+
+        // Act
+        $results = Chapter::getIdByName('Nonexistent');
+
+        // Assert
+        $this->assertNull($results);
+    }
+
     public function testGetCommandBilletAchillesCOReturnsExpectedUser()
     {
         // Arrange

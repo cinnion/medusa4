@@ -206,27 +206,27 @@ class Chapter extends Model
     }
 
     /**
-     * Get the name of chapter given an id.
+     * Get the name of chapter given an id, or null if not found.
      *
      * @param $chapterId
      *
-     * @return mixed
+     * @return ?string
      */
-    public static function getName($chapterId)
+    public static function getName(string $chapterId): ?string
     {
-        return self::find($chapterId)->chapter_name;
+        return self::find($chapterId)?->chapter_name;
     }
 
     /**
-     * Get the id of a chapter by the chapters name.
+     * Get the id of a chapter by the chapters name, or null if not found.
      *
      * @param string $name
      *
-     * @return mixed
+     * @return ?string
      */
-    public static function getIdByName(string $name)
+    public static function getIdByName(string $name): ?string
     {
-        return self::where('chapter_name', $name)->first()->_id;
+        return self::where('chapter_name', $name)->first()?->_id;
     }
 
     /**
