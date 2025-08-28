@@ -524,8 +524,13 @@ class Chapter extends Model
             }
         }', true);
 
-        $search = ['%ordinal%'];
-        $replace = [\App\Utility\MedusaUtility::ordinal($this->hull_number)];
+        if (is_numeric($this->hull_number)) {
+            $search = ['%ordinal%'];
+            $replace = [MedusaUtility::ordinal($this->hull_number)];
+        } else {
+            $search = [];
+            $replace = [];
+        }
 
         $billets = MedusaConfig::get('chapter.show', $default, $this->chapter_type);
 
