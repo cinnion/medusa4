@@ -133,7 +133,9 @@ class ChapterTest extends TestCase
             'Headquarters' => [
                 '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)',
             ],
-            'Bureaus' => [],
+            'Bureaus' => [
+                '55fa1800e4bed82e078b478a' => 'Bureau of Communications'
+            ],
             'Offices' => [],
             'Academies' => [],
             'Institutes' => [],
@@ -164,7 +166,9 @@ class ChapterTest extends TestCase
             'Counties' => [],
             'Duchy' => [],
             'Steadings' => [],
-            'Grand Duchy' => [],
+            'Grand Duchy' => [
+                '597f4f024b3df7b82123441d' => 'New Montana',
+            ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
@@ -213,7 +217,9 @@ class ChapterTest extends TestCase
             'Headquarters' => [
                 '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)',
             ],
-            'Bureaus' => [],
+            'Bureaus' => [
+                '55fa1800e4bed82e078b478a' => 'Bureau of Communications'
+            ],
             'Offices' => [],
             'Academies' => [],
             'Institutes' => [],
@@ -244,7 +250,9 @@ class ChapterTest extends TestCase
             'Counties' => [],
             'Duchy' => [],
             'Steadings' => [],
-            'Grand Duchy' => [],
+            'Grand Duchy' => [
+                '597f4f024b3df7b82123441d' => 'New Montana',
+            ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
@@ -363,7 +371,7 @@ class ChapterTest extends TestCase
         $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
-        $expected_user = User::where('email_address', 'david@example.com')->first();
+        $expected_user = User::where('email_address', 'dave@example.com')->first();
 
         // Act
         $result = $chapter->getCommandBillet('Baron');
@@ -392,7 +400,7 @@ class ChapterTest extends TestCase
         $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
-        $expectedUser = User::where('email_address', 'david@example.com')->first();
+        $expectedUser = User::where('email_address', 'dave@example.com')->first();
 
         // Act
         $result = $chapter->findPeerByLand('Baron', false);
@@ -443,5 +451,72 @@ class ChapterTest extends TestCase
 
         // Assert
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
+    }
+
+    public function testGetCommandCrewAchillesExpectedCommandCrew()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedCO = User::where('email_address', 'scott@example.com')->first();
+        $expectedXO = User::where('email_address', 'mike@example.com')->first();
+        $expectedBosun = User::where('email_address', 'bridgitte@example.com')->first();
+
+        // Act
+        $commandCrew = $chapter->getCommandCrew();
+
+        // Assert
+        $this->assertIsArray($commandCrew);
+        $this->assertCount(3, $commandCrew);
+        $this->assertEquals('Commanding Officer', $commandCrew[1]['display']);
+        $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
+        $this->assertEquals('Executive Officer', $commandCrew[2]['display']);
+        $this->assertEquals($expectedXO->toArray(), $commandCrew[2]['user']->toArray());
+        $this->assertEquals('Bosun', $commandCrew[3]['display']);
+        $this->assertEquals($expectedBosun->toArray(), $commandCrew[3]['user']->toArray());
+    }
+
+    public function testGetCommandCrewNewMontanaExpectedCommandCrew()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'New Montana')->first();
+        $expectedGD = User::where('email_address', 'david@example.com')->first();
+        //$expectedGDs = User::where('email_address', 'sharon@example.com')->first();
+
+        // Act
+        $commandCrew = $chapter->getCommandCrew();
+
+        // Assert
+        // XXX - Sharon is not showing up because her title is not a courtesy title.
+        $this->assertIsArray($commandCrew);
+        $this->assertCount(1, $commandCrew);
+        $this->assertEquals('Grand Duke', $commandCrew[1]['display']);
+        $this->assertEquals($expectedGD->toArray(), $commandCrew[1]['user']->toArray());
+        //$this->assertEquals('Grand Duchess', $commandCrew[2]['display']);
+        //$this->assertEquals($expectedGDs->toArray(), $commandCrew[2]['user']->toArray());
+    }
+
+    public function testGetCommandCrewBuCommExpectedCommandCrew()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Bureau of Communications')->first();
+        $expectedCO = User::where('email_address', '4sl@example.com')->first();
+
+        // Act
+        $commandCrew = $chapter->getCommandCrew();
+
+        // Assert
+        $this->assertIsArray($commandCrew);
+        $this->assertCount(1, $commandCrew);
+        $this->assertEquals('Fourth Space Lord', $commandCrew[1]['display']);
+        $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
     }
 }

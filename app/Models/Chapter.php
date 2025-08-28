@@ -404,10 +404,6 @@ class Chapter extends Model
 
         $users = $query->get();
 
-//        if ($users->count() == 0) {
-//            return null;
-//        }
-
         // Deal with edge cases where multiple users are assigned, and return the first one found.
         foreach ($users as $user) {
             foreach ($user->assignment as $assignment) {
@@ -539,8 +535,7 @@ class Chapter extends Model
         foreach ($billets as $position => $billetInfo) {
             $display = $position = str_replace($search, $replace, $position);
             if (isset($billetInfo['billet']) === true) {
-                $billetInfo['billet'] =
-                    str_replace($search, $replace, $billetInfo['billet']);
+                $billetInfo['billet'] = str_replace($search, $replace, $billetInfo['billet']);
             }
 
             if (strpos($position, '|') > 0) {
@@ -554,7 +549,7 @@ class Chapter extends Model
                         isset($billetInfo['allow_courtesy']) === true ? $billetInfo['allow_courtesy'] : true
                     );
 
-                    if (is_a($user, \App\User::class) === true) {
+                    if (is_a($user, User::class) === true) {
                         break 1;
                     }
                 }
@@ -567,7 +562,7 @@ class Chapter extends Model
                     );
             }
 
-            if (is_a($user, \App\User::class) === true) {
+            if (is_a($user, User::class) === true) {
                 $commandCrew[(int) $billetInfo['display_order']] = [
                     'display' => $display,
                     'user' => $user,

@@ -109,7 +109,7 @@ class UserSeeder extends Seeder
             'id' => '55fa1851e4bed834078b48ae',
             'first_name' => 'David',
             'last_name' => 'Weiner',
-            'email_address' => 'david@example.com',
+            'email_address' => 'dave@example.com',
             'member_id' => 'A0000006',
             'active' => 1,
             'assignment' => [
@@ -196,10 +196,68 @@ class UserSeeder extends Seeder
             'registration_status' => 'Active',
         ]);
         User::factory()->create([
+            'id' => '55fa1859e4bed834078b55f2',
+            'first_name' => 'David',
+            'email_address' => 'david@example.com',
+            'member_id' => 'A0000008',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '56357f5ee4bed8032f8b4e11',
+                    'chapter_name' => 'HMS Duke of Cromarty',
+                    'date_assigned' => '2015-10-31',
+                    'billet' => 'Embarked Flag Officer',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [
+                [
+                    'title' => 'Grand Duke',
+                    'code' => 'G',
+                    'precedence' => '1',
+                    'generation' => 'First',
+                    'lands' => 'New Montana',
+                    'peerage_id' => '57fbd45b7daaf1.79302574',
+                ],
+            ],
+            'city' => 'Columbus',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
+            'id' => '55fa1859e4bed834078b55d0',
+            'first_name' => 'Sharon',
+            'email_address' => 'sharon@example.com',
+            'member_id' => 'A0000009',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '56357f5ee4bed8032f8b4e11',
+                    'chapter_name' => 'HMS Duke of Cromarty',
+                    'date_assigned' => '2015-10-31',
+                    'billet' => 'Civilian',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [
+                [
+                    'title' => 'Grand Duchess',
+                    'code' => 'G',
+                    'precedence' => '1',
+                    'generation' => 'First',
+                    'lands' => 'New Montana',
+                    'peerage_id' => '5a8d8a98d34223.52879272',
+                ],
+            ],
+            'city' => 'Columbus',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
             '_id' => '55fa1856e4bed834078b523c',
             'last_name' => 'Lochen',
             'email_address' => 'lochen@example.com',
-            'member_id' => 'A0000008',
+            'member_id' => 'A0000010',
             'active' => 1,
             'assignment' => [
                 [
@@ -225,6 +283,32 @@ class UserSeeder extends Seeder
                     'postnominal' => 'KSK',
                     'peerage_id' => '5d2125c68fcf33.52734261',
                 ],
+            ],
+            'city' => 'Columbus',
+            'state_province' => 'OH',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
+
+            'first_name' => 'David',
+            'email_address' => '4sl@example.com',
+            'member_id' => 'A0000011',
+            'active' => 1,
+            'assignment' => [
+                    [
+                        'chapter_id' => '659af8499c6b7f25e8439ac9',
+                        'chapter_name' => 'IAN Admiralty House (Placeholder)',
+                        'date_assigned' => '2022-01-15',
+                        'billet' => 'Fourth Space Lord',
+                        'primary' => true,
+                    ],
+                    [
+                        'chapter_id' => '55fa1800e4bed82e078b478a',
+                        'chapter_name' => 'Bureau of Communications',
+                        'date_assigned' => '2025-01-15',
+                        'billet' => 'Commanding Officer',
+                        'additional' => true,
+                    ],
             ],
             'city' => 'Columbus',
             'state_province' => 'OH',

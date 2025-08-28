@@ -142,12 +142,30 @@ class ChapterSeeder extends Seeder
                 'id' => '61e564c39c6b7f0b29232f2c',
             ],
             [
+                'chapter_type' => 'grand_duchy',
+                'chapter_name' => 'New Montana',
+                'joinable' => false,
+                'updated_at' => '2020-12-09 01:48:31',
+                'created_at' => '2017-07-31 15:38:42',
+                'id' => '597f4f024b3df7b82123441d',
+            ],
+            [
                 'chapter_type' => 'keep',
                 'chapter_name' => 'Lochen Keep',
                 'joinable' => false,
                 'updated_at' => '2017-07-31 15:38:41',
                 'created_at' => '2017-07-31 15:38:41',
                 'id' => '597f4f014b3df7b8212343c7',
+            ],
+            [
+                'assigned_to' => '659af5509c6b7f6163520fda',
+                'chapter_name' => 'Bureau of Communications',
+                'chapter_type' => 'bureau',
+                'created_at' => '2015-09-17 01:31:44',
+                'hull_number' => 4,
+                'joinable' => false,
+                'updated_at' => '2024-01-07 19:10:05',
+                'id' => '55fa1800e4bed82e078b478a',
             ],
         ];
 
