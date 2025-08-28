@@ -295,23 +295,53 @@ class UserSeeder extends Seeder
             'member_id' => 'A0000011',
             'active' => 1,
             'assignment' => [
-                    [
-                        'chapter_id' => '659af8499c6b7f25e8439ac9',
-                        'chapter_name' => 'IAN Admiralty House (Placeholder)',
-                        'date_assigned' => '2022-01-15',
-                        'billet' => 'Fourth Space Lord',
-                        'primary' => true,
-                    ],
-                    [
-                        'chapter_id' => '55fa1800e4bed82e078b478a',
-                        'chapter_name' => 'Bureau of Communications',
-                        'date_assigned' => '2025-01-15',
-                        'billet' => 'Commanding Officer',
-                        'additional' => true,
-                    ],
+                [
+                    'chapter_id' => '659af8499c6b7f25e8439ac9',
+                    'chapter_name' => 'IAN Admiralty House (Placeholder)',
+                    'date_assigned' => '2022-01-15',
+                    'billet' => 'Fourth Space Lord',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => '55fa1800e4bed82e078b478a',
+                    'chapter_name' => 'Bureau of Communications',
+                    'date_assigned' => '2025-01-15',
+                    'billet' => 'Commanding Officer',
+                    'additional' => true,
+                ],
             ],
             'city' => 'Columbus',
             'state_province' => 'OH',
+            'registration_status' => 'Active',
+        ]);
+        User::factory()->create([
+
+            'first_name' => 'Jo',
+            'email_address' => 'jo@example.com',
+            'member_id' => 'A0000012',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '560dc143e4bed8b9748b45bb',
+                    'chapter_name' => 'MARDET Achilles',
+                    'date_assigned' => '2015-11-05',
+                    'billet' => 'Marine',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [
+                [
+                    'title' => 'Baroness',
+                    'code' => 'B',
+                    'precedence' => '4',
+                    'generation' => 'First',
+                    'lands' => 'Serpent Head Point',
+                    'courtesy' => true,
+                    'peerage_id' => '58195e8f7069e7.14667553',
+                ],
+            ],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
             'registration_status' => 'Active',
         ]);
 

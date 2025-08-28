@@ -501,6 +501,28 @@ class ChapterTest extends TestCase
         //$this->assertEquals($expectedGDs->toArray(), $commandCrew[2]['user']->toArray());
     }
 
+    public function testGetCommandCrewSHPExpectedCommandCrew()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
+        $expectedBaron = User::where('email_address', 'dave@example.com')->first();
+        $expectedBaroness = User::where('email_address', 'jo@example.com')->first();
+
+        // Act
+        $commandCrew = $chapter->getCommandCrew();
+
+        // Assert
+        $this->assertIsArray($commandCrew);
+        $this->assertCount(2, $commandCrew);
+        $this->assertEquals('Baron', $commandCrew[1]['display']);
+        $this->assertEquals($expectedBaron->toArray(), $commandCrew[1]['user']->toArray());
+        $this->assertEquals('Baroness', $commandCrew[2]['display']);
+        $this->assertEquals($expectedBaroness->toArray(), $commandCrew[2]['user']->toArray());
+    }
+
     public function testGetCommandCrewBuCommExpectedCommandCrew()
     {
         // Arrange
