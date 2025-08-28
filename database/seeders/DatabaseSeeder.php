@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call([
             BranchSeeder::class,
+            ChapterSeeder::class,
             GradeSeeder::class,
             MedusaConfigSeeder::class,
             RatingSeeder::class,

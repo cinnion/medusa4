@@ -385,17 +385,16 @@ class Chapter extends Model
     /**
      * Return the user that is filling that specified billet for this chapter.  Peerage land aware.
      *
-     * @param $billet
-     * @param bool $exact
-     * @param bool $allow_courtesy
+     * @param string $billet
+     * @param ?bool $exact
+     * @param ?bool $allow_courtesy
      *
-     * @return User
+     * @return User|Array
      */
-    public function getCommandBillet($billet, $exact = true, $allow_courtesy = true)
+    public function getCommandBillet(string $billet, ?bool $exact = true, ?bool $allow_courtesy = true): User|Array
     {
-        $query =
-            User::where('assignment.chapter_id', '=', $this->id)
-                ->where('assignment.billet', '=', $billet);
+        $query = User::where('assignment.chapter_id', $this->id)
+            ->where('assignment.billet', '=', $billet);
 
         if ($exact === false) {
             $user = $query->first();
@@ -409,12 +408,10 @@ class Chapter extends Model
             return [];
         }
 
-        // Deal with edge cases
+        // Deal with edge cases where multiple users are assigned, and return the first one found.
         foreach ($users as $user) {
             foreach ($user->assignment as $assignment) {
-                if ($assignment['chapter_id'] === $this->id &&
-                    $assignment['billet'] == $billet
-                ) {
+                if ($assignment['chapter_id'] === $this->id && $assignment['billet'] == $billet) {
                     return $user;
                 }
             }

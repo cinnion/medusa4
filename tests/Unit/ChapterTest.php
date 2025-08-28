@@ -3,8 +3,10 @@
 namespace Tests\Unit;
 
 use App\Models\Chapter;
+use App\Models\User;
 use Database\Seeders\ChapterSeeder;
 use Database\Seeders\MedusaConfigSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -299,5 +301,49 @@ class ChapterTest extends TestCase
         $this->assertIsArray($chapters);
         $this->assertCount(12, $chapters);
         $this->assertEquals($expectedChapters, $chapters);
+    }
+
+    public function testGetCommandBilletAchillesCOReturnsExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedUser = User::where('email_address', 'scott@example.com')->first();
+
+        // Act
+        $result = $chapter->getCommandBillet('Commanding Officer');
+
+        // Assert
+        $this->assertEquals($expectedUser->toArray(), $result->toArray());
+    }
+
+    public function testGetCommandBilletAchillesXOFalseReturnsExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedUser = User::where('email_address', 'mike@example.com')->first();
+
+        // Act
+        $result = $chapter->getCommandBillet('Executive Officer', false);
+
+        // Assert
+        $this->assertEquals($expectedUser->toArray(), $result->toArray());
+    }
+
+    public function testGetCommandBilletAchillesInvalidBilletReturnsFalse()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $result = $chapter->getCommandBillet('Bogus');
+
+        // Assert
+        $this->assertEquals([], $result);
     }
 }
