@@ -357,7 +357,36 @@ class ChapterTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testFindPeerByLandBaronExpectedUser()
+    public function testGetCommandBilletSHPBaronReturnsExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
+        $expected_user = User::where('email_address', 'david@example.com')->first();
+
+        // Act
+        $result = $chapter->getCommandBillet('Baron');
+
+        // Assert
+        $this->assertNull($result);
+    }
+
+    public function testFindPeerByLandBaronAllowCourtesyExpectedNull()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
+
+        // Act
+        $result = $chapter->findPeerByLand('Baron', true);
+
+        // Assert
+        $this->assertNull($result);
+    }
+
+    public function testFindPeerByLandBaronDontAllowCourtesyExpectedUser()
     {
         // Arrange
         $this->seed(ChapterSeeder::class);

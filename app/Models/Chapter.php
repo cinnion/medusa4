@@ -404,9 +404,9 @@ class Chapter extends Model
 
         $users = $query->get();
 
-        if (empty($users) === true) {
-            return null;
-        }
+//        if ($users->count() == 0) {
+//            return null;
+//        }
 
         // Deal with edge cases where multiple users are assigned, and return the first one found.
         foreach ($users as $user) {
