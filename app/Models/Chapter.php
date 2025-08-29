@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utility\MedusaUtility;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use MongoDB\Laravel\Eloquent\Model;
@@ -234,9 +235,12 @@ class Chapter extends Model
      *
      * @TODO Refactor this
      *
-     * @return mixed
+     * @param bool|null $forReport
+     * @param int|null $ts Timestamp of last report
+     *
+     * @return Collection<User>
      */
-    public function getCrew($forReport = false, $ts = null)
+    public function getCrew(?bool $forReport = false, ?int $ts = null): Collection
     {
         $users =
             User::where('assignment.chapter_id', '=', (string) $this->_id)
@@ -274,9 +278,7 @@ class Chapter extends Model
         }
 
         if ($forReport === true) {
-            $users = $users->toArray();
             // Only need members that have been assigned to the chapter since the last report
-
             foreach ($users as $key => $user) {
                 foreach ($user['assignment'] as $assignment) {
                     $include = true;

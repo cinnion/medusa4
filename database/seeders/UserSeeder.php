@@ -44,6 +44,10 @@ class UserSeeder extends Seeder
             'city' => 'Atlanta',
             'state_province' => 'GA',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'O-6-A',
+                'date_of_rank' => '2015-12-05',
+            ],
         ]);
         User::factory()->create([
             'id' => '55fa1851e4bed834078b48ba',
@@ -64,6 +68,10 @@ class UserSeeder extends Seeder
             'city' => 'Atlanta',
             'state_province' => 'GA',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'O-5',
+                'date_of_rank' => '2014-11-01',
+            ],
         ]);
         User::factory()->create([
             'id' => '565fd6f6e4bed8b7358b5195',
@@ -84,6 +92,10 @@ class UserSeeder extends Seeder
             'city' => 'Atlanta',
             'state_province' => 'GA',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'E-8',
+                'date_of_rank' => '2021-02-01',
+            ],
         ]);
         User::factory()->create([
             '_id' => '55fa1859e4bed834078b563c',
@@ -97,13 +109,17 @@ class UserSeeder extends Seeder
                     'chapter_id' => '55fa1833e4bed832078b45dc',
                     'chapter_name' => 'HMS Achilles',
                     'date_assigned' => '2016-02-01',
-                    'billet' => 'Executive Officer',
+                    'billet' => 'Crewman',
                     'primary' => true,
                 ]
             ],
             'city' => 'Waynesboro',
             'state_province' => 'VA',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'O-4',
+                'date_of_rank' => '2018-11-12',
+            ],
         ]);
         User::factory()->create([
             'id' => '55fa1851e4bed834078b48ae',
@@ -156,6 +172,10 @@ class UserSeeder extends Seeder
             'city' => 'Atlanta',
             'state_province' => 'GA',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'F-2-B',
+                'date_of_rank' => '2019-10-22',
+            ],
         ]);
         User::factory()->create([
             '_id' => '55fa1852e4bed834078b4af0',
@@ -344,6 +364,79 @@ class UserSeeder extends Seeder
             'state_province' => 'GA',
             'registration_status' => 'Active',
         ]);
-
+        User::factory()->create([
+            'first_name' => 'Robin',
+            'last_name' => 'Weiner',
+            'email_address' => 'robin1@example.com',
+            'member_id' => 'A0000013',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => fake()->dateTimeBetween('-1 week')->format('Y-m-d'),
+                    'billet' => 'Crewman',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'E-1',
+                'date_of_rank' => '2019-10-22',
+            ],
+        ]);
+        User::factory()->create([
+            'first_name' => 'Robin',
+            'middle_name' => 'Test2',
+            'last_name' => 'Weiner',
+            'email_address' => 'robin2@example.com',
+            'member_id' => null,
+            'active' => 0,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => '2015-12-05',
+                    'billet' => 'Crewman',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'E-1',
+                'date_of_rank' => '2019-10-22',
+            ],
+        ]);
+        User::factory()->create([
+            'first_name' => 'Robin',
+            'middle_name' => 'Test3',
+            'last_name' => 'Weiner',
+            'email_address' => 'robin3@example.com',
+            'member_id' => null,
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'date_assigned' => '2015-12-05',
+                    'billet' => 'Crewman',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [],
+            'city' => 'Atlanta',
+            'state_province' => 'GA',
+            'registration_status' => 'Pending',
+            'rank' => [
+                'grade' => 'E-1',
+                'date_of_rank' => '2019-10-22',
+            ],
+        ]);
     }
 }

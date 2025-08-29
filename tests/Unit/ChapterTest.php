@@ -470,6 +470,52 @@ class ChapterTest extends TestCase
         $this->assertNull($results);
     }
 
+    public function testGetCrewAchillesExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $dougUser = User::where('email_address', 'doug@example.com')->first();
+        $robin1User = User::where('email_address', 'robin1@example.com')->first();
+        $daveUser = User::where('email_address', 'dave@example.com')->first();
+
+        // Act
+        $crew = $chapter->getCrew();
+
+        // Assert
+        $this->assertCount(3, $crew);
+        $this->assertArrayNotHasKey(0, $crew, 'CO Scott was not excluded');
+        $this->assertArrayNotHasKey(1, $crew, 'XO Mike was not excluded');
+        $this->assertEquals($dougUser->toArray(), $crew[2]->toArray());
+        $this->assertArrayNotHasKey(3, $crew, 'Bosun Brigitte was not excluded');
+        $this->assertEquals($robin1User->toArray(), $crew[4]->toArray());
+        $this->assertEquals($daveUser->toArray(), $crew[5]->toArray());
+    }
+
+    public function testGetCrewAchillesReportExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $dougUser = User::where('email_address', 'doug@example.com')->first();
+        $robin1User = User::where('email_address', 'robin1@example.com')->first();
+        $daveUser = User::where('email_address', 'dave@example.com')->first();
+
+        // Act
+        $crew = $chapter->getCrew(true, fake()->dateTime('-2 months')->getTimestamp());
+
+        // Assert
+        $this->assertCount(1, $crew);
+        $this->assertArrayNotHasKey(0, $crew, 'CO Scott was not excluded');
+        $this->assertArrayNotHasKey(1, $crew, 'XO Mike was not excluded');
+        $this->assertArrayNotHasKey(2, $crew, 'Doug was not excluded');
+        $this->assertArrayNotHasKey(3, $crew, 'Bosun Brigitte was not excluded');
+        $this->assertEquals($robin1User->toArray(), $crew[4]->toArray());
+        $this->assertArrayNotHasKey(5, $crew, 'Dave was not excluded');
+    }
+
     public function testGetCommandBilletAchillesCOReturnsExpectedUser()
     {
         // Arrange

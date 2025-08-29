@@ -63,7 +63,7 @@ return new class extends Migration
                 $table->string('registration_status');
             }
             if (!Schema::hasColumn('users', 'member_id')) {
-                $table->string('member_id')->unique()->nullable();
+                $table->string('member_id');
             }
             if (!Schema::hasColumn('users', 'idcard_printed')) {
                 $table->boolean('idcard_printed')->nullable();
