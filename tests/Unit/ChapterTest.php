@@ -516,6 +516,14 @@ class ChapterTest extends TestCase
         $this->assertArrayNotHasKey(5, $crew, 'Dave was not excluded');
     }
 
+    // Test getCrewWithChildren
+
+    // Test getAllCrew
+
+    // Test getActiveCrewCount
+
+    // Test getAllCrewIncludingChildren
+
     public function testGetCommandBilletAchillesCOReturnsExpectedUser()
     {
         // Arrange
@@ -648,6 +656,14 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
+    // Test getCO
+
+    // Test getXO
+
+    // Test getBosun
+
+    // Test _getTriadMember
+
     public function testGetCommandCrewAchillesExpectedCommandCrew()
     {
         // Arrange
@@ -736,4 +752,22 @@ class ChapterTest extends TestCase
         $this->assertEquals('Fourth Space Lord', $commandCrew[1]['display']);
         $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
     }
+
+    // Test getChapterIdWithParents
+
+    // Test getAssignedFleet
+
+    // Test getChildChapters
+
+    // Test getChapterIdWithChildren
+
+    // Test getNumActiveChildren
+
+    // Test getChildHierarchy
+
+    // Test getChapterType
+
+    // Test getChapterLocations
+
+    // Test crewHasNewExams
 }
