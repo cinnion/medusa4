@@ -907,7 +907,45 @@ class ChapterTest extends TestCase
         $this->assertEquals($excalibur->id, $chapters[3]);
     }
 
-    // Test getNumActiveChildren
+    public function testGetNumActiveChildrenDefaultIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+
+        // Act
+        $count = $piDiv->getNumActiveChildren();
+
+        // Assert
+        $this->assertEquals(2, $count);
+    }
+
+    public function testGetNumActiveChildrenSpecifiedIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+
+        // Act
+        $count = $fleet->getNumActiveChildren($piDiv->id);
+
+        // Assert
+        $this->assertEquals(2, $count);
+    }
+
+    public function testGetNumActiveChildrenBadSpecifiedIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+
+        // Act
+        $count = $fleet->getNumActiveChildren('bad-id');
+
+        // Assert
+        $this->assertEquals(0, $count);
+    }
 
     // Test getChildHierarchy
 

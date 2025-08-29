@@ -668,15 +668,15 @@ class Chapter extends Model
    *
    * @param string $id
    *
-   * @return mixed
+   * @return int
    */
-    public function getNumActiveChildren(?string $id = null)
+    public function getNumActiveChildren(?string $id = null): int
     {
         if (empty($id) === true) {
             $id = $this->id;
         }
 
-        return self::where('assigned_to', '=', $id)->whereNull('decommission_date')->count();
+        return self::where('assigned_to', $id)->whereNull('decommission_date')->count();
     }
 
     /**
