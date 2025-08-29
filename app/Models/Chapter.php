@@ -301,26 +301,25 @@ class Chapter extends Model
     }
 
     /**
-     * Get all users/members assigned to a specific chapter or subordinate chapters.
+     * Get all users/members assigned to a specific chapter or subordinate chapters, excluding the current user.
      *
-     * @param $id Optional Chapter ID.  If not present, the id of the current instantiation is used.
+     * @param ?string $id Chapter ID.  If not present, the id of the current instantiation is used.
      *
-     * @return User[]
+     * @return Collection<User>
      */
-    public function getCrewWithChildren($id = null)
+    public function getCrewWithChildren(?string $id = null): Collection
     {
         if (empty($id) === true) {
             $id = $this->id;
         }
-        $users =
-            User::wherein(
-                'assignment.chapter_id',
-                $this->getChapterIdWithChildren($id)
-            )->where(
-                'member_id',
-                '!=',
-                Auth::user()->member_id
-            )->orderBy('last_name', 'asc')->get();
+        $users = User::wherein(
+            'assignment.chapter_id',
+            $this->getChapterIdWithChildren($id)
+        )->where(
+            'member_id',
+            '!=',
+            Auth::user()->member_id
+        )->orderBy('last_name', 'asc')->get();
 
         return $users;
     }

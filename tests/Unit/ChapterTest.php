@@ -8,6 +8,7 @@ use Database\Seeders\ChapterSeeder;
 use Database\Seeders\MedusaConfigSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class ChapterTest extends TestCase
@@ -178,6 +179,7 @@ class ChapterTest extends TestCase
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -271,6 +273,7 @@ class ChapterTest extends TestCase
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -319,6 +322,7 @@ class ChapterTest extends TestCase
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -353,6 +357,7 @@ class ChapterTest extends TestCase
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
             '55fa1833e4bed832078b457e' => 'HMS Truculent',
             '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
         ];
 
         // Act
@@ -371,6 +376,7 @@ class ChapterTest extends TestCase
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
             '55fa1833e4bed832078b457e' => 'HMS Truculent',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
         ];
 
         // Act
@@ -422,6 +428,7 @@ class ChapterTest extends TestCase
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
             '55fa1833e4bed832078b457e' => 'HMS Truculent',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
             '55fa1800e4bed82e078b4782' => 'Admiralty House',
             '55fa1800e4bed82e078b478a' => 'Bureau of Communications (Columbus, OH)',
             '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
@@ -532,7 +539,6 @@ class ChapterTest extends TestCase
 
         // Act
         $crew = $chapter->getCrew(true, time() - 60 * 86400);
-//        var_export($crew);
 
         // Assert
         $this->assertCount(1, $crew);
@@ -544,8 +550,77 @@ class ChapterTest extends TestCase
         $this->assertArrayNotHasKey(5, $crew, 'Dave was not excluded');
     }
 
-    // Test getCrewWithChildren
+    public function testGetCrewWithChildrenDefaultIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($scott);
+
+        // Act
+        $crew = $achilles->getCrewWithChildren();
+
+        // Assert
+        $this->assertCount(8, $crew);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertEquals($jo->toArray(), $crew[1]->toArray());
+        $this->assertEquals($doug->toArray(), $crew[2]->toArray());
+        $this->assertEquals($bridgitte->toArray(), $crew[3]->toArray());
+        $this->assertEquals($dave->toArray(), $crew[4]->toArray());
+        $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
+        $this->assertEquals($robin2->toArray(), $crew[6]->toArray());
+        $this->assertEquals($robin3->toArray(), $crew[7]->toArray());
+    }
+
+    public function testGetCrewWithChildrenFleetWithAchillesIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($scott);
+
+        // Act
+        $crew = $fleet->getCrewWithChildren($achilles->id);
+
+        // Assert
+        $this->assertCount(8, $crew);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertEquals($jo->toArray(), $crew[1]->toArray());
+        $this->assertEquals($doug->toArray(), $crew[2]->toArray());
+        $this->assertEquals($bridgitte->toArray(), $crew[3]->toArray());
+        $this->assertEquals($dave->toArray(), $crew[4]->toArray());
+        $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
+        $this->assertEquals($robin2->toArray(), $crew[6]->toArray());
+        $this->assertEquals($robin3->toArray(), $crew[7]->toArray());
+    }
     // Test getAllCrew
 
     // Test getActiveCrewCount

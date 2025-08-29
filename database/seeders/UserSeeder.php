@@ -337,6 +337,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
 
             'first_name' => 'Jo',
+            'last_name' => 'Johnson',
             'email_address' => 'jo@example.com',
             'member_id' => 'A0000012',
             'active' => 1,
