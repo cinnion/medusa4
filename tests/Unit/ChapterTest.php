@@ -135,7 +135,8 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)',
             ],
             'Bureaus' => [
-                '55fa1800e4bed82e078b478a' => 'Bureau of Communications'
+                '55fa1800e4bed82e078b478a' => 'Bureau of Communications',
+                '55fa1800e4bed82e078b4784' => 'Office of the First Space Lord',
             ],
             'Offices' => [],
             'Academies' => [],
@@ -148,10 +149,14 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd)',
             ],
             'Task Forces' => [],
-            'Task Groups' => [],
+            'Task Groups' => [
+                '58ee7c27493ea9ea728b4569' => 'Task Group 33.1',
+            ],
             'Squadrons' => [],
             'Marine Expeditionary Forces ' => [],
-            'Divisions' => [],
+            'Divisions' => [
+                '55fa18a3e4bed83f078b459e' => 'Battlecruiser Division 314',
+            ],
             'Separation Units' => [
                 '55fa1800e4bed82e078b47a2' => 'HMS Charon (Withdrawn)',
                 '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
@@ -174,7 +179,9 @@ class ChapterTest extends TestCase
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
-            'RMMC' => [],
+            'RMMC' => [
+                '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
+            ],
             'RMA' => [],
             'GSN' => [],
             'IAN' => [],
@@ -191,7 +198,9 @@ class ChapterTest extends TestCase
             'Civilian Systems' => [],
             'Civilian Planetary' => [],
             'Corporate Board' => [],
-            'Corporate Committee' => [],
+            'Corporate Committee' => [
+                '659af5a09c6b7f408f09e775' => 'Steering Committee',
+            ],
         ];
 
         // Act
@@ -219,7 +228,8 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)',
             ],
             'Bureaus' => [
-                '55fa1800e4bed82e078b478a' => 'Bureau of Communications'
+                '55fa1800e4bed82e078b478a' => 'Bureau of Communications',
+                '55fa1800e4bed82e078b4784' => 'Office of the First Space Lord',
             ],
             'Offices' => [],
             'Academies' => [],
@@ -232,10 +242,14 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd)',
             ],
             'Task Forces' => [],
-            'Task Groups' => [],
+            'Task Groups' => [
+                '58ee7c27493ea9ea728b4569' => 'Task Group 33.1',
+            ],
             'Squadrons' => [],
             'Marine Expeditionary Forces ' => [],
-            'Divisions' => [],
+            'Divisions' => [
+                '55fa18a3e4bed83f078b459e' => 'Battlecruiser Division 314',
+            ],
             'Separation Units' => [
                 '55fa1800e4bed82e078b47a2' => 'HMS Charon (Withdrawn)',
                 '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
@@ -258,7 +272,9 @@ class ChapterTest extends TestCase
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
-            'RMMC' => [],
+            'RMMC' => [
+                '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
+            ],
             'RMA' => [],
             'GSN' => [],
             'IAN' => [],
@@ -275,7 +291,9 @@ class ChapterTest extends TestCase
             'Civilian Systems' => [],
             'Civilian Planetary' => [],
             'Corporate Board' => [],
-            'Corporate Committee' => [],
+            'Corporate Committee' => [
+                '659af5a09c6b7f408f09e775' => 'Steering Committee',
+            ],
         ];
 
         // Act
@@ -302,7 +320,9 @@ class ChapterTest extends TestCase
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
                 '55fa1833e4bed832078b457e' => 'HMS Truculent',
             ],
-            'RMMC' => [],
+            'RMMC' => [
+                '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
+            ],
             'RMA' => [],
             'GSN' => [],
             'IAN' => [],
@@ -332,6 +352,7 @@ class ChapterTest extends TestCase
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
             '55fa1833e4bed832078b457e' => 'HMS Truculent',
+            '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
         ];
 
         // Act
@@ -413,6 +434,12 @@ class ChapterTest extends TestCase
             '597f4f024b3df7b82123441d' => 'New Montana (Columbus, GA)',
             '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd Fleet)',
             '597f4f024b3df7b8212343f5' => 'Serpent Head Point (Atlanta, GA)',
+            '55fa18a3e4bed83f078b459e' => 'Battlecruiser Division 314',
+            '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
+            '55fa1800e4bed82e078b4784' => 'Office of the First Space Lord',
+            '659af5a09c6b7f408f09e775' => 'Steering Committee',
+            '58ee7c27493ea9ea728b4569' => 'Task Group 33.1',
+            '55fa1800e4bed82e078b475e' => 'Third Naval District',
         ];
 
         // Act
@@ -504,7 +531,8 @@ class ChapterTest extends TestCase
         $daveUser = User::where('email_address', 'dave@example.com')->first();
 
         // Act
-        $crew = $chapter->getCrew(true, fake()->dateTime('-2 months')->getTimestamp());
+        $crew = $chapter->getCrew(true, time() - 60 * 86400);
+//        var_export($crew);
 
         // Assert
         $this->assertCount(1, $crew);
