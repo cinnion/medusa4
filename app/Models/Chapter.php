@@ -642,22 +642,22 @@ class Chapter extends Model
      *
      * @param string $id
      *
-     * @return array
+     * @return array<string>
      */
-    public function getChapterIdWithChildren(?string $id = null)
+    public function getChapterIdWithChildren(?string $id = null): array
     {
         if (empty($id) === true) {
             $id = $this->id;
         }
-        $children = self::where('assigned_to', '=', $id)->whereNull('decommission_date')->get();
+
+        $children = self::where('assigned_to', $id)->whereNull('decommission_date')->get();
 
         $results = [];
         foreach ($children as $child) {
-            $results =
-                array_merge(
-                    $results,
-                    self::find($child->id)->getChapterIdWithChildren()
-                );
+            $results = array_merge(
+                $results,
+                self::find($child->id)->getChapterIdWithChildren()
+            );
         }
 
         return array_unique(array_merge([$id], $results));

@@ -862,7 +862,50 @@ class ChapterTest extends TestCase
 
     // Test getChildChapters
 
-    // Test getChapterIdWithChildren
+    public function testGetChapterIdWithChildrenDefaultIdExpectedList()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $mardetAchilles = Chapter::where('chapter_name', 'MARDET Achilles')->first();
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+
+        // Act
+        $chapters = $fleet->getChapterIdWithChildren();
+
+        // Assert
+        $this->assertCount(6, $chapters);
+        $this->assertEquals($fleet->id, $chapters[0]);
+        $this->assertEquals($tg331->id, $chapters[1]);
+        $this->assertEquals($piDiv->id, $chapters[2]);
+        $this->assertEquals($achilles->id, $chapters[3]);
+        $this->assertEquals($mardetAchilles->id, $chapters[4]);
+        $this->assertEquals($excalibur->id, $chapters[5]);
+    }
+
+    public function testGetChapterIdWithChildrenPiDivIdExpectedList()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $mardetAchilles = Chapter::where('chapter_name', 'MARDET Achilles')->first();
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+
+        // Act
+        $chapters = $fleet->getChapterIdWithChildren($piDiv->id);
+
+        // Assert
+        $this->assertCount(4, $chapters);
+        $this->assertEquals($piDiv->id, $chapters[0]);
+        $this->assertEquals($achilles->id, $chapters[1]);
+        $this->assertEquals($mardetAchilles->id, $chapters[2]);
+        $this->assertEquals($excalibur->id, $chapters[3]);
+    }
 
     // Test getNumActiveChildren
 
