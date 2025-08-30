@@ -46,7 +46,8 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
         "mongodb/laravel-mongodb": "^5.4",
-        "spatie/laravel-html": "^3.12"
+        "spatie/laravel-html": "^3.12",
+        "webpatser/laravel-countries": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
