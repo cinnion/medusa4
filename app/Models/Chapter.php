@@ -344,7 +344,12 @@ class Chapter extends Model
             ->get();
     }
 
-    public function getActiveCrewCount($chapterId = null)
+    /**
+     * @param ?string $chapterId
+     * 
+     * @return int
+     */
+    public function getActiveCrewCount(?string $chapterId = null): int
     {
         return count($this->getAllCrew($chapterId));
     }

@@ -710,7 +710,48 @@ class ChapterTest extends TestCase
         $this->assertInstanceOf(Collection::class, $crew);
     }
 
-    // Test getActiveCrewCount
+    public function testGetActiveCrewCountDefaultIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $count = $achilles->getActiveCrewCount();
+
+        // Assert
+        $this->assertEquals(6, $count);
+    }
+
+    public function testGetActiveCrewCountSpecifiedIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+
+        // Act
+        $count = $fleet->getActiveCrewCount($achilles->id);
+
+        // Assert
+        $this->assertEquals(6, $count);
+    }
+
+    public function testGetActiveCrewCountBadIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $count = $achilles->getActiveCrewCount('bad-id');
+
+        // Assert
+        $this->assertEquals(0, $count);
+    }
 
     // Test getAllCrewIncludingChildren
 
