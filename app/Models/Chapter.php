@@ -682,11 +682,11 @@ class Chapter extends Model
     /**
      * Generate a hierarchical tree of a chapter's children.
      *
-     * @return array
+     * @return array<string, Chapter|array>
      */
-    public function getChildHierarchy()
+    public function getChildHierarchy(): array
     {
-        $children = self::where('assigned_to', '=', $this->id)->whereNull('decommission_date')->get();
+        $children = self::where('assigned_to', $this->id)->whereNull('decommission_date')->get();
 
         $results = [];
 

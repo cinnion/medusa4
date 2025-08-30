@@ -947,7 +947,33 @@ class ChapterTest extends TestCase
         $this->assertEquals(0, $count);
     }
 
-    // Test getChildHierarchy
+    public function testGetChildHierarchyDefaultIdExpectedCount()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $mardet = Chapter::where('chapter_name', 'MARDET Achilles')->first();
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+
+        // Act
+        $results = $piDiv->getChildHierarchy();
+
+        // Assert
+        $this->assertCount(2, $results);
+        $this->assertInstanceOf(Chapter::class, $results[0]['chapter']);
+        $this->assertEquals($achilles->toArray(), $results[0]['chapter']->toArray());
+        $this->assertIsArray($results[0]['children']);
+        $this->assertCount(1, $results[0]['children']);
+        $this->assertInstanceOf(Chapter::class, $results[0]['children'][0]['chapter']);
+        $this->assertEquals($mardet->toArray(), $results[0]['children'][0]['chapter']->toArray());
+        $this->assertIsArray($results[0]['children'][0]['children']);
+        $this->assertCount(0, $results[0]['children'][0]['children']);
+        $this->assertInstanceOf(Chapter::class, $results[1]['chapter']);
+        $this->assertEquals($excalibur->toArray(), $results[1]['chapter']->toArray());
+        $this->assertIsArray($results[1]['children']);
+        $this->assertCount(0, $results[1]['children']);
+    }
 
     // Test getChapterType
 
