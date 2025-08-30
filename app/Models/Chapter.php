@@ -625,14 +625,11 @@ class Chapter extends Model
      */
     public function getChildChapters()
     {
-        return Arr::where(
-            $this->getChapterIdWithChildren(),
-            function ($value, $key) {
-                if ($value != $this->id) {
-                    return $value;
-                }
+        return Arr::where($this->getChapterIdWithChildren(), function ($value, $key) {
+            if ($value != $this->id) {
+                return $value;
             }
-        );
+        });
     }
 
     /**
