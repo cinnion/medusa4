@@ -4,19 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use MongoDB\Laravel\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('billets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        if (!Schema::hasTable('ratings')) {
+            Schema::create('billets', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
 
-            $table->string('billet_name')->unique();
-        });
+                $table->string('billet_name')->unique();
+            });
+        }
     }
 
     /**

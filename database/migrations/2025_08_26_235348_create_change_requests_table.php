@@ -4,25 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use MongoDB\Laravel\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('change_requests', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        if (!Schema::hasTable('ratings')) {
+            Schema::create('change_requests', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
 
-            $table->string('user');
-            $table->string('requestor');
-            $table->string('req_type');
-            $table->string('old_value');
-            $table->string('new_value');
-            $table->string('status')->default('open');
-            $table->softDeletes();
-        });
+                $table->string('user');
+                $table->string('requestor');
+                $table->string('req_type');
+                $table->string('old_value');
+                $table->string('new_value');
+                $table->string('status')->default('open');
+                $table->softDeletes();
+            });
+        }
     }
 
     /**
