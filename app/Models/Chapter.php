@@ -714,10 +714,10 @@ class Chapter extends Model
     /**
      * Get a list of all chapter locations.
      *
-     * @return array
+     * @return array<string>
      * @deprecated
      */
-    public static function getChapterLocations()
+    public static function getChapterLocations(): array
     {
         $states = \App\Enums\MedusaDefaults::STATES_BY_ABREVIATION;
 
@@ -736,11 +736,10 @@ class Chapter extends Model
         $retVal = [];
 
         foreach (array_keys($chapterLocations) as $location) {
-            $retVal[$location] =
-                array_key_exists(
-                    $location,
-                    $states
-                ) === true ? $states[$location] : $location;
+            $retVal[$location] = array_key_exists(
+                $location,
+                $states
+            ) === true ? $states[$location] : $location;
         }
 
         return $retVal;

@@ -181,8 +181,8 @@ class ChapterTest extends TestCase
             ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-                '55fa1833e4bed832078b457e' => 'HMS Truculent',
-                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -279,8 +279,8 @@ class ChapterTest extends TestCase
             ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-                '55fa1833e4bed832078b457e' => 'HMS Truculent',
-                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -330,8 +330,8 @@ class ChapterTest extends TestCase
             ],
             'RMN' => [
                 '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-                '55fa1833e4bed832078b457e' => 'HMS Truculent',
-                '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+                '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
+                '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
             ],
             'RMMC' => [
                 '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
@@ -364,9 +364,9 @@ class ChapterTest extends TestCase
         $this->seed(UserSeeder::class);
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-            '55fa1833e4bed832078b457e' => 'HMS Truculent',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
             '560dc143e4bed8b9748b45bb' => 'MARDET Achilles',
-            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
         ];
 
         // Act
@@ -384,8 +384,8 @@ class ChapterTest extends TestCase
         $this->seed(UserSeeder::class);
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-            '55fa1833e4bed832078b457e' => 'HMS Truculent',
-            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
         ];
 
         // Act
@@ -419,6 +419,7 @@ class ChapterTest extends TestCase
         $this->seed(UserSeeder::class);
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
         ];
 
         // Act
@@ -436,8 +437,8 @@ class ChapterTest extends TestCase
         $this->seed(UserSeeder::class);
         $expectedResults = [
             '55fa1833e4bed832078b45dc' => 'HMS Achilles (Atlanta, GA)',
-            '55fa1833e4bed832078b457e' => 'HMS Truculent',
-            '55fa1833e4bed832078b4580' => 'HMS Excalibur',
+            '55fa1833e4bed832078b457e' => 'HMS Truculent (Los Angeles, CA)',
+            '55fa1833e4bed832078b4580' => 'HMS Excalibur (Athens, GA)',
             '55fa1800e4bed82e078b4782' => 'Admiralty House',
             '55fa1800e4bed82e078b478a' => 'Bureau of Communications (Columbus, OH)',
             '55fa1800e4bed82e078b4796' => 'GNSS Katherine Mayhew',
@@ -1433,7 +1434,24 @@ class ChapterTest extends TestCase
         $this->assertNull($results);
     }
 
-    // Test getChapterLocations
+    public function testGetChapterLocationsExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $espectedResults = [
+            'CA' => 'California',
+            'GA' => 'Georgia',
+            'OH' => 'Ohio',
+        ];
+
+        // Act
+        $results = Chapter::getChapterLocations();
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($espectedResults, $results);
+    }
 
     // Test crewHasNewExams
 }
