@@ -7,6 +7,7 @@ use App\Models\User;
 use Database\Seeders\ChapterSeeder;
 use Database\Seeders\MedusaConfigSeeder;
 use Database\Seeders\UserSeeder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -556,7 +557,6 @@ class ChapterTest extends TestCase
         $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
-
         $dave = User::where('email_address', 'dave@example.com')->first();
         $jo = User::where('email_address', 'jo@example.com')->first();
         $mike = User::where('email_address', 'mike@example.com')->first();
@@ -621,7 +621,94 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin2->toArray(), $crew[6]->toArray());
         $this->assertEquals($robin3->toArray(), $crew[7]->toArray());
     }
-    // Test getAllCrew
+
+    public function testGetAllCrewDefaultIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Act
+        $crew = $achilles->getAllCrew();
+
+        // Assert
+        $this->assertCount(6, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+        $this->assertInstanceOf(User::class, $crew[0]);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertInstanceOf(User::class, $crew[1]);
+        $this->assertEquals($scott->toArray(), $crew[1]->toArray());
+        $this->assertInstanceOf(User::class, $crew[2]);
+        $this->assertEquals($doug->toArray(), $crew[2]->toArray());
+        $this->assertInstanceOf(User::class, $crew[3]);
+        $this->assertEquals($bridgitte->toArray(), $crew[3]->toArray());
+        $this->assertInstanceOf(User::class, $crew[4]);
+        $this->assertEquals($dave->toArray(), $crew[4]->toArray());
+        $this->assertInstanceOf(User::class, $crew[5]);
+        $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
+    }
+
+    public function testGetAllCrewSpecifiedIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Act
+        $crew = $fleet->getAllCrew($achilles->id);
+
+        // Assert
+        $this->assertCount(6, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+        $this->assertInstanceOf(User::class, $crew[0]);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertInstanceOf(User::class, $crew[1]);
+        $this->assertEquals($scott->toArray(), $crew[1]->toArray());
+        $this->assertInstanceOf(User::class, $crew[2]);
+        $this->assertEquals($doug->toArray(), $crew[2]->toArray());
+        $this->assertInstanceOf(User::class, $crew[3]);
+        $this->assertEquals($bridgitte->toArray(), $crew[3]->toArray());
+        $this->assertInstanceOf(User::class, $crew[4]);
+        $this->assertEquals($dave->toArray(), $crew[4]->toArray());
+        $this->assertInstanceOf(User::class, $crew[5]);
+        $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
+    }
+
+    public function testGetAllCrewBadIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $crew = $achilles->getAllCrew('bad-id');
+
+        // Assert
+        $this->assertCount(0, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+    }
 
     // Test getActiveCrewCount
 
@@ -766,8 +853,6 @@ class ChapterTest extends TestCase
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedCO = User::where('email_address', 'scott@example.com')->first();
-        $expectedXO = User::where('email_address', 'mike@example.com')->first();
-        $expectedBosun = User::where('email_address', 'bridgitte@example.com')->first();
 
         // Act
         $user = $chapter->getCO();

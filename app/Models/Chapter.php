@@ -327,23 +327,19 @@ class Chapter extends Model
     /**
      * Get all users/members assigned to a specific chapter, including the command crew.
      *
-     * @param $chapterId
+     * @param ?string $chapterId
      *
-     * @return User[]
+     * @return Collection<User>
      */
-    public function getAllCrew($chapterId = null)
+    public function getAllCrew(?string $chapterId = null): Collection
     {
         if (empty($chapterId) === true) {
             $chapterId = $this->id;
         }
 
-        return User::where('assignment.chapter_id', '=', $chapterId)
-            ->where('active', '=', 1)
-            ->where(
-                'registration_status',
-                '=',
-                'Active'
-            )
+        return User::where('assignment.chapter_id', $chapterId)
+            ->where('active', 1)
+            ->where('registration_status', 'Active')
             ->orderBy('last_name', 'asc')
             ->get();
     }
