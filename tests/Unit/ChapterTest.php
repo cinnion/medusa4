@@ -759,13 +759,52 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    // Test getCO
+    public function testGetCOAchillesExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedCO = User::where('email_address', 'scott@example.com')->first();
+        $expectedXO = User::where('email_address', 'mike@example.com')->first();
+        $expectedBosun = User::where('email_address', 'bridgitte@example.com')->first();
 
-    // Test getXO
+        // Act
+        $user = $chapter->getCO();
 
-    // Test getBosun
+        // Assert
+        $this->assertEquals($expectedCO->toArray(), $user->toArray());
+    }
 
-    // Test _getTriadMember
+    public function testGetXOAchillesExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedXO = User::where('email_address', 'mike@example.com')->first();
+
+        // Act
+        $user = $chapter->getXO();
+
+        // Assert
+        $this->assertEquals($expectedXO->toArray(), $user->toArray());
+    }
+
+    public function testGetBosunAchillesExpectedUser()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $expectedBosun = User::where('email_address', 'bridgitte@example.com')->first();
+
+        // Act
+        $user = $chapter->getBosun();
+
+        // Assert
+        $this->assertEquals($expectedBosun->toArray(), $user->toArray());
+    }
 
     public function testGetCommandCrewAchillesExpectedCommandCrew()
     {
@@ -1000,6 +1039,8 @@ class ChapterTest extends TestCase
         // Assert
         $this->assertNull($results);
     }
+
+    // Test getChapterLocations
 
     // Test crewHasNewExams
 }
