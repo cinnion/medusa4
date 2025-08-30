@@ -16,10 +16,16 @@ class ChapterTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testGetHoldingChaptersExpectedChapters()
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(ChapterSeeder::class);
+    }
+
+    public function testGetHoldingChaptersExpectedChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $expectedChapters = [
             '55fa1800e4bed82e078b4794' => 'HMSS Hephaestus',
@@ -35,10 +41,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetChaptersByTypeNonexistentTypeReturnsEmptyArray()
+    public function testGetChaptersByTypeNonexistentTypeReturnsEmptyArray(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
 
         // Act
         $chapters = Chapter::getChaptersByType('nonexistent_type');
@@ -48,10 +53,9 @@ class ChapterTest extends TestCase
         $this->assertCount(0, $chapters);
     }
 
-    public function testGetChaptersByTypeSuReturnsExpectedChapters()
+    public function testGetChaptersByTypeSuReturnsExpectedChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $expectedChapters = [
             '55fa1800e4bed82e078b47a0' => 'HMS Tartarus (Expelled)',
             '55fa1800e4bed82e078b47a2' => 'HMS Charon (Withdrawn)',
@@ -67,10 +71,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetChaptersByTypeHeadquartersReturnsExpectedChapters()
+    public function testGetChaptersByTypeHeadquartersReturnsExpectedChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $expectedChapters = [
             '55fa1800e4bed82e078b4782' => 'Admiralty House (RMN)'
@@ -85,10 +88,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetChaptersByTypeFleetReturnsExpectedChapters()
+    public function testGetChaptersByTypeFleetReturnsExpectedChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $expectedChapters = [
             '55fa1800e4bed82e078b4772' => 'San Martino Fleet (3rd)',
         ];
@@ -102,10 +104,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetChaptersByTypeStationReturnsExpectedChapters()
+    public function testGetChaptersByTypeStationReturnsExpectedChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $expectedChapters = [
             '55fa1800e4bed82e078b4794' => 'HMSS Hephaestus',
@@ -121,10 +122,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetFullChapterListNoArgumentReturnsAllActiveChapters()
+    public function testGetFullChapterListNoArgumentReturnsAllActiveChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedChapters = [
@@ -219,10 +219,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetFullChapterListTrueReturnsAllActiveChapters()
+    public function testGetFullChapterListTrueReturnsAllActiveChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedChapters = [
@@ -317,10 +316,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetFullChapterListFalseReturnsAllApplicableChapters()
+    public function testGetFullChapterListFalseReturnsAllApplicableChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedChapters = [
@@ -356,10 +354,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedChapters, $chapters);
     }
 
-    public function testGetChaptersDefaultsExpectedResults()
+    public function testGetChaptersDefaultsExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedResults = [
@@ -376,10 +373,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
-    public function testGetChaptersRMNExpectedResults()
+    public function testGetChaptersRMNExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedResults = [
@@ -395,10 +391,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
-    public function testGetChaptersIANExpectedResults()
+    public function testGetChaptersIANExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedResults = [
@@ -411,10 +406,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
-    public function testGetChaptersGAExpectedResults()
+    public function testGetChaptersGAExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedResults = [
@@ -429,10 +423,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
-    public function testGetChaptersJoinableFalseExpectedResults()
+    public function testGetChaptersJoinableFalseExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $expectedResults = [
@@ -468,10 +461,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedResults, $chapters);
     }
 
-    public function testGetNameAchillesExpectedResult()
+    public function testGetNameAchillesExpectedResult(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
 
         // Act
         $results = Chapter::getName('55fa1833e4bed832078b45dc');
@@ -480,10 +472,9 @@ class ChapterTest extends TestCase
         $this->assertEquals('HMS Achilles', $results);
     }
 
-    public function testGetNameBadIdExpectedNull()
+    public function testGetNameBadIdExpectedNull(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
 
         // Act
         $results = Chapter::getName('abc123');
@@ -492,10 +483,9 @@ class ChapterTest extends TestCase
         $this->assertNull($results);
     }
 
-    public function testGetIdByNameAchillesExpectedResult()
+    public function testGetIdByNameAchillesExpectedResult(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
 
         // Act
         $results = Chapter::getIdByName('HMS Achilles');
@@ -504,10 +494,9 @@ class ChapterTest extends TestCase
         $this->assertEquals('55fa1833e4bed832078b45dc', $results);
     }
 
-    public function testGetIdByNameNonexistentExpectedNull()
+    public function testGetIdByNameNonexistentExpectedNull(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
 
         // Act
         $results = Chapter::getIdByName('Nonexistent');
@@ -516,10 +505,9 @@ class ChapterTest extends TestCase
         $this->assertNull($results);
     }
 
-    public function testGetCrewAchillesExpectedResults()
+    public function testGetCrewAchillesExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $dougUser = User::where('email_address', 'doug@example.com')->first();
@@ -539,10 +527,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($daveUser->toArray(), $crew[5]->toArray());
     }
 
-    public function testGetCrewAchillesReportExpectedResults()
+    public function testGetCrewAchillesReportExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $dougUser = User::where('email_address', 'doug@example.com')->first();
@@ -562,10 +549,9 @@ class ChapterTest extends TestCase
         $this->assertArrayNotHasKey(5, $crew, 'Dave was not excluded');
     }
 
-    public function testGetCrewWithChildrenDefaultIdExpectedRoster()
+    public function testGetCrewWithChildrenDefaultIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $dave = User::where('email_address', 'dave@example.com')->first();
@@ -597,10 +583,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin3->toArray(), $crew[7]->toArray());
     }
 
-    public function testGetCrewWithChildrenFleetWithAchillesIdExpectedRoster()
+    public function testGetCrewWithChildrenFleetWithAchillesIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
@@ -633,10 +618,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin3->toArray(), $crew[7]->toArray());
     }
 
-    public function testGetAllCrewDefaultIdExpectedRoster()
+    public function testGetAllCrewDefaultIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $dave = User::where('email_address', 'dave@example.com')->first();
@@ -669,10 +653,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
     }
 
-    public function testGetAllCrewSpecifiedIdExpectedRoster()
+    public function testGetAllCrewSpecifiedIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
@@ -706,10 +689,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin1->toArray(), $crew[5]->toArray());
     }
 
-    public function testGetAllCrewBadIdExpectedRoster()
+    public function testGetAllCrewBadIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
@@ -721,10 +703,9 @@ class ChapterTest extends TestCase
         $this->assertInstanceOf(Collection::class, $crew);
     }
 
-    public function testGetActiveCrewCountDefaultIdExpectedCount()
+    public function testGetActiveCrewCountDefaultIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
@@ -735,10 +716,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(6, $count);
     }
 
-    public function testGetActiveCrewCountSpecifiedIdExpectedCount()
+    public function testGetActiveCrewCountSpecifiedIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
@@ -750,10 +730,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(6, $count);
     }
 
-    public function testGetActiveCrewCountBadIdExpectedCount()
+    public function testGetActiveCrewCountBadIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
@@ -764,10 +743,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(0, $count);
     }
 
-    public function testGetAllCrewIncludingDefaultIdExpectedRoster()
+    public function testGetAllCrewIncludingDefaultIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $dave = User::where('email_address', 'dave@example.com')->first();
@@ -802,10 +780,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin1->toArray(), $crew[6]->toArray());
     }
 
-    public function testGetAllCrewIncludingChildrenSpecifiedIdExpectedRoster()
+    public function testGetAllCrewIncludingChildrenSpecifiedIdExpectedRoster(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
@@ -841,10 +818,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($robin1->toArray(), $crew[6]->toArray());
     }
 
-    public function testGetAllCrewIncludingChildrenBadIdExpectedEmptyCollection()
+    public function testGetAllCrewIncludingChildrenBadIdExpectedEmptyCollection(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
@@ -856,10 +832,9 @@ class ChapterTest extends TestCase
         $this->assertInstanceOf(Collection::class, $crew);
     }
 
-    public function testGetCommandBilletAchillesCOReturnsExpectedUser()
+    public function testGetCommandBilletAchillesCOReturnsExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedUser = User::where('email_address', 'scott@example.com')->first();
@@ -871,10 +846,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testGetCommandBilletAchillesXOFalseReturnsExpectedUser()
+    public function testGetCommandBilletAchillesXOFalseReturnsExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedUser = User::where('email_address', 'mike@example.com')->first();
@@ -886,10 +860,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testGetCommandBilletAchillesInvalidBilletReturnsNull()
+    public function testGetCommandBilletAchillesInvalidBilletReturnsNull(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
@@ -900,10 +873,9 @@ class ChapterTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testGetCommandBilletSHPBaronReturnsExpectedUser()
+    public function testGetCommandBilletSHPBaronReturnsExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
         $expected_user = User::where('email_address', 'dave@example.com')->first();
@@ -915,10 +887,9 @@ class ChapterTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testFindPeerByLandBaronAllowCourtesyExpectedNull()
+    public function testFindPeerByLandBaronAllowCourtesyExpectedNull(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
 
@@ -929,10 +900,9 @@ class ChapterTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testFindPeerByLandBaronDontAllowCourtesyExpectedUser()
+    public function testFindPeerByLandBaronDontAllowCourtesyExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
         $expectedUser = User::where('email_address', 'dave@example.com')->first();
@@ -944,10 +914,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testFindPeerByLandDameFalseExpectedArray()
+    public function testFindPeerByLandDameFalseExpectedArray(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'New Gilwell')->first();
 
@@ -958,10 +927,9 @@ class ChapterTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testFindPeerByLandDameTrueExpectedUser()
+    public function testFindPeerByLandDameTrueExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'New Gilwell')->first();
         $expectedUser = User::where('email_address', 'misty@example.com')->first();
@@ -973,10 +941,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testFindPeerByLandKnightTrueExpectedUser()
+    public function testFindPeerByLandKnightTrueExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Lochen Keep')->first();
         $expectedUser = User::where('email_address', 'lochen@example.com')->first();
@@ -988,10 +955,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedUser->toArray(), $result->toArray());
     }
 
-    public function testGetCOAchillesExpectedUser()
+    public function testGetCOAchillesExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedCO = User::where('email_address', 'scott@example.com')->first();
@@ -1003,10 +969,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedCO->toArray(), $user->toArray());
     }
 
-    public function testGetXOAchillesExpectedUser()
+    public function testGetXOAchillesExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedXO = User::where('email_address', 'mike@example.com')->first();
@@ -1018,10 +983,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedXO->toArray(), $user->toArray());
     }
 
-    public function testGetBosunAchillesExpectedUser()
+    public function testGetBosunAchillesExpectedUser(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $expectedBosun = User::where('email_address', 'bridgitte@example.com')->first();
@@ -1033,10 +997,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedBosun->toArray(), $user->toArray());
     }
 
-    public function testGetCommandCrewAchillesExpectedCommandCrew()
+    public function testGetCommandCrewAchillesExpectedCommandCrew(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'HMS Achilles')->first();
@@ -1058,10 +1021,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedBosun->toArray(), $commandCrew[3]['user']->toArray());
     }
 
-    public function testGetCommandCrewNewMontanaExpectedCommandCrew()
+    public function testGetCommandCrewNewMontanaExpectedCommandCrew(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'New Montana')->first();
@@ -1081,10 +1043,9 @@ class ChapterTest extends TestCase
         //$this->assertEquals($expectedGDs->toArray(), $commandCrew[2]['user']->toArray());
     }
 
-    public function testGetCommandCrewSHPExpectedCommandCrew()
+    public function testGetCommandCrewSHPExpectedCommandCrew(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Serpent Head Point')->first();
@@ -1103,10 +1064,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedBaroness->toArray(), $commandCrew[2]['user']->toArray());
     }
 
-    public function testGetCommandCrewBuCommExpectedCommandCrew()
+    public function testGetCommandCrewBuCommExpectedCommandCrew(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(MedusaConfigSeeder::class);
         $this->seed(UserSeeder::class);
         $chapter = Chapter::where('chapter_name', 'Bureau of Communications')->first();
@@ -1122,10 +1082,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
     }
 
-    public function testGetChapterIdWithParentsDefaultExpectedResults()
+    public function testGetChapterIdWithParentsDefaultExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
         $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
@@ -1157,10 +1116,9 @@ class ChapterTest extends TestCase
      * @xxx - This situation needs to be investigated, to determine if it
      * should just stop and return one level.
      */
-    public function testGetChapterIdWithParentsShipExpectedResults()
+    public function testGetChapterIdWithParentsShipExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
         $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
@@ -1192,10 +1150,9 @@ class ChapterTest extends TestCase
      * @xxx This test and the associated code needs looked at to see if the
      * unit on which we are to stop should be included.
      */
-    public function testGetChapterIdWithParentsFleetExpectedResults()
+    public function testGetChapterIdWithParentsFleetExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
         $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
@@ -1213,10 +1170,9 @@ class ChapterTest extends TestCase
 //        $this->assertEquals($fleet->id, $chapters[3]);  // Not returned as one might expect.
     }
 
-    public function testGetChapterIdWithParentsBrokenChainExpectedResults()
+    public function testGetChapterIdWithParentsBrokenChainExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $truculent = Chapter::where('chapter_name', 'HMS Truculent')->first();
 
         // Act
@@ -1228,10 +1184,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($truculent->id, $chapters[0]);
     }
 
-    public function testGetChapterIdWithParentsFleetWithBrokenChainExpectedResults()
+    public function testGetChapterIdWithParentsFleetWithBrokenChainExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $truculent = Chapter::where('chapter_name', 'HMS Truculent')->first();
 
         // Act
@@ -1243,10 +1198,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($truculent->id, $chapters[0]);
     }
 
-    public function testGetAssignedFleetDefaultExpectedFleetName()
+    public function testGetAssignedFleetDefaultExpectedFleetName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
         // Act
@@ -1256,10 +1210,9 @@ class ChapterTest extends TestCase
         $this->assertEquals('Third Fleet', $results);
     }
 
-    public function testGetAssignedFleetIdOnlyExpectedFleetName()
+    public function testGetAssignedFleetIdOnlyExpectedFleetName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
 
@@ -1270,10 +1223,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($fleet->id, $results);
     }
 
-    public function testGetChildChapters()
+    public function testGetChildChapters(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
         $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
@@ -1295,10 +1247,9 @@ class ChapterTest extends TestCase
 
     }
 
-    public function testGetChapterIdWithChildrenDefaultIdExpectedList()
+    public function testGetChapterIdWithChildrenDefaultIdExpectedList(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
         $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
@@ -1319,10 +1270,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($excalibur->id, $chapters[5]);
     }
 
-    public function testGetChapterIdWithChildrenPiDivIdExpectedList()
+    public function testGetChapterIdWithChildrenPiDivIdExpectedList(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
@@ -1340,10 +1290,9 @@ class ChapterTest extends TestCase
         $this->assertEquals($excalibur->id, $chapters[3]);
     }
 
-    public function testGetNumActiveChildrenDefaultIdExpectedCount()
+    public function testGetNumActiveChildrenDefaultIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
 
         // Act
@@ -1353,10 +1302,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(2, $count);
     }
 
-    public function testGetNumActiveChildrenSpecifiedIdExpectedCount()
+    public function testGetNumActiveChildrenSpecifiedIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
 
@@ -1367,10 +1315,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(2, $count);
     }
 
-    public function testGetNumActiveChildrenBadSpecifiedIdExpectedCount()
+    public function testGetNumActiveChildrenBadSpecifiedIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
 
         // Act
@@ -1380,10 +1327,9 @@ class ChapterTest extends TestCase
         $this->assertEquals(0, $count);
     }
 
-    public function testGetChildHierarchyDefaultIdExpectedCount()
+    public function testGetChildHierarchyDefaultIdExpectedCount(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $mardet = Chapter::where('chapter_name', 'MARDET Achilles')->first();
@@ -1408,10 +1354,9 @@ class ChapterTest extends TestCase
         $this->assertCount(0, $results[1]['children']);
     }
 
-    public function testGetChapterTypeGoodIdExpectedResults()
+    public function testGetChapterTypeGoodIdExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
         // Act
@@ -1421,10 +1366,9 @@ class ChapterTest extends TestCase
         $this->assertEquals('ship', $results);
     }
 
-    public function testGetChapterTypeBadIdExpectedResults()
+    public function testGetChapterTypeBadIdExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
         // Act
@@ -1434,10 +1378,9 @@ class ChapterTest extends TestCase
         $this->assertNull($results);
     }
 
-    public function testGetChapterLocationsExpectedResults()
+    public function testGetChapterLocationsExpectedResults(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
         $this->seed(UserSeeder::class);
         $espectedResults = [
             'CA' => 'California',
