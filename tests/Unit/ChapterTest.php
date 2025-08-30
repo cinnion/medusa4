@@ -966,7 +966,21 @@ class ChapterTest extends TestCase
         $user = $chapter->getCO();
 
         // Assert
+        $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($expectedCO->toArray(), $user->toArray());
+    }
+
+    public function testGetCOGallantExpectedNull(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Gallant')->first();
+
+        // Act
+        $result = $chapter->getCO();
+
+        // Assert
+        $this->assertNull($result);
     }
 
     public function testGetXOAchillesExpectedUser(): void
@@ -980,7 +994,21 @@ class ChapterTest extends TestCase
         $user = $chapter->getXO();
 
         // Assert
+        $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($expectedXO->toArray(), $user->toArray());
+    }
+
+    public function testGetXOGallantExpectedNull(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Gallant')->first();
+
+        // Act
+        $result = $chapter->getXO();
+
+        // Assert
+        $this->assertNull($result);
     }
 
     public function testGetBosunAchillesExpectedUser(): void
@@ -994,7 +1022,21 @@ class ChapterTest extends TestCase
         $user = $chapter->getBosun();
 
         // Assert
+        $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($expectedBosun->toArray(), $user->toArray());
+    }
+
+    public function testGetBosunGallantExpectedNull(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $chapter = Chapter::where('chapter_name', 'HMS Gallant')->first();
+
+        // Act
+        $result = $chapter->getBosun();
+
+        // Assert
+        $this->assertNull($result);
     }
 
     public function testGetCommandCrewAchillesExpectedCommandCrew(): void
@@ -1014,10 +1056,13 @@ class ChapterTest extends TestCase
         $this->assertIsArray($commandCrew);
         $this->assertCount(3, $commandCrew);
         $this->assertEquals('Commanding Officer', $commandCrew[1]['display']);
+        $this->assertInstanceOf(User::class, $commandCrew[1]['user']);
         $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
         $this->assertEquals('Executive Officer', $commandCrew[2]['display']);
+        $this->assertInstanceOf(User::class, $commandCrew[2]['user']);
         $this->assertEquals($expectedXO->toArray(), $commandCrew[2]['user']->toArray());
         $this->assertEquals('Bosun', $commandCrew[3]['display']);
+        $this->assertInstanceOf(User::class, $commandCrew[3]['user']);
         $this->assertEquals($expectedBosun->toArray(), $commandCrew[3]['user']->toArray());
     }
 
@@ -1038,8 +1083,10 @@ class ChapterTest extends TestCase
         $this->assertIsArray($commandCrew);
         $this->assertCount(1, $commandCrew);
         $this->assertEquals('Grand Duke', $commandCrew[1]['display']);
+        $this->assertInstanceOf(User::class, $commandCrew[1]['user']);
         $this->assertEquals($expectedGD->toArray(), $commandCrew[1]['user']->toArray());
         //$this->assertEquals('Grand Duchess', $commandCrew[2]['display']);
+        //$this->assertInstanceOf(User, $commandCrew[1]['user']);
         //$this->assertEquals($expectedGDs->toArray(), $commandCrew[2]['user']->toArray());
     }
 

@@ -453,9 +453,9 @@ class Chapter extends Model
     /**
      * Get the XO or equiv of a chapter.
      *
-     * @return User|array
+     * @return ?User
      */
-    public function getXO()
+    public function getXO(): ?User
     {
         return $this->_getTriadMember(2);
     }
@@ -463,9 +463,9 @@ class Chapter extends Model
     /**
      * Get the Bosun or equiv of a chapter.
      *
-     * @return User|array
+     * @return ?User
      */
-    public function getBosun()
+    public function getBosun(): ?User
     {
         return $this->_getTriadMember(3);
     }
@@ -473,19 +473,18 @@ class Chapter extends Model
     /**
      * Return user returned for a specific slot in the command triad results.
      *
-     * @TODO Refactor to return null instead of an empty array.  Will have to check all code that calls this.
+     * @param int $slot
      *
-     * @param $slot
-     *
-     * @return User|array
+     * @return ?User
      */
-    private function _getTriadMember($slot)
+    private function _getTriadMember(int $slot): ?User
     {
         $triad = $this->getCommandCrew();
 
         if (empty($triad[$slot]) === false) {
             return $triad[$slot]['user'];
         }
+        return null;
     }
 
     /**
@@ -493,9 +492,9 @@ class Chapter extends Model
      *
      * @param $chapterId
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getCommandCrew()
+    public function getCommandCrew(): array
     {
         $default = json_decode('{
             "Commanding Officer": {
@@ -623,7 +622,7 @@ class Chapter extends Model
      *
      * @return array
      */
-    public function getChildChapters()
+    public function getChildChapters(): array
     {
         return Arr::where($this->getChapterIdWithChildren(), function ($value, $key) {
             if ($value != $this->id) {
