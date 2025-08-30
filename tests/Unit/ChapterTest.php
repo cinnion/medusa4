@@ -1396,5 +1396,100 @@ class ChapterTest extends TestCase
         $this->assertEquals($espectedResults, $results);
     }
 
-    // Test crewHasNewExams
+    public function testCrewHasNewExamsDefaultIdAchillesReturnsTrue()
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($scott);
+
+        // Act
+        $results = $achilles->crewHasNewExams();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testCrewHasNewExamsSpecifiedAchillesReturnsTrue()
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($scott);
+
+        // Act
+        $results = $excalibur->crewHasNewExams($achilles->id);
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testCrewHasNewExamsDefaultIdExcaliburReturnsFalse()
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+        $co = User::where('email_address', 'excalibur@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($co);
+
+        // Act
+        $results = $excalibur->crewHasNewExams();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testCrewHasNewExamsSpecifiedExcaliburReturnsFalse()
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
+        $co = User::where('email_address', 'excalibur@example.com')->first();
+
+        // Expects
+        Auth::expects('user')
+            ->andReturn($co);
+
+        // Act
+        $results = $achilles->crewHasNewExams($excalibur->id);
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testCrewHasNewExamsExceptionThrownReturnsFalse()
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        $mock = \Mockery::mock(Chapter::class)->makePartial();
+        $mock->id = 'fubar';
+
+        // Expects
+        Auth::expects('user')
+            ->never();
+        $mock->expects('getCrewWithChildren')
+            ->andThrow(new \Exception('some exception'));
+
+        // Act
+        $results = $mock->crewHasNewExams();
+
+        // Assert
+        $this->assertFalse($results);
+    }
 }

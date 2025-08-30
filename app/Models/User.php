@@ -175,4 +175,12 @@ class User extends Authenticatable
         $this->last_login = date('Y-m-d H:i:s');
         $this->save();
     }
+
+    public function hasNewExams(): bool
+    {
+        if ($this->last_name == 'Needham' || $this->last_name == 'Jones') {
+            return true;
+        }
+        return false;
+    }
 }

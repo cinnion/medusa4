@@ -748,30 +748,35 @@ class Chapter extends Model
     /**
      * Are there any new exams for this crew?
      *
-     * @param string|null $id
+     * @param ?string $chapterId
      *
      * @return bool
      */
-    public function crewHasNewExams(?string $id = null)
+    public function crewHasNewExams(?string $chapterId = null): bool
     {
-        if (empty($id) === true) {
-            $id = $this->id;
-        }
-
-        try {
-            $crew = $this->getCrewWithChildren($id);
-        } catch (\Exception $d) {
-            return false;
+        if (empty($chapterId) === true) {
+            $chapterId = $this->id;
         }
 
         $hasExams = false;
 
-        foreach ($crew as $member) {
-            if ($member->hasNewExams() === true) {
-                $hasExams = true;
+        try {
+            $crew = $this->getCrewWithChildren($chapterId);
+
+            foreach ($crew as $member) {
+                if ($member->hasNewExams() === true) {
+                    $hasExams = true;
+                    break;
+                }
             }
+
+            return $hasExams;
+        } catch (\Exception $d) {
+            return $hasExams;
         }
 
-        return $hasExams;
+
+
+
     }
 }

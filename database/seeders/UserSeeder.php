@@ -309,7 +309,6 @@ class UserSeeder extends Seeder
             'registration_status' => 'Active',
         ]);
         User::factory()->create([
-
             'first_name' => 'David',
             'email_address' => '4sl@example.com',
             'member_id' => 'A0000011',
@@ -335,7 +334,6 @@ class UserSeeder extends Seeder
             'registration_status' => 'Active',
         ]);
         User::factory()->create([
-
             'first_name' => 'Jo',
             'last_name' => 'Johnson',
             'email_address' => 'jo@example.com',
@@ -461,7 +459,9 @@ class UserSeeder extends Seeder
             ],
         ]);
         User::factory()->create([
+            'last_name' => 'Anderson',
             'member_id' => 'A0000014',
+            'email_address' => 'excalibur@example.com',
             'active' => 1,
             'assignment' => [
                 [
@@ -478,6 +478,29 @@ class UserSeeder extends Seeder
             'registration_status' => 'Active',
             'rank' => [
                 'grade' => 'O-6',
+                'date_of_rank' => '2019-10-22',
+            ],
+        ]);
+
+        User::factory()->create([
+            'last_name' => 'Anderson',
+            'member_id' => 'A0000015',
+            'active' => 1,
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b4580',
+                    'chapter_name' => 'HMS Excalibur',
+                    'date_assigned' => '2018-11-15',
+                    'billet' => 'Crewman',
+                    'primary' => true,
+                ],
+            ],
+            'peerages' => [],
+            'city' => 'Athens',
+            'state_province' => 'GA',
+            'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'E-3',
                 'date_of_rank' => '2019-10-22',
             ],
         ]);
