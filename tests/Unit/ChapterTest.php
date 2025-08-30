@@ -753,7 +753,97 @@ class ChapterTest extends TestCase
         $this->assertEquals(0, $count);
     }
 
-    // Test getAllCrewIncludingChildren
+    public function testGetAllCrewIncludingDefaultIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Act
+        $crew = $achilles->getAllCrewIncludingChildren();
+
+        // Assert
+        $this->assertCount(7, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+        $this->assertInstanceOf(User::class, $crew[0]);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertInstanceOf(User::class, $crew[1]);
+        $this->assertEquals($jo->toArray(), $crew[1]->toArray());
+        $this->assertInstanceOf(User::class, $crew[2]);
+        $this->assertEquals($scott->toArray(), $crew[2]->toArray());
+        $this->assertInstanceOf(User::class, $crew[3]);
+        $this->assertEquals($doug->toArray(), $crew[3]->toArray());
+        $this->assertInstanceOf(User::class, $crew[4]);
+        $this->assertEquals($bridgitte->toArray(), $crew[4]->toArray());
+        $this->assertInstanceOf(User::class, $crew[5]);
+        $this->assertEquals($dave->toArray(), $crew[5]->toArray());
+        $this->assertInstanceOf(User::class, $crew[6]);
+        $this->assertEquals($robin1->toArray(), $crew[6]->toArray());
+    }
+
+    public function testGetAllCrewIncludingChildrenSpecifiedIdExpectedRoster()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $dave = User::where('email_address', 'dave@example.com')->first();
+        $jo = User::where('email_address', 'jo@example.com')->first();
+        $mike = User::where('email_address', 'mike@example.com')->first();
+        $doug = User::where('email_address', 'doug@example.com')->first();
+        $bridgitte = User::where('email_address', 'bridgitte@example.com')->first();
+        $robin1 = User::where('email_address', 'robin1@example.com')->first();
+        $robin2 = User::where('email_address', 'robin2@example.com')->first();
+        $robin3 = User::where('email_address', 'robin3@example.com')->first();
+        $scott = User::where('email_address', 'scott@example.com')->first();
+
+        // Act
+        $crew = $fleet->getAllCrewIncludingChildren($achilles->id);
+
+        // Assert
+        $this->assertCount(7, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+        $this->assertInstanceOf(User::class, $crew[0]);
+        $this->assertEquals($mike->toArray(), $crew[0]->toArray());
+        $this->assertInstanceOf(User::class, $crew[1]);
+        $this->assertEquals($jo->toArray(), $crew[1]->toArray());
+        $this->assertInstanceOf(User::class, $crew[2]);
+        $this->assertEquals($scott->toArray(), $crew[2]->toArray());
+        $this->assertInstanceOf(User::class, $crew[3]);
+        $this->assertEquals($doug->toArray(), $crew[3]->toArray());
+        $this->assertInstanceOf(User::class, $crew[4]);
+        $this->assertEquals($bridgitte->toArray(), $crew[4]->toArray());
+        $this->assertInstanceOf(User::class, $crew[5]);
+        $this->assertEquals($dave->toArray(), $crew[5]->toArray());
+        $this->assertInstanceOf(User::class, $crew[6]);
+        $this->assertEquals($robin1->toArray(), $crew[6]->toArray());
+    }
+
+    public function testGetAllCrewIncludingChildrenBadIdExpectedEmptyCollection()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $crew = $achilles->getAllCrewIncludingChildren('bad-id');
+
+        // Assert
+        $this->assertCount(0, $crew);
+        $this->assertInstanceOf(Collection::class, $crew);
+    }
 
     public function testGetCommandBilletAchillesCOReturnsExpectedUser()
     {

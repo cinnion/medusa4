@@ -346,7 +346,7 @@ class Chapter extends Model
 
     /**
      * @param ?string $chapterId
-     * 
+     *
      * @return int
      */
     public function getActiveCrewCount(?string $chapterId = null): int
@@ -355,11 +355,11 @@ class Chapter extends Model
     }
 
     /**
-     * @param string|null $chapterId
+     * @param ?string $chapterId
      *
-     * @return User[]
+     * @return Collection<User>
      */
-    public function getAllCrewIncludingChildren(?string $chapterId = null)
+    public function getAllCrewIncludingChildren(?string $chapterId = null): Collection
     {
         if (empty($chapterId) === true) {
             $chapterId = $this->id;
@@ -368,12 +368,8 @@ class Chapter extends Model
         $chapters = $this->getChapterIdWithChildren($chapterId);
 
         return User::whereIn('assignment.chapter_id', $chapters)
-            ->where('active', '=', 1)
-            ->where(
-                'registration_status',
-                '=',
-                'Active'
-            )
+            ->where('active', 1)
+            ->where('registration_status', 'Active')
             ->orderBy('last_name', 'asc')
             ->get();
     }
