@@ -1242,7 +1242,32 @@ class ChapterTest extends TestCase
         $this->assertEquals($truculent->id, $chapters[0]);
     }
 
-    // Test getAssignedFleet
+    public function testGetAssignedFleetDefaultExpectedFleetName()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $results = $achilles->getAssignedFleet();
+
+        // Assert
+        $this->assertEquals('Third Fleet', $results);
+    }
+
+    public function testGetAssignedFleetIdOnlyExpectedFleetName()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+
+        // Act
+        $results = $achilles->getAssignedFleet(true);
+
+        // Assert
+        $this->assertEquals($fleet->id, $results);
+    }
 
     // Test getChildChapters
 

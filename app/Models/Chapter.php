@@ -596,9 +596,11 @@ class Chapter extends Model
     /**
      * Get the fleet a ship is assigned to.
      *
+     * @param ?bool $idOnly
+     *
      * @return string|null
      */
-    public function getAssignedFleet($idOnly = false)
+    public function getAssignedFleet(?bool $idOnly = false): string
     {
         foreach ($this->getChapterIdWithParents() as $chapterId) {
             $fleet = self::find($chapterId);
@@ -607,12 +609,9 @@ class Chapter extends Model
                     return $fleet->id;
                 }
                 $nf = new NumberFormatter('en_US', NumberFormatter::SPELLOUT);
-                $nf->setTextAttribute(
-                    NumberFormatter::DEFAULT_RULESET,
-                    '%spellout-ordinal'
-                );
+                $nf->setTextAttribute(NumberFormatter::DEFAULT_RULESET, '%spellout-ordinal');
 
-                return ucfirst($nf->format($fleet->hull_number)).' Fleet';
+                return ucfirst($nf->format($fleet->hull_number)) . ' Fleet';
             }
         }
     }
