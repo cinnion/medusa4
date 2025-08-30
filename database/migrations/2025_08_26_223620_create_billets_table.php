@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        if (!Schema::hasTable('ratings')) {
+        if (!Schema::hasTable('billets')) {
             Schema::create('billets', function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
