@@ -568,20 +568,22 @@ class Chapter extends Model
     /**
      * Get a list of Chapter ID's and parents, with an option to stop at a certain type of chapters.
      *
-     * @param string $stopAtType
+     * @param ?string $stopAtType
      *
-     * @return array
+     * @return array<string>
      */
-    public function getChapterIdWithParents($stopAtType = null)
+    public function getChapterIdWithParents(?string $stopAtType = null): array
     {
         if (empty($this->assigned_to) === false && is_null($stopAtType) === true) {
-            return array_merge(
-                [$this->id],
-                self::find($this->assigned_to)->getChapterIdWithParents($stopAtType)
-            );
+            $children = self::find($this->assigned_to)?->getChapterIdWithParents($stopAtType);
+            if (is_null($children) === true) {
+                return [$this->id];
+            } else {
+                return array_merge([$this->id], $children);
+            }
         } elseif (empty($this->assigned_to) === false && is_null($stopAtType) === false) {
             $next = self::find($this->assigned_to);
-            if ($next->chapter_type == $stopAtType) {
+            if (is_null($next) === true || $next->chapter_type == $stopAtType) {
                 return [$this->id];
             } else {
                 return array_merge([$this->id], $next->getChapterIdWithParents($stopAtType));

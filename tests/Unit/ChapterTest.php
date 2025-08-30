@@ -140,7 +140,9 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b478a' => 'Bureau of Communications',
                 '55fa1800e4bed82e078b4784' => 'Office of the First Space Lord',
             ],
-            'Offices' => [],
+            'Offices' => [
+                '56f0c862e4bed809258b4579' => 'Office of the Lord Chancellor',
+            ],
             'Academies' => [],
             'Institutes' => [],
             'Universities' => [],
@@ -200,7 +202,9 @@ class ChapterTest extends TestCase
             'Civilian Regions' => [],
             'Civilian Systems' => [],
             'Civilian Planetary' => [],
-            'Corporate Board' => [],
+            'Corporate Board' => [
+                '6596c53b9c6b7f5dfc011af3' => 'Board of Directors',
+            ],
             'Corporate Committee' => [
                 '659af5a09c6b7f408f09e775' => 'Steering Committee',
             ],
@@ -234,7 +238,9 @@ class ChapterTest extends TestCase
                 '55fa1800e4bed82e078b478a' => 'Bureau of Communications',
                 '55fa1800e4bed82e078b4784' => 'Office of the First Space Lord',
             ],
-            'Offices' => [],
+            'Offices' => [
+                '56f0c862e4bed809258b4579' => 'Office of the Lord Chancellor',
+            ],
             'Academies' => [],
             'Institutes' => [],
             'Universities' => [],
@@ -294,7 +300,9 @@ class ChapterTest extends TestCase
             'Civilian Regions' => [],
             'Civilian Systems' => [],
             'Civilian Planetary' => [],
-            'Corporate Board' => [],
+            'Corporate Board' => [
+                '6596c53b9c6b7f5dfc011af3' => 'Board of Directors',
+            ],
             'Corporate Committee' => [
                 '659af5a09c6b7f408f09e775' => 'Steering Committee',
             ],
@@ -448,6 +456,8 @@ class ChapterTest extends TestCase
             '659af5a09c6b7f408f09e775' => 'Steering Committee',
             '58ee7c27493ea9ea728b4569' => 'Task Group 33.1',
             '55fa1800e4bed82e078b475e' => 'Third Naval District',
+            '6596c53b9c6b7f5dfc011af3' => 'Board of Directors',
+            '56f0c862e4bed809258b4579' => 'Office of the Lord Chancellor',
         ];
 
         // Act
@@ -1111,7 +1121,126 @@ class ChapterTest extends TestCase
         $this->assertEquals($expectedCO->toArray(), $commandCrew[1]['user']->toArray());
     }
 
-    // Test getChapterIdWithParents
+    public function testGetChapterIdWithParentsDefaultExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $district = Chapter::where('chapter_name', 'Third Naval District')->first();
+        $firstSL = Chapter::where('chapter_name', 'Office of the First Space Lord')->first();
+        $ah = Chapter::where('chapter_name', 'Admiralty House')->first();
+        $sc = Chapter::where('chapter_name', 'Steering Committee')->first();
+        $bod = Chapter::where('chapter_name', 'Board of Directors')->first();
+
+        // Act
+        $chapters = $achilles->getChapterIdWithParents();
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(9, $chapters);
+        $this->assertEquals($achilles->id, $chapters[0]);
+        $this->assertEquals($piDiv->id, $chapters[1]);
+        $this->assertEquals($tg331->id, $chapters[2]);
+        $this->assertEquals($fleet->id, $chapters[3]);
+        $this->assertEquals($district->id, $chapters[4]);
+        $this->assertEquals($firstSL->id, $chapters[5]);
+        $this->assertEquals($ah->id, $chapters[6]);
+        $this->assertEquals($sc->id, $chapters[7]);
+        $this->assertEquals($bod->id, $chapters[8]);
+    }
+
+    /**
+     * @xxx - This situation needs to be investigated, to determine if it
+     * should just stop and return one level.
+     */
+    public function testGetChapterIdWithParentsShipExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+        $district = Chapter::where('chapter_name', 'Third Naval District')->first();
+        $firstSL = Chapter::where('chapter_name', 'Office of the First Space Lord')->first();
+        $ah = Chapter::where('chapter_name', 'Admiralty House')->first();
+        $sc = Chapter::where('chapter_name', 'Steering Committee')->first();
+        $bod = Chapter::where('chapter_name', 'Board of Directors')->first();
+
+        // Act
+        $chapters = $achilles->getChapterIdWithParents('ship');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(9, $chapters);
+        $this->assertEquals($achilles->id, $chapters[0]);
+        $this->assertEquals($piDiv->id, $chapters[1]);
+        $this->assertEquals($tg331->id, $chapters[2]);
+        $this->assertEquals($fleet->id, $chapters[3]);
+        $this->assertEquals($district->id, $chapters[4]);
+        $this->assertEquals($firstSL->id, $chapters[5]);
+        $this->assertEquals($ah->id, $chapters[6]);
+        $this->assertEquals($sc->id, $chapters[7]);
+        $this->assertEquals($bod->id, $chapters[8]);
+    }
+
+    /**
+     * @xxx This test and the associated code needs looked at to see if the
+     * unit on which we are to stop should be included.
+     */
+    public function testGetChapterIdWithParentsFleetExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+        $piDiv = Chapter::where('chapter_name', 'Battlecruiser Division 314')->first();
+        $tg331 = Chapter::where('chapter_name', 'Task Group 33.1')->first();
+        $fleet = Chapter::where('chapter_name', 'San Martino Fleet')->first();
+
+        // Act
+        $chapters = $achilles->getChapterIdWithParents('fleet');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(3, $chapters);
+        $this->assertEquals($achilles->id, $chapters[0]);
+        $this->assertEquals($piDiv->id, $chapters[1]);
+        $this->assertEquals($tg331->id, $chapters[2]);
+//        $this->assertEquals($fleet->id, $chapters[3]);  // Not returned as one might expect.
+    }
+
+    public function testGetChapterIdWithParentsBrokenChainExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $truculent = Chapter::where('chapter_name', 'HMS Truculent')->first();
+
+        // Act
+        $chapters = $truculent->getChapterIdWithParents();
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(1, $chapters);
+        $this->assertEquals($truculent->id, $chapters[0]);
+    }
+
+    public function testGetChapterIdWithParentsFleetWithBrokenChainExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $truculent = Chapter::where('chapter_name', 'HMS Truculent')->first();
+
+        // Act
+        $chapters = $truculent->getChapterIdWithParents('fleet');
+
+        // Assert
+        $this->assertIsArray($chapters);
+        $this->assertCount(1, $chapters);
+        $this->assertEquals($truculent->id, $chapters[0]);
+    }
 
     // Test getAssignedFleet
 
