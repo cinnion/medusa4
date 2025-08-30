@@ -707,13 +707,13 @@ class Chapter extends Model
      *
      * @param string $chapterId
      *
-     * @return mixed
+     * @return ?string
      */
-    public static function getChapterType(string $chapterId)
+    public static function getChapterType(string $chapterId): string|null
     {
         $chapter = self::find($chapterId);
 
-        return $chapter->chapter_type;
+        return $chapter?->chapter_type;
     }
 
     /**

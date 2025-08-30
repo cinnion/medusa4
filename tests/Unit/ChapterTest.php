@@ -975,9 +975,31 @@ class ChapterTest extends TestCase
         $this->assertCount(0, $results[1]['children']);
     }
 
-    // Test getChapterType
+    public function testGetChapterTypeGoodIdExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
 
-    // Test getChapterLocations
+        // Act
+        $results = Chapter::getChapterType($achilles->id);
+
+        // Assert
+        $this->assertEquals('ship', $results);
+    }
+
+    public function testGetChapterTypeBadIdExpectedResults()
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
+
+        // Act
+        $results = Chapter::getChapterType('bad-id');
+
+        // Assert
+        $this->assertNull($results);
+    }
 
     // Test crewHasNewExams
 }
