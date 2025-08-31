@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('korders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string('order');
+            $table->string('filename');
+            $table->json('classes');
         });
     }
 
