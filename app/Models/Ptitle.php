@@ -6,5 +6,9 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Ptitle extends Model
 {
-    //
+    protected $fillable = [
+        'title',
+        'code',
+        'precedence'
+    ];
 }
