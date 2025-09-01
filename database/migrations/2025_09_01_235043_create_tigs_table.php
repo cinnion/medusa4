@@ -15,6 +15,9 @@ return new class extends Migration
             Schema::create('tig', function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
+
+                $table->string('grade');
+                $table->json('tig');
             });
         }
     }
