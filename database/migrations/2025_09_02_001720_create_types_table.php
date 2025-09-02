@@ -15,6 +15,10 @@ return new class extends Migration
             Schema::create('types', function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
+
+                $table->string('chapter_type');
+                $table->string('chapter_description');
+                $table->json('can_have');
             });
         }
     }
