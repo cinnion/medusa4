@@ -13,7 +13,11 @@ return new class extends Migration {
         if (!Schema::hasTable('award_logs')) {
             Schema::create('award_logs', function (Blueprint $table) {
                 $table->id();
-                $table->timestamps();
+
+                $table->timestamp('timestamp');
+                $table->string('member_id');
+                $table->string('award');
+                $table->integer('qty');
             });
         }
     }
