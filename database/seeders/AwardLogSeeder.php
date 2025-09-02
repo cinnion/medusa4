@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\AwardLog;
 use Illuminate\Database\Seeder;
 
 class AwardLogSeeder extends Seeder
@@ -12,6 +12,13 @@ class AwardLogSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        AwardLog::factory()
+            ->count(10)
+            ->create();
+
+        AwardLog::factory()
+            ->count(10)
+            ->newer()
+            ->create();
     }
 }
