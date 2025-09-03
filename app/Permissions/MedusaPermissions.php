@@ -45,7 +45,7 @@ trait MedusaPermissions
             );
     }
 
-    public function loginValid()
+    public function loginValid(): bool
     {
         if (Auth::check() === false) {
             return redirect(URL::previous())->with(

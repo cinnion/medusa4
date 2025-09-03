@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Permissions\MedusaPermissions;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -18,6 +19,38 @@ class MedusaPermissionsTest extends TestCase
     // Test loginValid
 
     // Test hasPermission
+    /**
+     * @todo Revisit with a feature test.
+     */
+    public function testLoginValidCheckReturnsFalseRedirected(): void
+    {
+        // Arrange:
+        Auth::shouldReceive('check')->andReturn(false);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->loginValid();
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $result);
+    }
+
+    public function testLoginValidCheckReturnsTrueTrueExpected(): void
+    {
+        // Arrange:
+        Auth::shouldReceive('check')->andReturn(true);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->loginValid();
+
+        // Assert
+        $this->assertTrue($result);
+    }
 
     public function testHasPermissionNotLoggedInExpectFalse(): void
     {
