@@ -57,7 +57,14 @@ trait MedusaPermissions
         return true;
     }
 
-    public function hasPermission($permissions, $skipAll = false)
+    /**
+     * @param string|array $permissions
+     * @param bool $skipAll
+     * @return bool
+     *
+     * @deprecated Call hasPermissions directly.
+     */
+    public function hasPermission(string|array $permissions, bool $skipAll = false): bool
     {
         return $this->hasPermissions($permissions, $skipAll);
     }
