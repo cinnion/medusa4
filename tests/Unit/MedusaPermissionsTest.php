@@ -14,11 +14,99 @@ class MedusaPermissionsTest extends TestCase
 
     // Test canDeleteExam
 
-    // Test hasDutyRosterForAssignedShip
+    public function testHasDutyRosterForAssignedShipHasAllPermissionsExpectTrue(): void
+    {
+        // Arrange.
+        $mock = new class
+        {
+            use MedusaPermissions;
 
-    // Test loginValid
+            public $permissions = [
+                'ALL_PERMS',
+            ];
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
 
-    // Test hasPermission
+        // Act
+        $result = $mock->hasDutyRosterForAssignedShip();
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    public function testHasDutyRosterForAssignedShipDoesNotHaveDutyRosterExpectFalse(): void
+    {
+        // Arrange.
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+            ];
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
+
+        // Act
+        $result = $mock->hasDutyRosterForAssignedShip();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    public function testHasDutyRosterForAssignedShipHasDutyRosterNotInRosterExpectFalse(): void
+    {
+        // Arrange.
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+                'DUTY_ROSTER',
+            ];
+
+            public $duty_roster = 'ABC, DEF';
+
+            public function getAssignedShip(): string
+            {
+                return 'XYZ';
+            }
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
+
+        // Act
+        $result = $mock->hasDutyRosterForAssignedShip();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    public function testHasDutyRosterForAssignedShipHasDutyRosterInRosterExpectTrue(): void
+    {
+        // Arrange.
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+                'DUTY_ROSTER',
+            ];
+
+            public $duty_roster = 'XYZ, ABC';
+
+            public function getAssignedShip(): string
+            {
+                return 'XYZ';
+            }
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
+
+        // Act
+        $result = $mock->hasDutyRosterForAssignedShip();
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
     /**
      * @todo Revisit with a feature test.
      */

@@ -35,7 +35,7 @@ trait MedusaPermissions
         }
     }
 
-    public function hasDutyRosterForAssignedShip()
+    public function hasDutyRosterForAssignedShip(): bool
     {
         return Auth::user()->hasAllPermissions() === true ? true :
             Auth::user()->hasPermissions(['DUTY_ROSTER']) &&
