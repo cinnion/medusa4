@@ -62,7 +62,12 @@ trait MedusaPermissions
         return $this->hasPermissions($permissions, $skipAll);
     }
 
-    public function hasPermissions($permissions, $skipAll = false)
+    /**
+     * @param string|array<sting> $permissions
+     * @param bool $skipAll
+     * @return bool
+     */
+    public function hasPermissions(string|array $permissions, bool $skipAll = false): bool
     {
         if (empty(Auth::user()) === true) {
             return false; // Not logged in, don't waste time
