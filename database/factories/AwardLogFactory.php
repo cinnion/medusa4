@@ -22,7 +22,7 @@ class AwardLogFactory extends Factory
         $award = Award::all()->random();
 
         return [
-            'timestamp' => $this->faker->dateTimeBetween('-1 year', '-1 month'),
+            'timestamp' => $this->faker->dateTimeBetween('-1 year', '-2 month')->getTimestamp(),
             'member_id' => $user->member_id,
             'award' => $award->code,
             'qty' => $award->multiple ? $this->faker->numberBetween(1,5) : 1,
@@ -31,8 +31,10 @@ class AwardLogFactory extends Factory
 
     public function newer(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'timestamp' => $this->faker->dateTimeBetween('-1 month', 'now'),
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'timestamp' => $this->faker->dateTimeBetween('-1 month', 'now')->getTimestamp(),
+            ];
+        });
     }
 }

@@ -17,8 +17,16 @@ class AwardLogSeeder extends Seeder
             ->create();
 
         AwardLog::factory()
-            ->count(10)
+            ->count(8)
             ->newer()
             ->create();
+
+        AwardLog::factory()
+            ->newer()
+            ->create(['member_id' => 'B0001']);
+
+        AwardLog::factory()
+            ->newer()
+            ->create(['award' => 'XYZ']);
     }
 }

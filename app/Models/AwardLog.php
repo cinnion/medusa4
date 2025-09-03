@@ -26,21 +26,21 @@ class AwardLog extends Model
             return self::all();
         }
 
-        $query = new self();
+        $query = self::query();
 
         foreach ($params as $param => $value) {
             switch ($param) {
                 case 'start':
-                    $query = $query->where('timestamp', '>=', strtotime($value));
+                    $query->where('timestamp', '>=', strtotime($value));
                     break;
                 case 'end':
-                    $query = $query->where('timestamp', '<=', strtotime($value));
+                    $query->where('timestamp', '<=', strtotime($value));
                     break;
                 case 'award':
-                    $query = $query->where('award', $value);
+                    $query->where('award', $value);
                     break;
                 case 'member_id':
-                    $query = $query->where('member_id', $value);
+                    $query->where('member_id', $value);
                     break;
             }
         }
