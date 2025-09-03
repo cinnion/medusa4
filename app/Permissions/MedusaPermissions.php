@@ -11,7 +11,15 @@ use Illuminate\Support\Facades\URL;
 
 trait MedusaPermissions
 {
-    public function checkPermissions($permissions, $skipAll = false)
+
+    /**
+     * Check to see if the user has the specified permissions and redirect back if not.
+     *
+     * @param string|array $permissions
+     * @param bool $skipAll
+     * @return bool|RedirectResponse
+     */
+    public function checkPermissions(string|array $permissions, bool $skipAll = false): bool|RedirectResponse
     {
         if ($this->hasPermissions($permissions, $skipAll) === false) {
             return redirect(URL::previous())->with(

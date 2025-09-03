@@ -10,7 +10,68 @@ use Tests\TestCase;
 
 class MedusaPermissionsTest extends TestCase
 {
-    // Test checkPermissions
+    public function testCheckPermissionsNotLoggedInExpectFalse(): void
+    {
+        // Arrange.
+        Auth::shouldReceive('user')->andReturn(null);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->checkPermissions('');
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $result);
+    }
+
+    public function testCheckPermissionsLoggedInHasAllPermsExpectTrue(): void
+    {
+        // Arrange.
+        $permissions = [
+            'LOGOUT',
+            'CHANGE_PWD',
+            'EDIT_SELF',
+            'ROSTER',
+            'TRANSFER',
+            'ALL_PERMS',
+        ];
+        $user = User::factory()->make(['permissions' => $permissions]);
+        Auth::shouldReceive('user')->andReturn($user);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->checkPermissions('FOO_PERM');
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    public function testCheckPermissionsLoggedInHasAllPermsSkippedExpectFalse(): void
+    {
+        // Arrange.
+        $permissions = [
+            'LOGOUT',
+            'CHANGE_PWD',
+            'EDIT_SELF',
+            'ROSTER',
+            'TRANSFER',
+            'ALL_PERMS',
+        ];
+        $user = User::factory()->make(['permissions' => $permissions]);
+        Auth::shouldReceive('user')->andReturn($user);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->checkPermissions('FOO_PERM', true);
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $result);
+    }
 
     /**
      * @todo Revisit with a feature test.
