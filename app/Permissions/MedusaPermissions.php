@@ -91,7 +91,12 @@ trait MedusaPermissions
         return false; // Permission not found
     }
 
-    public function hasAllPermissions()
+    /**
+     * Determine if the user has ALL_PERMS.
+     *
+     * @return bool
+     */
+    public function hasAllPermissions(): bool
     {
         if (empty(Auth::user()) === true) {
             return false; // Not logged in, don't waste time

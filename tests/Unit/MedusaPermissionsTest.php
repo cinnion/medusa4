@@ -106,8 +106,67 @@ class MedusaPermissionsTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testHasAllPermissionsNotLoggedInExpectFalse(): void
+    {
+        // Arrange.
+        Auth::shouldReceive('user')->andReturn(null);
+        $mock = new class {
+            use MedusaPermissions;
+        };
 
-    // Test hasAllPermissions
+        // Act
+        $result = $mock->hasAllPermissions();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    public function testHasAllPermissionsLoggedInHasAllPermsExpectTrue(): void
+    {
+        // Arrange.
+        $permissions = [
+            'LOGOUT',
+            'CHANGE_PWD',
+            'EDIT_SELF',
+            'ROSTER',
+            'TRANSFER',
+            'ALL_PERMS',
+        ];
+        $user = User::factory()->make(['permissions' => $permissions]);
+        Auth::shouldReceive('user')->andReturn($user);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->hasAllPermissions();
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    public function testHasAllPermissionsLoggedInNoAllPermsExpectFalse(): void
+    {
+        // Arrange.
+        $permissions = [
+            'LOGOUT',
+            'CHANGE_PWD',
+            'EDIT_SELF',
+            'ROSTER',
+            'TRANSFER',
+        ];
+        $user = User::factory()->make(['permissions' => $permissions]);
+        Auth::shouldReceive('user')->andReturn($user);
+        $mock = new class {
+            use MedusaPermissions;
+        };
+
+        // Act
+        $result = $mock->hasAllPermissions();
+
+        // Assert
+        $this->assertFalse($result);
+    }
 
     // Test isInChainOfCommand
 
