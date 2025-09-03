@@ -12,7 +12,88 @@ class MedusaPermissionsTest extends TestCase
 {
     // Test checkPermissions
 
-    // Test canDeleteExam
+    /**
+     * @todo Revisit with a feature test.
+     */
+    public function testCanDeleteExamNoPermissionExpectRedirect()
+    {
+        // Arrange
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+            ];
+        };
+
+        // Act
+        $result = $mock->canDeleteExam('100%');
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $result);
+    }
+
+    /**
+     * @todo Revisit with a feature test.
+     */
+    public function testCanDeleteExamEditGradePermissionZeroPercentExpectRedirect()
+    {
+        // Arrange
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+                'EDIT_GRADE'
+            ];
+        };
+
+        // Act
+        $result = $mock->canDeleteExam('0%');
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $result);
+    }
+
+    public function testCanDeleteExamEditGradePermissionNonZeroPercentExpectTrue()
+    {
+        // Arrange
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+                'EDIT_GRADE',
+            ];
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
+
+        // Act
+        $result = $mock->canDeleteExam('10%');
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    public function testCanDeleteExamUploadExamsPermissionZeroPercentExpectTrue()
+    {
+        // Arrange
+        $mock = new class
+        {
+            use MedusaPermissions;
+
+            public $permissions = [
+                'UPLOAD_EXAMS',
+            ];
+        };
+        Auth::shouldReceive('user')->andReturn($mock);
+
+        // Act
+        $result = $mock->canDeleteExam('0%');
+
+        // Assert
+        $this->assertTrue($result);
+    }
 
     public function testHasDutyRosterForAssignedShipHasAllPermissionsExpectTrue(): void
     {

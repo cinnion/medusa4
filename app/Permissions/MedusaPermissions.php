@@ -23,7 +23,7 @@ trait MedusaPermissions
         return true;
     }
 
-    public function canDeleteExam($score)
+    public function canDeleteExam($score): bool|RedirectResponse
     {
         if (($this->hasPermissions(['EDIT_GRADE']) && rtrim($score, '%') !== '0') ||
             $this->hasPermissions(['UPLOAD_EXAMS'])) {
