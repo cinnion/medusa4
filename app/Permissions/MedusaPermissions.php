@@ -5,6 +5,7 @@ namespace App\Permissions;
 use App\Models\MedusaConfig;
 use App\Models\Chapter;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
@@ -45,7 +46,7 @@ trait MedusaPermissions
             );
     }
 
-    public function loginValid(): bool
+    public function loginValid(): bool|RedirectResponse
     {
         if (Auth::check() === false) {
             return redirect(URL::previous())->with(
