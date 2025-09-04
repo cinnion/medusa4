@@ -46,6 +46,7 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
         "mongodb/laravel-mongodb": "^5.5",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-html": "^3.12",
         "webpatser/laravel-countries": "dev-master"
     },
