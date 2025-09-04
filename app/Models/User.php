@@ -1447,7 +1447,7 @@ class User extends Authenticatable
      */
     public function hasNewExams($regex = null)
     {
-        $options['since'] = Auth::user()->getLastLogin();
+        $options['since'] = Auth::user()->getPreviousLogin();
 
         if (is_null($regex) === false) {
             $options['pattern'] = $regex;
@@ -2065,7 +2065,7 @@ class User extends Authenticatable
      *
      * @return false|string
      */
-    public function getLastLogin()
+    public function getPreviousLogin()
     {
         if (empty($this->previous_login) === true) {
             return date('Y-m-d', strtotime('-2 weeks'));
