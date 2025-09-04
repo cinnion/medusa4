@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         if (!Schema::hasTable('exam_list')) {
-            Schema::create('exam_lists', function (Blueprint $table) {
+            Schema::create('exam_list', function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exam_lists');
+        Schema::dropIfExists('exam_list');
     }
 };
