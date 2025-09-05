@@ -145,7 +145,7 @@ class MedusaConfigTest extends TestCase
         $this->assertEquals('Some other value 1', $value, 'Value is incorrect');
     }
 
-    public function testGetWithSInvalidubkeyReturnsValue(): void
+    public function testGetWithSubkeyInvalidKeyReturnsValue(): void
     {
         // Arrange
         $this->seed(MedusaConfigSeeder::class);
