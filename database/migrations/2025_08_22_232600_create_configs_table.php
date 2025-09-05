@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('config')) {
-            Schema::create('config', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::create('config', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('key')->unique();
-                $table->json('value');
-            });
-        } else {
-            echo "Table 'config' already exists. Skipping migration.\n";
-        }
+            $table->string('key')->unique();
+            $table->json('value');
+        });
     }
 
     /**

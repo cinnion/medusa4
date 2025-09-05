@@ -10,12 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        if (!Schema::hasTable('ptitles')) {
-            Schema::create('ptitles', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
-            });
-        }
+        Schema::create('ptitles', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**

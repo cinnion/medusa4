@@ -11,25 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('events')) {
-            Schema::create('events', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::create('events', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('event_name');
-                $table->string('address1');
-                $table->string('address2');
-                $table->string('city');
-                $table->string('state_province');
-                $table->string('postal_code');
-                $table->string('country');
-                $table->date('start_date');
-                $table->date('end_date');
-                $table->json('registrars');
-                $table->string('requestor');
-                $table->json('checkins');
-            });
-        }
+            $table->string('event_name');
+            $table->string('address1');
+            $table->string('address2');
+            $table->string('city');
+            $table->string('state_province');
+            $table->string('postal_code');
+            $table->string('country');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->json('registrars');
+            $table->string('requestor');
+            $table->json('checkins');
+        });
     }
 
     /**

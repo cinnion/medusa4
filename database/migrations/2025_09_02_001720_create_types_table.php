@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('types')) {
-            Schema::create('types', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::create('types', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('chapter_type');
-                $table->string('chapter_description');
-                $table->json('can_have');
-            });
-        }
+            $table->string('chapter_type');
+            $table->string('chapter_description');
+            $table->json('can_have');
+        });
     }
 
     /**

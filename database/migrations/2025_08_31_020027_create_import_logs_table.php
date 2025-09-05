@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('import_logs')) {
-            Schema::create('import_logs', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::create('import_logs', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('source');
-                $table->string('msg');
-            });
-        }
+            $table->string('source');
+            $table->string('msg');
+        });
     }
 
     /**

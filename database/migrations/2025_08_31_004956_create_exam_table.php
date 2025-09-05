@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('exams')) {
-            Schema::table('exams', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::table('exams', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('member_id');
-                $table->json('exams');
-            });
-        }
+            $table->string('member_id');
+            $table->json('exams');
+        });
     }
 
     /**

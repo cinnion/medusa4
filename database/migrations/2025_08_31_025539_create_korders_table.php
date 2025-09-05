@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('korders')) {
+        Schema::create('korders', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-            Schema::create('korders', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
-
-                $table->string('order');
-                $table->string('filename');
-                $table->json('classes');
-            });
-        }
+            $table->string('order');
+            $table->string('filename');
+            $table->json('classes');
+        });
     }
 
     /**

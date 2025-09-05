@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('tig')) {
-            Schema::create('tig', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
+        Schema::create('tig', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
 
-                $table->string('grade');
-                $table->json('tig');
-            });
-        }
+            $table->string('grade');
+            $table->json('tig');
+        });
     }
 
     /**
