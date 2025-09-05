@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -48,6 +47,7 @@ class UserSeeder extends Seeder
                 'grade' => 'O-6-A',
                 'date_of_rank' => '2015-12-05',
             ],
+            'last_login' => fake()->dateTimeBetween('-1 month', '-3 weeks'),
         ]);
         User::factory()->create([
             'id' => '55fa1851e4bed834078b48ba',

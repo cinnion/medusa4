@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 use MongoDB\Laravel\Auth\User as Authenticatable;
+use MongoDB\Laravel\Relations\HasOne;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
@@ -222,6 +223,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function exams(): HasOne
+    {
+        return $this->hasOne(Exam::class, 'member_id', 'member_id');
     }
 
     /**

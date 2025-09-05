@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use App\Models\Chapter;
 use App\Models\User;
 use Database\Seeders\ChapterSeeder;
+use Database\Seeders\ExamListSeeder;
+use Database\Seeders\ExamSeeder;
 use Database\Seeders\MedusaConfigSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Database\Eloquent\Collection;
@@ -1447,11 +1449,14 @@ class ChapterTest extends TestCase
     {
         // Arrange
         $this->seed(UserSeeder::class);
+        $this->seed(ExamListSeeder::class);
+        $this->seed(ExamSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $scott = User::where('email_address', 'scott@example.com')->first();
 
         // Expects
         Auth::expects('user')
+            ->times(4)
             ->andReturn($scott);
 
         // Act
@@ -1465,12 +1470,15 @@ class ChapterTest extends TestCase
     {
         // Arrange
         $this->seed(UserSeeder::class);
+        $this->seed(ExamListSeeder::class);
+        $this->seed(ExamSeeder::class);
         $achilles = Chapter::where('chapter_name', 'HMS Achilles')->first();
         $excalibur = Chapter::where('chapter_name', 'HMS Excalibur')->first();
         $scott = User::where('email_address', 'scott@example.com')->first();
 
         // Expects
         Auth::expects('user')
+            ->times(4)
             ->andReturn($scott);
 
         // Act
@@ -1489,6 +1497,7 @@ class ChapterTest extends TestCase
 
         // Expects
         Auth::expects('user')
+            ->times(2)
             ->andReturn($co);
 
         // Act
@@ -1508,6 +1517,7 @@ class ChapterTest extends TestCase
 
         // Expects
         Auth::expects('user')
+            ->times(2)
             ->andReturn($co);
 
         // Act
