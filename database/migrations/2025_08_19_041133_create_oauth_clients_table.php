@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('oauth_clients')) {
-            Schema::create('oauth_clients', function (Blueprint $table) {
-                $table->uuid('id')->primary();
-                //$table->nullableMorphs('owner');
-                $table->unsignedBigInteger('owner')->nullable();
-                $table->string('name');
-                $table->string('secret')->nullable();
-                $table->string('provider')->nullable();
-                $table->text('redirect_uris');
-                $table->text('grant_types');
-                $table->boolean('revoked');
-                $table->timestamps();
-            });
-        } else {
-            echo "Table 'oauth_clients' already exists. Skipping migration.\n";
-        }
+        Schema::create('oauth_clients', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            //$table->nullableMorphs('owner');
+            $table->unsignedBigInteger('owner')->nullable();
+            $table->string('name');
+            $table->string('secret')->nullable();
+            $table->string('provider')->nullable();
+            $table->text('redirect_uris');
+            $table->text('grant_types');
+            $table->boolean('revoked');
+            $table->timestamps();
+        });
     }
 
     /**
