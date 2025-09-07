@@ -9,8 +9,6 @@ use Carbon\Carbon;
 
 /**
  * Trait AwardQualification.
- *
- * @codeCoverageIgnore
  */
 trait AwardQualification
 {
@@ -321,7 +319,7 @@ trait AwardQualification
      *
      * @return bool
      */
-    public function isPassingGrade(string $score)
+    public function isPassingGrade(string $score): bool
     {
         if (intval($score) >= 70) {
             return true;
