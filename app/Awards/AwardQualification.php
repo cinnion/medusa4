@@ -20,7 +20,7 @@ trait AwardQualification
      * @return bool
      * @throws \Exception
      */
-    public function mcamQual($isNewAward = true)
+    public function mcamQual(bool $isNewAward = true): bool
     {
         $numMCAM = 0;
 
@@ -64,7 +64,7 @@ trait AwardQualification
                 // Calculated number of MCAM's is more the what the member
                 // currently has, fill out the array of award dates
                 $awardDates += array_fill(
-                    $newMCAM - 1,
+                    $curNumMCAM,
                     $newMCAM,
                     $awardDate
                 );
