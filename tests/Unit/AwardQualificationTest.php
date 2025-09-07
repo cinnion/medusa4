@@ -6,10 +6,15 @@ use App\Awards\AwardQualification;
 use App\Models\AwardLog;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class AwardQualificationTest extends TestCase
 {
     use DatabaseMigrations;
@@ -91,7 +96,7 @@ class AwardQualificationTest extends TestCase
         $mockUser->shouldReceive('addServiceHistoryEntry')
             ->once()
             ->with([
-                'timestamp' => 1759276800,
+                'timestamp' => strtotime('2025-10-01'),
                 'event' => 'First Manticore Combat Action Medal earned on 2025-10-01'
             ])->andReturn(true);
 
@@ -206,7 +211,7 @@ class AwardQualificationTest extends TestCase
         $mockUser->shouldReceive('addServiceHistoryEntry')
             ->never()
             ->with([
-                'timestamp' => 1759276800,
+                'timestamp' => strtotime('2025-10-01'),
                 'event' => 'Second Manticore Combat Action Medal earned on 2025-10-01'
             ])->andReturn(true);
 
@@ -224,7 +229,6 @@ class AwardQualificationTest extends TestCase
                 'qty' => 1
             ]);
     }
-
 
     public function testMcamQualOSWP80ExamsOneMcamExpectedResults(): void
     {
@@ -270,7 +274,7 @@ class AwardQualificationTest extends TestCase
         $mockUser->shouldReceive('addServiceHistoryEntry')
             ->once()
             ->with([
-                'timestamp' => 1759276800,
+                'timestamp' => strtotime('2025-10-01'),
                 'event' => 'Second Manticore Combat Action Medal earned on 2025-10-01'
             ])->andReturn(true);
 
@@ -287,6 +291,75 @@ class AwardQualificationTest extends TestCase
                 'award' => 'MCAM',
                 'qty' => 2
             ]);
+    }
+
+    public function testMcamQualOSWP80ExamsOneMcamAwardLogThrowsExceptionExpectedException(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->member_id = 'MEMBER-ID';
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '1970-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(true);
+        $mockUser->shouldReceive('getNumExams')
+            ->once()
+            ->andReturn(80);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([ 'MCAM' => [
+                'count' => 2,
+                'location' => 'L',
+                'award_date' => [
+                    '1970-01-01',
+                    '2025-10-01',
+                ],
+                'display' => true
+            ]])->andReturn(true);
+        $mockUser->shouldReceive('addServiceHistoryEntry')
+            ->once()
+            ->with([
+                'timestamp' => strtotime('2025-10-01'),
+                'event' => 'Second Manticore Combat Action Medal earned on 2025-10-01'
+            ])->andReturn(true);
+
+        $mockAwardLog = Mockery::mock('alias:' . AwardLog::class)->makePartial();
+        $mockAwardLog->shouldReceive('create')
+            ->once()
+            ->with(
+                [
+                    'timestamp' => strtotime('2025-10-01'),
+                    'member_id' => 'MEMBER-ID',
+                    'award' => 'MCAM',
+                    'qty' => 2
+                ])
+            ->andThrow(new Exception('Some message'));
+        $this->app->instance(AwardLog::class, $mockAwardLog);
+
+        // Expect
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Some message');
+
+        // Act
+        $results = $mockUser->mcamQual();
     }
 
     // Test numToNextMcam
