@@ -110,13 +110,15 @@ trait AwardQualification
      *
      * @return int|null
      */
-    public function numToNextMcam()
+    public function numToNextMcam(): ?int
     {
         if ($this->hasAward('MCAM')) {
             $numMcams = $this->awards['MCAM']['count'] + 1;
 
             return (($numMcams * 35) + 5) - count($this->getExamList());
         }
+
+        return null;
     }
 
     /**

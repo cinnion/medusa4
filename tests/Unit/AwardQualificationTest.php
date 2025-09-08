@@ -362,7 +362,50 @@ class AwardQualificationTest extends TestCase
         $results = $mockUser->mcamQual();
     }
 
-    // Test numToNextMcam
+    public function testNumToNextMcamNoMcamExpectedResult(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+
+        // Act
+        $results = $mockUser->numToNextMcam();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testNumToNextMcamOneMcam40ExamsExpectedResult(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '1970-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn(array_fill(0, 40, array()));
+
+        // Act
+        $results = $mockUser->numToNextMcam();
+
+        // Assert
+        $this->assertEquals(35, $results);
+    }
 
     // Test percentNextMcamLeft
 
