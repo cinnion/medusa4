@@ -136,7 +136,7 @@ trait AwardQualification
      *
      * @return float|int
      */
-    public function percentNextMcamDone()
+    public function percentNextMcamDone(): float|int
     {
         return 100 - $this->percentNextMcamLeft();
     }
