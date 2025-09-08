@@ -407,7 +407,47 @@ class AwardQualificationTest extends TestCase
         $this->assertEquals(35, $results);
     }
 
-    // Test percentNextMcamLeft
+    public function testPercentNextMcamLeftNoMcamZeroReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('numToNextMcam')
+            ->andReturn(null);
+
+        // Act
+        $results = $mockUser->percentNextMcamLeft();
+
+        // Assert
+        $this->assertEquals(0, $results);
+    }
+
+    public function testPercentNextMcamLeft35Left100Returned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('numToNextMcam')
+            ->andReturn(35);
+
+        // Act
+        $results = $mockUser->percentNextMcamLeft();
+
+        // Assert
+        $this->assertEquals(100, $results);
+    }
+
+    public function testPercentNextMcamLeft0Left0Returned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('numToNextMcam')
+            ->andReturn(0);
+
+        // Act
+        $results = $mockUser->percentNextMcamLeft();
+
+        // Assert
+        $this->assertEquals(0, $results);
+    }
 
     // Test percentNextMcamDone
 

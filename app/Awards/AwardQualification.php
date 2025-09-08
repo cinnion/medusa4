@@ -126,7 +126,7 @@ trait AwardQualification
      *
      * @return float
      */
-    public function percentNextMcamLeft()
+    public function percentNextMcamLeft(): float
     {
         return floor($this->numToNextMcam() * 2.86);
     }
