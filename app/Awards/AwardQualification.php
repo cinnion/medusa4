@@ -149,7 +149,7 @@ trait AwardQualification
      * @return bool
      * @throws \Exception
      */
-    public function swpQual($isNewAward = true)
+    public function swpQual(bool $isNewAward = true): bool
     {
         // If they have at least 1 MCAM and DON'T have a SWP, it's an edge case based on how qual badges were
         // handled before.  Check that the MCAM was not just issued.
@@ -183,7 +183,7 @@ trait AwardQualification
                 try {
                     $this->addUpdateAward(
                         [
-                            $type.'SWP' => [
+                            $type . 'SWP' => [
                                 'count' => 1,
                                 'location' => 'TL',
                                 'award_date' => ['1970-01-01'],
@@ -280,7 +280,7 @@ trait AwardQualification
 
                 $results = $this->addUpdateAward(
                     [
-                        substr($swpType, 0, 1).'SWP' => [
+                        substr($swpType, 0, 1) . 'SWP' => [
                             'count' => 1,
                             'location' => 'TL',
                             'award_date' => [$awardDate],
@@ -294,12 +294,12 @@ trait AwardQualification
                     // their history and log it for BuTrain
 
                     $this->logAward(
-                        substr($swpType, 0, 1).'SWP',
+                        substr($swpType, 0, 1) . 'SWP',
                         1,
                         [
                             'timestamp' => strtotime($awardDate),
-                            'event' => $this->branch.' '.$swpType.
-                                ' Space Warfare Pin earned on '.
+                            'event' => $this->branch . ' ' . $swpType .
+                                ' Space Warfare Pin earned on ' .
                                 $awardDate,
                         ]
                     );
@@ -341,14 +341,14 @@ trait AwardQualification
     /**
      * Log the new award.
      *
-     * @param $award
-     * @param $qty
-     * @param $event
+     * @param string $award
+     * @param int $qty
+     * @param array<string,string> $event
      *
      * @return bool
      * @throws \Exception
      */
-    private function logAward($award, $qty, $event)
+    private function logAward(string $award, int $qty, array $event): bool
     {
         try {
             // Add this to the members service history

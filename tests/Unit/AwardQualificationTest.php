@@ -477,7 +477,720 @@ class AwardQualificationTest extends TestCase
         $this->assertEquals(100, $results);
     }
 
-    // Test swpQual
+    public function testSwpQualMcamEnlistedNoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'E-1',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'ESWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamWONoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'WO-1',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamMidNoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'MID',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamONoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'O-6',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamFNoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'F-1',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamC11NoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'C-11',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'ESWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamC12NoSwpExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'C-12',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ]);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testSwpQualMcamC12NoSwpExceptionExpectedCalls(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'WO-1',
+        ];
+        $awards = [
+            'MCAM' => [
+                'count' => 1,
+                'award_date' => [
+                    '2024-01-01'
+                ]
+            ]
+        ];
+        $mockUser->awards = $awards;
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(true);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['1970-01-01'],
+                    'display' => false,
+                ]
+            ])
+            ->andThrow(new Exception('some exception'));
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamCivilianReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'C-1',
+        ];
+        $mockUser->branch = 'CIVIL';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('OSWP');
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMNEnlistedNoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'E-1',
+        ];
+        $mockUser->branch = 'RMN';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('OSWP');
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMNWarrantNoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'WO-1',
+        ];
+        $mockUser->branch = 'RMN';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMNMidNoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'MID',
+        ];
+        $mockUser->branch = 'RMN';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMNOfficerNoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'O-1',
+        ];
+        $mockUser->branch = 'RMN';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMNFlagNoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'F-1',
+        ];
+        $mockUser->branch = 'RMN';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMMMC11NoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'C-11',
+        ];
+        $mockUser->branch = 'RMMM';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('ESWP')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('OSWP');
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMMMC12NoExamsReturnFalse(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = [
+            'grade' => 'C-12',
+        ];
+        $mockUser->branch = 'RMMM';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testSwpQualNoMcamRMMMO5WithCorrectExamsReturnTrue(): void
+    {
+        // Arrange
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->member_id = 'MEMBER-ID';
+        $mockUser->rank = [
+            'grade' => 'C-12',
+        ];
+        $mockUser->branch = 'RMMM';
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('MCAM')
+            ->andReturn(false);
+        $mockUser->shouldReceive('hasAward')
+            ->never()
+            ->with('ESWP');
+        $mockUser->shouldReceive('hasAward')
+            ->once()
+            ->with('OSWP')
+            ->andReturn(false);
+        $exams = [
+            'SIA-SRN-01C' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-31C' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-05D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-06D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-11D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-14D' => [
+                'score' => '100%'
+            ],
+        ];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+        $mockUser->shouldReceive('addUpdateAward')
+            ->once()
+            ->with([
+                'OSWP' => [
+                    'count' => 1,
+                    'location' => 'TL',
+                    'award_date' => ['2025-10-01'],
+                    'display' => false,
+                ]
+            ])
+        ->andReturn(true);
+        $mockUser->shouldReceive('addServiceHistoryEntry')
+            ->once()
+            ->with(
+                [
+                    'timestamp' => strtotime('2025-10-01'),
+                    'event' => 'RMMM Officer Space Warfare Pin earned on 2025-10-01'
+                ]
+            );
+        $mockAwardLog = Mockery::mock('alias:' . AwardLog::class)->makePartial();
+        $mockAwardLog->shouldReceive('create')
+            ->once()
+            ->with(
+                [
+                    'timestamp' => strtotime('2025-10-01'),
+                    'member_id' => 'MEMBER-ID',
+                    'award' => 'OSWP',
+                    'qty' => 1
+                ]);
+        $this->app->instance(AwardLog::class, $mockAwardLog);
+
+        // Act
+        $results = $mockUser->swpQual();
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     public function testIsPassingGrade69ReturnsFalse() : void
     {
