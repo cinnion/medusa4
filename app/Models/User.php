@@ -245,7 +245,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function getNumExams()
+    public function getNumExams(): int
     {
         $numExams = 0;
 

@@ -60,6 +60,40 @@ class UserTest extends TestCase
         $this->assertEquals(20, $age);
     }
 
+    public function testGetNumExamsReturnsPassingGradeCountOnly(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $exams = [
+            'SIA-SRN-01C' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-31C' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-05D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-06D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-11D' => [
+                'score' => '100%'
+            ],
+            'SIA-SRN-14D' => [
+                'score' => '60%'
+            ],
+        ];
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->andReturn($exams);
+
+        // Act
+        $numExams = $mockUser->getNumExams();
+
+        // Assert
+        $this->assertEquals(5, $numExams);
+    }
 
 
     public function testGetGreetingArrayReturnsCorrectArray(): void
