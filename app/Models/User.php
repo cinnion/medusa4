@@ -263,7 +263,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail(): string
     {
         return $this->email_address;
     }
@@ -273,7 +273,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getEmailForPasswordReset()
+    public function getEmailForPasswordReset(): string
     {
         return $this->email_address;
     }

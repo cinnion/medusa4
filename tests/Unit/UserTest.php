@@ -95,6 +95,31 @@ class UserTest extends TestCase
         $this->assertEquals(5, $numExams);
     }
 
+    public function testRouteNotificationForMailGivenEmailReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->email_address = 'someone@example.com';
+
+        // Act
+        $email = $mockUser->routeNotificationForMail();
+
+        // Assert
+        $this->assertEquals('someone@example.com', $email);
+    }
+
+    public function testGetEmailForPasswordResetGivenEmailReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->email_address = 'someone@example.com';
+
+        // Act
+        $email = $mockUser->getEmailForPasswordReset();
+
+        // Assert
+        $this->assertEquals('someone@example.com', $email);
+    }
 
     public function testGetGreetingArrayReturnsCorrectArray(): void
     {
