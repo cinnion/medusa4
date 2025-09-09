@@ -235,9 +235,9 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function getAge()
+    public function getAge(): int
     {
-        return Carbon::now()->diffInYears(Carbon::parse($this->dob));
+        return abs((int)Carbon::now()->diffInYears(Carbon::parse($this->dob)));
     }
 
     /**
@@ -2019,7 +2019,7 @@ class User extends Authenticatable
     /**
      * Return all member id's.
      *
-     * @return array
+     * @return int
      */
     public static function getMemberIds()
     {

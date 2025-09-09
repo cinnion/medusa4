@@ -31,12 +31,36 @@ function date(string $format, ?int $timestamp = null): string
 namespace Tests\Unit;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Mockery;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
+    }
+
+    public function testGetAgeExpectedAgeReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->dob = Carbon::now()->subYears(20);
+
+        // Act
+        $age = $mockUser->getAge();
+
+        // Assert
+        $this->assertEquals(20, $age);
+    }
+
+
 
     public function testGetGreetingArrayReturnsCorrectArray(): void
     {
