@@ -121,10 +121,19 @@ class UserTest extends TestCase
         $this->assertEquals('someone@example.com', $email);
     }
 
+
+    // Test getByBilletId
+
+    // Test getGreetingAndNameByBilletId
+
+    // Test getFullName
+
+    // Test getGreeting
+
     public function testGetGreetingArrayReturnsCorrectArray(): void
     {
         // Arrange
-        $user = User::factory()->create([
+        $user = User::factory()->make([
             'rank' => [
                 'grade' => 'Commander',
             ],
@@ -139,7 +148,133 @@ class UserTest extends TestCase
         $this->assertEquals($array['last_name'], 'Spock', 'Last name is incorrect');
     }
 
-    public function testUpdateFirstLoginLastLoginUpdatesRecordInDatabase(): void
+    // Test getDisplayRank
+
+    // Test getRate
+
+    // Test getRateTitle
+
+    // Test getDateOfRank
+
+    // Test getPostNominals
+
+    // Test getPostnominalsFromAwards
+
+    // Test getPostnominalsFromPeerages
+
+    // Test getPeerages
+
+    // Test getNameofLands
+
+    // Test getAssignedShip
+
+    // Test isFleetCO
+
+    // Test isCoAssignedShip
+
+    // Test isCommandingOfficer
+
+    // Test findAssignment
+
+    // Test getAssignmentId
+
+    // Test getFullAssignmentInfo
+
+    // Test getIndividualAssignmentAttribute
+
+    // Test getPrimaryAssignmentId
+
+    // Test getSecondaryAssignmentId
+
+    // Test getAssignmentName
+
+    // Test getPrimaryAssignmentName
+
+    // Test getSecondaryAssignmentName
+
+    // Test getAssignmentDesignation
+
+    // Test getAssignmentType
+
+    // Test getChapterAssignmentAttribute
+
+    // Test getPrimaryAssignmentDesignation
+
+    // Test getSecondaryAssignmentDesignation
+
+    // Test getBillet
+
+    // Test getPrimaryBillet
+
+    // Test getSecondaryBillet
+
+    // Test getDateAssigned
+
+    // Test getPrimaryDateAssigned
+
+    // Test getSecondaryDateAssigned
+
+    // Test getBilletForChapter
+
+    // Test getTimeInGrade
+
+    // Test getTimeInService
+
+    // Test getExamList
+
+    // Test getHighestExamFromList
+
+    // Test getHighestMainLineExamForBranch
+
+    // Test getHighestEnlistedExam
+
+    // Test getHighestWarrantExam
+
+    // Test getHighestOfficerExam
+
+    // Test getHighestFlagExam
+
+    // Test getHighestExams
+
+    // Test getCompletedExams
+
+    // Test getExamLastUpdated
+
+    // Test hasNewExams
+
+    // Test assignCOPerms
+
+    // Test assignAllPerms
+
+    // Test assignBuShipPerms
+
+    // Test assignBuPersPerms
+
+    // Test assignSpaceLordPerms
+
+    // Test updatePerms
+
+    // Test deletePerm
+
+    // Test deletePeerage
+
+    // Test buildIdCard
+
+    // Test normalizeStateProvince
+
+    // Test getNextAvailableMemberId
+
+    // Test getFirstAvailableMemberId
+
+    // Test getMemberIds
+
+    // Test getReminderEmail
+
+    // Test getAuthIdentifer
+
+    // Test getAuthPassword
+
+    public function testUpdateLastLoginUpdatesRecordInDatabase(): void
     {
         // Arrange
         $user = User::factory()->create();
@@ -154,7 +289,7 @@ class UserTest extends TestCase
         $this->assertEquals('2025-08-21 20:24:05', $actualUser->last_login, 'Last login value is incorrect');
     }
 
-    public function testUpdateFirstLoginLastLoginSavedAsPreviousLoginInRecordInDatabase(): void
+    public function testUpdateLastLoginSavedAsPreviousLoginInRecordInDatabase(): void
     {
         // Arrange
         $user = User::factory()->create([
@@ -196,4 +331,60 @@ class UserTest extends TestCase
         // Assert
         $this->assertEquals('2025-07-11', $result, 'Previous login value is incorrect');
     }
+
+    // Test getLastUpdated
+
+    // Test updateLastUpdated
+
+    // Test checkRostersForNewExams
+
+    // Test getScheduledEvents
+
+    // Test checkMemberIn
+
+    // Test setTimeZone
+
+    // Test getUserByMemberId
+
+    // Test getCurrentAwards
+
+    // Test getRibbons
+
+    // Test hasAwards
+
+    // Test getUnitPatchPath
+
+    // Test findForPassport
+
+    // Test hasAward
+
+    // Test addUpdateAward
+
+    // Test setPath
+
+    // Test setPromotionPointValue
+
+    // Test getPointsFromAwards
+
+    // Test getPointsFromTimeInService
+
+    // Test getPointsFromExams
+
+    // Test getTotalPromotionPoints
+
+    // Test getGPA
+
+    // Test getPath
+
+    // Test hasRequiredExams
+
+    // Test addServiceHistoryEntry
+
+    // Test getActiveUsers
+
+    // Test getArmyWeaponBadges
+
+    // Test findByEmail
+
+    // Test findByName
 }
