@@ -127,6 +127,95 @@ class UserTest extends TestCase
     // Test getGreetingAndNameByBilletId
 
     // Test getFullName
+    public function testGetFullNameFirstNoMiddleLastNoSuffixExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->last_name = 'Last';
+
+        // Act
+        $result = $mockUser->getFullName();
+
+        // Assert
+        $this->assertEquals('First Last', $result);
+    }
+
+    public function testGetFullNameFirstNoMiddleLastSuffixExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->last_name = 'Last';
+        $mockUser->suffix = 'Jr';
+
+        // Act
+        $result = $mockUser->getFullName();
+
+        // Assert
+        $this->assertEquals('First Last Jr', $result);
+    }
+
+    public function testGetFullNameFirstMiddleLastSuffixExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->middle_name = 'Middle';
+        $mockUser->last_name = 'Last';
+        $mockUser->suffix = 'Jr';
+
+        // Act
+        $result = $mockUser->getFullName();
+
+        // Assert
+        $this->assertEquals('First Middle Last Jr', $result);
+    }
+
+    public function testGetFullNameFirstNoMiddleLastNoSuffixLastFirstExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->last_name = 'Last';
+
+        // Act
+        $result = $mockUser->getFullName(true);
+
+        // Assert
+        $this->assertEquals('Last, First', $result);
+    }
+
+    public function testGetFullNameFirstNoMiddleLastSuffixLastFirstExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->last_name = 'Last';
+        $mockUser->suffix = 'Jr';
+
+        // Act
+        $result = $mockUser->getFullName(true);
+
+        // Assert
+        $this->assertEquals('Last Jr, First', $result);
+    }
+
+    public function testGetFullNameFirstMiddleLastSuffixLastFirstExpectedReturn()
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->first_name = 'First';
+        $mockUser->middle_name = 'Middle';
+        $mockUser->last_name = 'Last';
+        $mockUser->suffix = 'Jr';
+
+        // Act
+        $result = $mockUser->getFullName(true);
+
+        // Assert
+        $this->assertEquals('Last Jr, First Middle', $result);
+    }
 
     // Test getGreeting
 

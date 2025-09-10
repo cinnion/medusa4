@@ -339,21 +339,19 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getFullName($lastFirst = false)
+    public function getFullName(bool $lastFirst = false): string
     {
         if ($lastFirst === true) {
             return trim(
                 $this->last_name .
-                (empty($this->suffix) ? '' : $this->suffix) . ', ' .
+                (empty($this->suffix) ? '' : ' ' . $this->suffix) . ', ' .
                 $this->first_name . ' ' .
-                (empty($this->middle_name) ? '' :
-                    $this->middle_name . ' ')
+                (empty($this->middle_name) ? '' : $this->middle_name . ' ')
             );
         } else {
             return trim(
                 $this->first_name . ' ' .
-                (empty($this->middle_name) ? '' :
-                    $this->middle_name . ' ') .
+                (empty($this->middle_name) ? '' : $this->middle_name . ' ') .
                 $this->last_name . ' ' .
                 (empty($this->suffix) ? '' : $this->suffix)
             );
