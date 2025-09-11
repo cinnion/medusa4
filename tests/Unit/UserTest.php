@@ -40,7 +40,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
 use Tests\TestCase;
 
-
 #[PreserveGlobalState(false)]
 #[RunClassInSeparateProcess]
 class UserTest extends TestCase

@@ -402,7 +402,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function getDisplayRank(): string
+    public function getDisplayRank(): bool
     {
         $gradeDetails = Grade::where('grade', '=', $this->rank['grade'])->first();
 
