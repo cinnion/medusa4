@@ -10,7 +10,6 @@ use Exception;
 use Mockery;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Tests\TestCase;
 
 #[PreserveGlobalState(false)]
