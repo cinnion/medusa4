@@ -121,6 +121,23 @@ class UserTest extends TestCase
         $this->assertEquals('someone@example.com', $email);
     }
 
+    public function testGetGreetingAndNameReturnsCorrectValue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('getGreeting')
+            ->once()
+            ->andReturn('Greeting');
+        $mockUser->shouldReceive('getFullName')
+            ->once()
+            ->andReturn('Fullname');
+
+        // Act
+        $result = $mockUser->getGreetingAndName();
+
+        //
+        $this->assertEquals('Greeting Fullname', $result);
+    }
 
     // Test getByBilletId
 

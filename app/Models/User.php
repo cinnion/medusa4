@@ -283,7 +283,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getGreetingAndName()
+    public function getGreetingAndName(): string
     {
         return $this->getGreeting() . ' ' . $this->getFullName();
     }
