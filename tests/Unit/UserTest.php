@@ -402,7 +402,6 @@ class UserTest extends TestCase
             ->andReturn((object)$ratingDetails);
         $this->app->instance(Rating::class, $mockRating);
 
-
         // Act
         $results = $mockUser->getDisplayRank();
 
@@ -412,7 +411,74 @@ class UserTest extends TestCase
         $this->assertEquals(['rate' => 'Some rate', 'description' => 'Some description'], $mockUser->rating);
     }
 
-    // Test getRate
+    public function testGetRateRMNNoRatingReturnsNull(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'RMN';
+
+        // Act
+        $returns = $mockUser->getRate();
+
+        // Assert
+        $this->assertNull($returns);
+    }
+
+    public function testGetRateCivilNoRatingReturnsDiplomatic(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'CIVIL';
+
+        // Act
+        $returns = $mockUser->getRate();
+
+        // Assert
+        $this->assertEquals('DIPLOMATIC', $returns);
+    }
+
+    public function testGetRateRMMMNoRatingReturnsBasic(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'RMMM';
+
+        // Act
+        $returns = $mockUser->getRate();
+
+        // Assert
+        $this->assertEquals('BASIC', $returns);
+    }
+
+    public function testGetRateRMMMRatingReturnsValue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'RMMM';
+        $mockUser->rating = 'FOO';
+
+        // Act
+        $returns = $mockUser->getRate();
+
+        // Assert
+        $this->assertEquals('FOO', $returns);
+    }
+
+    public function testGetRateRMMMRatingArrayReturnsValue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'RMMM';
+        $mockUser->rating = [
+            'rate'  => 'BAR'
+        ];
+
+        // Act
+        $returns = $mockUser->getRate();
+
+        // Assert
+        $this->assertEquals('BAR', $returns);
+    }
 
     // Test getRateTitle
 

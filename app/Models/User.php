@@ -448,9 +448,9 @@ class User extends Authenticatable
     /**
      * Get the users rating.
      *
-     * @return string|null
+     * @return ?string
      */
-    public function getRate()
+    public function getRate(): ?string
     {
         if (empty($this->rating) === false) {
             if (is_array($this->rating) === true) {
@@ -463,6 +463,8 @@ class User extends Authenticatable
         } elseif ($this->branch == 'RMMM') {
             return 'BASIC';
         }
+
+        return null;
     }
 
     /**
