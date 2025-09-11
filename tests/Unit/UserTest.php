@@ -36,8 +36,13 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
 use Tests\TestCase;
 
+
+#[PreserveGlobalState(false)]
+#[RunClassInSeparateProcess]
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
