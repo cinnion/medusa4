@@ -30,6 +30,8 @@ function date(string $format, ?int $timestamp = null): string
 
 namespace Tests\Unit;
 
+use App\Models\Grade;
+use App\Models\Rating;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -254,7 +256,157 @@ class UserTest extends TestCase
         $this->assertEquals($array['last_name'], 'Spock', 'Last name is incorrect');
     }
 
-    // Test getDisplayRank
+    public function testGetDisplayRankNoBranchRankNoRatingExpectedResult(): void
+    {
+        // Arrange
+        $gradeDetails = [
+            'grade' => 'O-6-B',
+            'rank' => [
+                'RMN' => 'Captain (SG)'
+            ]
+        ];
+        $rank = [
+            'grade' => 'O-6-B',
+        ];
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->rank = $rank;
+
+        $mockGrade = Mockery::mock('alias:' . Grade::class);
+        $mockGrade->shouldReceive('where')
+            ->with('grade', '=', 'O-6-B')
+            ->once()
+            ->andReturnSelf();
+        $mockGrade->shouldReceive('first')
+            ->once()
+            ->andReturn((object)$gradeDetails);
+        $this->app->instance(Grade::class, $mockGrade);
+
+        // Act
+        $results = $mockUser->getDisplayRank();
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertEquals('Captain (SG)', $mockUser->rank_title);
+        $this->assertEquals('RMN', $mockUser->branch);
+    }
+
+    public function testGetDisplayRankCivilianNoRatingExpectedResult(): void
+    {
+        // Arrange
+        $gradeDetails = [
+            'grade' => 'C-12',
+            'rank' => [
+                'CIVIL' => 'Civilian Twelve'
+            ]
+        ];
+        $rank = [
+            'grade' => 'C-12',
+        ];
+        $ratingDetails = [
+            'rate_code' => 'DIPLOMATIC',
+            'rate' => [
+                'description' => 'Some description',
+                'CIVIL' => [
+                    'C-12' => 'Vice Consul'
+                ]
+            ]
+        ];
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'CIVIL';
+        $mockUser->rank = $rank;
+        $mockUser->shouldReceive('save')
+            ->once();
+
+        $mockGrade = Mockery::mock('alias:' . Grade::class);
+        $mockGrade->shouldReceive('where')
+            ->with('grade', '=', 'C-12')
+            ->once()
+            ->andReturnSelf();
+        $mockGrade->shouldReceive('first')
+            ->once()
+            ->andReturn((object)$gradeDetails);
+        $this->app->instance(Grade::class, $mockGrade);
+
+        $mockRating = Mockery::mock('alias:' . Rating::class);
+        $mockRating->shouldReceive('where')
+            ->with('rate_code', '=', 'DIPLOMATIC')
+            ->once()
+            ->andReturnSelf();
+        $mockRating->shouldReceive('first')
+            ->once()
+            ->andReturn((object)$ratingDetails);
+        $this->app->instance(Rating::class, $mockRating);
+
+
+        // Act
+        $results = $mockUser->getDisplayRank();
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertEquals('Civilian Twelve', $mockUser->rank_title);
+        $this->assertEquals(['rate' => 'DIPLOMATIC', 'description' => 'Some description'], $mockUser->rating);
+    }
+
+    public function testGetDisplayRankRMNRatingExpectedResult(): void
+    {
+        // Arrange
+        $gradeDetails = [
+            'grade' => 'E-3',
+            'rank' => [
+                'FOO' => 'Spacer 1st Class'
+            ]
+        ];
+        $rank = [
+            'grade' => 'E-3',
+        ];
+        $rating = [
+            'rate' => 'Some rate',
+        ];
+        $ratingDetails = [
+            'rate_code' => 'Some rate',
+            'rate' => [
+                'description' => 'Some description',
+                'RMN' => [
+                    'E-3' => 'Some rating'
+                ]
+            ]
+        ];
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->branch = 'RMN';
+        $mockUser->rank = $rank;
+        $mockUser->rating = $rating;
+        $mockUser->shouldReceive('save')
+            ->never();
+
+        $mockGrade = Mockery::mock('alias:' . Grade::class);
+        $mockGrade->shouldReceive('where')
+            ->with('grade', '=', 'E-3')
+            ->once()
+            ->andReturnSelf();
+        $mockGrade->shouldReceive('first')
+            ->once()
+            ->andReturn((object)$gradeDetails);
+        $this->app->instance(Grade::class, $mockGrade);
+
+        $mockRating = Mockery::mock('alias:' . Rating::class);
+        $mockRating->shouldReceive('where')
+            ->with('rate_code', '=', 'Some rate')
+            ->once()
+            ->andReturnSelf();
+        $mockRating->shouldReceive('first')
+            ->once()
+            ->andReturn((object)$ratingDetails);
+        $this->app->instance(Rating::class, $mockRating);
+
+
+        // Act
+        $results = $mockUser->getDisplayRank();
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertEquals('E-3', $mockUser->rank_title);
+        $this->assertEquals(['rate' => 'Some rate', 'description' => 'Some description'], $mockUser->rating);
+    }
 
     // Test getRate
 
