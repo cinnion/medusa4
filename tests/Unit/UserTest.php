@@ -145,7 +145,32 @@ class UserTest extends TestCase
         $this->assertEquals('Greeting Fullname', $result);
     }
 
-    // Test getByBilletId
+    public function testGetByBilletIdPresidentIdReturnsPresident(): void
+    {
+        // Arrange
+        $this->seed(BilletSeeder::class);
+        $this->seed(UserSeeder::class);
+
+        // Act
+        $results = User::getByBilletId('55fa1800e4bed82e078b4972');
+
+        // Assert
+        $this->assertInstanceOf(User::class, $results);
+        $this->assertEquals('A0000011', $results->member_id);
+    }
+
+    public function testGetByBilletIdBadIdReturnsNull(): void
+    {
+        // Arrange
+        $this->seed(BilletSeeder::class);
+        $this->seed(UserSeeder::class);
+
+        // Act
+        $results = User::getByBilletId('bad-id');
+
+        // Assert
+        $this->assertNull($results->member_id);
+    }
 
     // Test getGreetingAndNameByBilletId
 

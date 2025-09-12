@@ -297,15 +297,14 @@ class User extends Authenticatable
      *
      * @return User|null
      */
-    public static function getByBilletId(string $billet_id)
+    public static function getByBilletId(string $billet_id): ?User
     {
         $billet_user = null;
 
         $billet = Billet::where('_id', $billet_id)->first();
 
         if ($billet instanceof Billet) {
-            $billet_user = User::where('assignment.billet', $billet['billet_name'])
-                ->first();
+            $billet_user = User::where('assignment.billet', $billet['billet_name'])->first();
         }
 
         return $billet_user;
