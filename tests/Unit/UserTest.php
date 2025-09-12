@@ -34,6 +34,10 @@ use App\Models\Grade;
 use App\Models\Rating;
 use App\Models\User;
 use Carbon\Carbon;
+use Database\Seeders\BilletSeeder;
+use Database\Seeders\GradeSeeder;
+use Database\Seeders\RatingSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -172,10 +176,39 @@ class UserTest extends TestCase
         $this->assertNull($results->member_id);
     }
 
-    // Test getGreetingAndNameByBilletId
+    public function testGetGreetingAndNameByBilletIdValidBilletGreetingAndNameReturned(): void
+    {
+        // Arrange
+        $this->seed(BilletSeeder::class);
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(UserSeeder::class);
 
-    // Test getFullName
-    public function testGetFullNameFirstNoMiddleLastNoSuffixExpectedReturn()
+        // Act
+        $results = User::getGreetingAndNameByBilletId('55fa1800e4bed82e078b4972');
+
+        // Assert
+        $this->assertEquals('Admiral of the Green David Kilback', $results);
+
+    }
+
+    public function testGetGreetingAndNameByBilletIdInvalidBilletBlankStringReturned(): void
+    {
+        // Arrange
+        $this->seed(BilletSeeder::class);
+        $this->seed(GradeSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $this->seed(UserSeeder::class);
+
+        // Act
+        $results = User::getGreetingAndNameByBilletId('bad-id');
+
+        // Assert
+        $this->assertEquals('', $results);
+
+    }
+
+    public function testGetFullNameFirstNoMiddleLastNoSuffixExpectedReturn(): void
     {
         // Arrange
         $mockUser = Mockery::mock(User::class)->makePartial();

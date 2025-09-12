@@ -310,6 +310,8 @@ class UserSeeder extends Seeder
         ]);
         User::factory()->create([
             'first_name' => 'David',
+            'middle_name' => '',
+            'last_name' => 'Kilback',
             'email_address' => '4sl@example.com',
             'member_id' => 'A0000011',
             'active' => 1,
@@ -332,6 +334,10 @@ class UserSeeder extends Seeder
             'city' => 'Columbus',
             'state_province' => 'OH',
             'registration_status' => 'Active',
+            'rank' => [
+                'grade' => 'F-4-B',
+                'date_of_rank' => '2019-10-22',
+            ],
         ]);
         User::factory()->create([
             'first_name' => 'Jo',
