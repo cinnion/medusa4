@@ -362,7 +362,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getGreeting()
+    public function getGreeting(): string
     {
         $this->getDisplayRank();
 

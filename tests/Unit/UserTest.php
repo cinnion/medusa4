@@ -173,7 +173,7 @@ class UserTest extends TestCase
         $results = User::getByBilletId('bad-id');
 
         // Assert
-        $this->assertNull($results->member_id);
+        $this->assertNull($results);
     }
 
     public function testGetGreetingAndNameByBilletIdValidBilletGreetingAndNameReturned(): void
@@ -298,7 +298,35 @@ class UserTest extends TestCase
         $this->assertEquals('Last Jr, First Middle', $result);
     }
 
-    // Test getGreeting
+    public function testGetGreetingNoRatingGetRank(): void
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', '4sl@example.com')->first();
+
+        // Act
+        $result = $user->getGreeting();
+
+        // Assert
+        $this->assertEquals('Admiral of the Green', $result);
+    }
+
+    public function testGetGreetingWithRatingGet(): void
+    {
+        // Arrange
+        $this->seed(GradeSeeder::class);
+        $this->seed(UserSeeder::class);
+        $this->seed(RatingSeeder::class);
+        $user = User::where('email_address', 'robin1@example.com')->first();
+        $user->rating = 'SRN-05';
+
+        // Act
+        $result = $user->getGreeting();
+
+        // Assert
+        $this->assertEquals('Coxswain 3/c', $result);
+    }
 
     public function testGetGreetingArrayReturnsCorrectArray(): void
     {
