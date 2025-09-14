@@ -492,7 +492,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getDateOfRank()
+    public function getDateOfRank(): string
     {
         return $this->rank['date_of_rank'];
     }

@@ -617,8 +617,22 @@ class UserTest extends TestCase
         $this->assertFalse($results);
     }
 
+    public function testGetDateOfRankGivenDateReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'rank' => [
+                'grade' => 'O-6-A',
+                'date_of_rank' => '2025-09-01'
+            ]
+        ]);
 
-    // Test getDateOfRank
+        // Act
+        $results = $user->getDateOfRank();
+
+        // Assert
+        $this->assertEquals('2025-09-01', $results);
+    }
 
     // Test getPostNominals
 
