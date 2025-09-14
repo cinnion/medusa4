@@ -30,6 +30,7 @@ function date(string $format, ?int $timestamp = null): string
 
 namespace Tests\Unit;
 
+use App\Models\Award;
 use App\Models\Grade;
 use App\Models\Rating;
 use App\Models\User;
@@ -556,7 +557,7 @@ class UserTest extends TestCase
         $mockUser = Mockery::mock(User::class)->makePartial();
         $mockUser->branch = 'RMMM';
         $mockUser->rating = [
-            'rate'  => 'BAR'
+            'rate' => 'BAR'
         ];
 
         // Act
@@ -634,11 +635,174 @@ class UserTest extends TestCase
         $this->assertEquals('2025-09-01', $results);
     }
 
-    // Test getPostNominals
+    public function testGetPostnominalsHasAwardsReturnsAwardPostnominals(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->awards = [
+            'SC' => [
+                'count' => 1,
+                'location' => 'L',
+                'award_date' => [ '2020-01-01' ],
+                'display' => true,
+            ],
+            'QBM' => [
+                'count' => 1,
+                'location' => 'L',
+                'award_date' => [ '2020-01-01' ],
+                'display' => true,
+            ]
+        ];
+        $userMock->peerages = [
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 5,
+                'postnominal' => 'GCE',
+            ]
+        ];
+        $awardMock = Mockery::mock('alias:' . Award::class)->makePartial();
+        $awardMock->shouldReceive('getAwardByCode')
+            ->once()
+            ->with('SC')
+            ->andReturn((object)[
+                'display_order' => 22,
+                'post_nominal' => 'ABC',
+            ]);
+        $awardMock->shouldReceive('getAwardByCode')
+            ->once()
+            ->with('QBM')
+            ->andReturn((object)[
+                'display_order' => 33,
+                'post_nominal' => 'XYZ',
+            ]);
+        $this->app->instance(Award::class, $awardMock);
 
-    // Test getPostnominalsFromAwards
+        // Act
+        $results = $userMock->getPostnominals();
 
-    // Test getPostnominalsFromPeerages
+        // Assert
+        $this->assertEquals(', ABC, XYZ', $results);
+    }
+
+    public function testGetPostnominalsHasAwardsNoPostnominalsReturnsNull(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->awards = [
+            'SC' => [
+                'count' => 1,
+                'location' => 'L',
+                'award_date' => [ '2020-01-01' ],
+                'display' => true,
+            ],
+            'QBM' => [
+                'count' => 1,
+                'location' => 'L',
+                'award_date' => [ '2020-01-01' ],
+                'display' => true,
+            ]
+        ];
+        $userMock->peerages = [
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 5,
+                'postnominal' => 'GCE',
+            ]
+        ];
+        $awardMock = Mockery::mock('alias:' . Award::class)->makePartial();
+        $awardMock->shouldReceive('getAwardByCode')
+            ->once()
+            ->with('SC')
+            ->andReturn((object)[
+                'display_order' => 22,
+                'post_nominal' => null,
+            ]);
+        $awardMock->shouldReceive('getAwardByCode')
+            ->once()
+            ->with('QBM')
+            ->andReturn((object)[
+                'display_order' => 33,
+                'post_nominal' => '',
+            ]);
+        $this->app->instance(Award::class, $awardMock);
+
+        // Act
+        $results = $userMock->getPostnominals();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetPostnominalsHasNoAwardsReturnsPeeragePostnominals(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldAllowMockingProtectedMethods();
+        $userMock->awards = [];
+        $userMock->peerages = [
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 3,
+                'postnominal' => 'KSK'
+            ],
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 5,
+                'postnominal' => 'GCE',
+            ]
+        ];
+
+        // Act
+        $results = $userMock->getPostnominals();
+
+        // Assert
+        $this->assertEquals(', KSK, GCE', $results);
+    }
+
+    public function testGetPostnominalsHasNoAwardsReturnsNoPeeragePostnominalsReturnNull(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->awards = [];
+        $userMock->peerages = [
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 3,
+                'postnominal' => ''
+            ],
+            [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 5,
+                'postnominal' => null,
+            ]
+        ];
+
+        // Act
+        $results = $userMock->getPostnominals();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetPostnominalsHasNoAwardsNoPeeragesReturnsNull(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->awards = [];
+        $userMock->peerages = [];
+
+        // Act
+        $results = $userMock->getPostnominals();
+
+        // Assert
+        $this->assertNull($results);
+    }
 
     // Test getPeerages
 

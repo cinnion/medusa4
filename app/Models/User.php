@@ -502,23 +502,23 @@ class User extends Authenticatable
      *
      * @return null|string
      */
-    public function getPostnominals()
+    public function getPostnominals(): ?string
     {
         if (empty($this->awards) === false) {
             return $this->getPostnominalsFromAwards();
-        } elseif (empty($this->perages) === false) {
+        } elseif (empty($this->peerages) === false) {
             return $this->getPostnominalsFromPeerages();
         } else {
-            return;
+            return null;
         }
     }
 
     /**
      * Get a users Post Nominals from awards.
      *
-     * @return string
+     * @return ?string
      */
-    public function getPostnominalsFromAwards()
+    public function getPostnominalsFromAwards(): ?string
     {
         $postnominals = [];
 
@@ -535,22 +535,23 @@ class User extends Authenticatable
 
             return ', ' . implode(', ', $postnominals);
         }
+
+        return null;
     }
 
     /**
      * Get a users Post Nominals from their peerages.
      *
-     * @return string
+     * @return ?string
      */
-    private function getPostnominalsFromPeerages()
+    private function getPostnominalsFromPeerages(): ?string
     {
         $postnominals = [];
 
         foreach ($this->peerages as $peerage) {
             if (empty($peerage['courtesy']) === true &&
                 empty($peerage['postnominal']) === false) {
-                $postnominals[$peerage['precedence']] =
-                    $peerage['postnominal']; // Order them by precedence
+                $postnominals[$peerage['precedence']] = $peerage['postnominal']; // Order them by precedence
             }
         }
 
@@ -559,6 +560,8 @@ class User extends Authenticatable
 
             return ', ' . implode(', ', $postnominals);
         }
+
+        return null;
     }
 
     /**
