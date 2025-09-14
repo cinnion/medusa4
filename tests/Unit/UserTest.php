@@ -566,7 +566,57 @@ class UserTest extends TestCase
         $this->assertEquals('BAR', $returns);
     }
 
-    // Test getRateTitle
+    public function testGetRateTitleRatingArrayTitleFoundReturnsTitle(): void
+    {
+        // Arrange
+        $this->seed(RatingSeeder::class);
+        $user = User::factory()->make([
+            'branch' => 'RMN',
+            'rating' => [
+                'rate' => 'SRN-05',
+                'description' => 'Some description'
+            ]
+        ]);
+
+        // Act
+        $results = $user->getRateTitle('E-10');
+
+        // Assert
+        $this->assertEquals('Senior Master Chief Coxswain', $results);
+    }
+
+    public function testGetRateTitleRatingStringTitleFoundReturnsTitle(): void
+    {
+        // Arrange
+        $this->seed(RatingSeeder::class);
+        $user = User::factory()->make([
+            'branch' => 'RMN',
+            'rating' => 'SRN-05',
+        ]);
+
+        // Act
+        $results = $user->getRateTitle('E-10');
+
+        // Assert
+        $this->assertEquals('Senior Master Chief Coxswain', $results);
+    }
+
+    public function testGetRateTitleRatingStringTitleNotFoundReturnsFalse(): void
+    {
+        // Arrange
+        $this->seed(RatingSeeder::class);
+        $user = User::factory()->make([
+            'branch' => 'RMN',
+            'rating' => 'SRN-XX',
+        ]);
+
+        // Act
+        $results = $user->getRateTitle('E-10');
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
 
     // Test getDateOfRank
 

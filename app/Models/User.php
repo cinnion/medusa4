@@ -472,14 +472,12 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    public function getRateTitle($rank)
+    public function getRateTitle($rank): bool|string
     {
         if (is_array($this->rating) === true) {
-            $rateDetail =
-                Rating::where('rate_code', '=', $this->rating['rate'])->first();
+            $rateDetail = Rating::where('rate_code', $this->rating['rate'])->first();
         } else {
-            $rateDetail =
-                Rating::where('rate_code', '=', $this->rating)->first();
+            $rateDetail = Rating::where('rate_code',  $this->rating)->first();
         }
 
         if (empty($rateDetail->rate[$this->branch][$rank]) === false) {
