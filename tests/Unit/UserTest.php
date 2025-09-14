@@ -363,7 +363,7 @@ class UserTest extends TestCase
 
         $mockGrade = Mockery::mock('alias:' . Grade::class);
         $mockGrade->shouldReceive('where')
-            ->with('grade', '=', 'O-6-B')
+            ->with('grade', 'O-6-B')
             ->once()
             ->andReturnSelf();
         $mockGrade->shouldReceive('first')
@@ -409,7 +409,7 @@ class UserTest extends TestCase
 
         $mockGrade = Mockery::mock('alias:' . Grade::class);
         $mockGrade->shouldReceive('where')
-            ->with('grade', '=', 'C-12')
+            ->with('grade', 'C-12')
             ->once()
             ->andReturnSelf();
         $mockGrade->shouldReceive('first')
@@ -419,7 +419,7 @@ class UserTest extends TestCase
 
         $mockRating = Mockery::mock('alias:' . Rating::class);
         $mockRating->shouldReceive('where')
-            ->with('rate_code', '=', 'DIPLOMATIC')
+            ->with('rate_code', 'DIPLOMATIC')
             ->once()
             ->andReturnSelf();
         $mockRating->shouldReceive('first')
@@ -470,7 +470,7 @@ class UserTest extends TestCase
 
         $mockGrade = Mockery::mock('alias:' . Grade::class);
         $mockGrade->shouldReceive('where')
-            ->with('grade', '=', 'E-3')
+            ->with('grade', 'E-3')
             ->once()
             ->andReturnSelf();
         $mockGrade->shouldReceive('first')
@@ -480,7 +480,7 @@ class UserTest extends TestCase
 
         $mockRating = Mockery::mock('alias:' . Rating::class);
         $mockRating->shouldReceive('where')
-            ->with('rate_code', '=', 'Some rate')
+            ->with('rate_code', 'Some rate')
             ->once()
             ->andReturnSelf();
         $mockRating->shouldReceive('first')

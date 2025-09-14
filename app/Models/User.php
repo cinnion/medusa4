@@ -384,7 +384,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getGreetingArray()
+    public function getGreetingArray(): array
     {
         $greeting['rank'] = $this->getGreeting();
         // To be used when viewing an announcement not published by the current user
@@ -403,7 +403,7 @@ class User extends Authenticatable
      */
     public function getDisplayRank(): bool
     {
-        $gradeDetails = Grade::where('grade', '=', $this->rank['grade'])->first();
+        $gradeDetails = Grade::where('grade', $this->rank['grade'])->first();
 
         if (empty($this->branch) === true) {
             $this->branch = 'RMN';
@@ -423,10 +423,9 @@ class User extends Authenticatable
 
         if (!empty($this->rating)) {
             if (is_array($this->rating) === true) {
-                $results = Rating::where('rate_code', '=', $this->rating['rate'])
-                    ->first();
+                $results = Rating::where('rate_code', $this->rating['rate'])->first();
             } else {
-                $results = Rating::where('rate_code', '=', $this->rating)->first();
+                $results = Rating::where('rate_code', $this->rating)->first();
             }
 
             if (is_array($this->rating) === true) {
