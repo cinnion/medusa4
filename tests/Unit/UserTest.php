@@ -804,7 +804,158 @@ class UserTest extends TestCase
         $this->assertNull($results);
     }
 
-    // Test getPeerages
+    public function testGetPeeragesNoPeeragesEmptyArrayReturned()
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'peerages' => []
+        ]);
+
+        // Act
+        $results = $user->getPeerages();
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertCount(0, $results);
+    }
+
+    public function testGetPeeragesGivenPeeragesDefaultArgumentUnifiedArrayReturned()
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'peerages' => [
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE'
+                ],
+                [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'precedence' => 4,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => '',
+                    'precedence' => 24.5,
+                    'postnominal' => 'MGL'
+                ],
+            ]
+        ]);
+        $expectedArray = [
+            '24.5' => [
+                'title' => 'Knight',
+                'code' => '',
+                'precedence' => 24.5,
+                'postnominal' => 'MGL'
+            ],
+            0 => [
+                'title' => 'Baron',
+                'code' => 'B',
+                'precedence' => 4,
+                'postnominal' => 'KSK'
+            ],
+            1 => [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 3,
+                'postnominal' => 'KSK'
+            ],
+            2 => [
+                'title' => 'Knight',
+                'code' => 'K',
+                'precedence' => 5,
+                'postnominal' => 'GCE'
+            ],
+        ];
+
+        // Act
+        $results = $user->getPeerages();
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertCount(4, $results);
+        $this->assertEquals($expectedArray, $results);
+    }
+
+    public function testGetPeeragesGivenPeeragesTrueArgumentAssociativeArrayReturned()
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'peerages' => [
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE'
+                ],
+                [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'precedence' => 4,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => '',
+                    'precedence' => 24.5,
+                    'postnominal' => 'MGL'
+                ],
+            ]
+        ]);
+        $expectedArray = [
+            'landed' => [
+                4 => [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'precedence' => 4,
+                    'postnominal' => 'KSK'
+                ],
+                '24.5' => [
+                    'title' => 'Knight',
+                    'code' => '',
+                    'precedence' => 24.5,
+                    'postnominal' => 'MGL'
+                ],
+            ],
+            'knighthoods' => [
+                3 => [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK'
+                ],
+                5 => [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE'
+                ],
+            ]
+        ];
+
+        // Act
+        $results = $user->getPeerages(true);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertCount(2, $results);
+        $this->assertEquals($expectedArray, $results);
+    }
 
     // Test getNameofLands
 

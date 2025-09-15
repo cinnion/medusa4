@@ -571,7 +571,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getPeerages($detail = false)
+    public function getPeerages(bool $detail = false): array
     {
         $landed = [];
         $knighthoods = [];
@@ -589,7 +589,7 @@ class User extends Authenticatable
             ksort($knighthoods);
 
             if ($detail === true) {
-                return ['landed' => $landed, 'knighhoods' => $knighthoods];
+                return ['landed' => $landed, 'knighthoods' => $knighthoods];
             }
 
             return array_merge($landed, $knighthoods);
