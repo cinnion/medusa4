@@ -510,5 +510,26 @@ class UserSeeder extends Seeder
                 'date_of_rank' => '2019-10-22',
             ],
         ]);
+
+        User::factory()->create([
+            'id' => 'A00000016',
+            'email_address' => 'peter@example.com',
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1800e4bed82e078b4772',
+                    'chapter_name' => 'San Martino Fleet',
+                    'billet' => 'Commanding Officer',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ],
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HSM Achilles',
+                    'billet' => 'Embarked Flag Officer',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ]
+            ]
+        ]);
     }
 }

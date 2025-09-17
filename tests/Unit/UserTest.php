@@ -1111,7 +1111,47 @@ class UserTest extends TestCase
         $this->assertFalse($results);
     }
 
-    // Test isFleetCO
+    public function testIsFleetCONotCOReturnFalse(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::factory()->make([
+            'id' => 'ABC123',
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'billet' => 'Crewman',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ]
+            ]
+        ]);
+
+        // Act
+        $result = $user->isFleetCO();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+
+    public function testIsFleetCOIsCOReturnTrue(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $result = $user->isFleetCO();
+
+        // Assert
+        $this->assertTrue($result);
+    }
 
     // Test isCoAssignedShip
 

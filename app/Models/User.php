@@ -646,7 +646,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isFleetCO()
+    public function isFleetCO(): bool
     {
         $chapter = Chapter::find($this->getAssignedShip());
         $fleet = null;
