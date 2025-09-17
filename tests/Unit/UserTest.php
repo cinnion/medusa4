@@ -36,7 +36,9 @@ use App\Models\Rating;
 use App\Models\User;
 use Carbon\Carbon;
 use Database\Seeders\BilletSeeder;
+use Database\Seeders\ChapterSeeder;
 use Database\Seeders\GradeSeeder;
+use Database\Seeders\MedusaConfigSeeder;
 use Database\Seeders\RatingSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -1037,7 +1039,77 @@ class UserTest extends TestCase
         $this->assertEquals('Some lands', $results);
     }
 
-    // Test getAssignedShip
+    public function testGetAssignedShipStationExpectedChapterIdReturned(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1800e4bed82e078b4794',
+                    'chapter_name' => 'HMSS Hephaestus',
+                    'billet' => 'Crewman',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getAssignedShip();
+
+        // Assert
+        $this->assertEquals('55fa1800e4bed82e078b4794', $results);
+    }
+
+    public function testGetAssignedShipShipExpectedChapterIdReturned(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1833e4bed832078b45dc',
+                    'chapter_name' => 'HMS Achilles',
+                    'billet' => 'Crewman',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getAssignedShip();
+
+        // Assert
+        $this->assertEquals('55fa1833e4bed832078b45dc', $results);
+    }
+
+    public function testGetAssignedShipBureauExpectedFalseReturned(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => '55fa1800e4bed82e078b478a',
+                    'chapter_name' => 'BuComm',
+                    'billet' => 'Crewman',
+                    'data_assigned' => '2015-12-05',
+                    'primary' => true
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getAssignedShip();
+
+        // Assert
+        $this->assertFalse($results);
+    }
 
     // Test isFleetCO
 

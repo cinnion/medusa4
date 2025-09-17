@@ -618,19 +618,19 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    public function getAssignedShip()
+    public function getAssignedShip(): bool|string
     {
         $holding = MedusaConfig::get('chapter.holding');
         $assignable_types =  MedusaConfig::get('chapter.assignable');
 
         if (isset($this->assignment) == true) {
             foreach ($this->assignment as $assignment) {
+                $chapter = Chapter::find($assignment['chapter_id']);
+
                 // If this is a holding chapter, return that chapter id
-                if (in_array($assignment['chapter_id'], $holding) === true) {
+                if (in_array($chapter['hull_number'], $holding) === true) {
                     return $assignment['chapter_id'];
                 }
-
-                $chapter = Chapter::find($assignment['chapter_id']);
 
                 if (in_array($chapter->chapter_type, $assignable_types) === true) {
                     return $assignment['chapter_id'];
