@@ -603,12 +603,11 @@ class User extends Authenticatable
      *
      * @return null|string
      */
-    public function getNameofLands()
+    public function getNameofLands(): ?string
     {
         $peerages = $this->getPeerages(true);
 
-        $land =
-            empty($peerages['landed']) ? null : array_shift($peerages['landed']);
+        $land = empty($peerages['landed']) ? null : array_shift($peerages['landed']);
 
         return isset($land['lands']) ? $land['lands'] : null;
     }

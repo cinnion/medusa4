@@ -957,7 +957,85 @@ class UserTest extends TestCase
         $this->assertEquals($expectedArray, $results);
     }
 
-    // Test getNameofLands
+    public function testGetNameOfLandsNoLandsExpectedNameReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'peerages' => [
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE'
+                ],
+                [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'precedence' => 4,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => '',
+                    'precedence' => 24.5,
+                    'postnominal' => 'MGL'
+                ],
+            ]
+        ]);
+
+        // Act
+        $results = $user->getNameofLands();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetNameOfLandsGivenLandsExpectedNameReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'peerages' => [
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 3,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => 'K',
+                    'precedence' => 5,
+                    'postnominal' => 'GCE'
+                ],
+                [
+                    'title' => 'Baron',
+                    'code' => 'B',
+                    'lands' => 'Some lands',
+                    'precedence' => 4,
+                    'postnominal' => 'KSK'
+                ],
+                [
+                    'title' => 'Knight',
+                    'code' => '',
+                    'lands' => 'Some other lands',
+                    'precedence' => 24.5,
+                    'postnominal' => 'MGL'
+                ],
+            ]
+        ]);
+
+        // Act
+        $results = $user->getNameofLands();
+
+        // Assert
+        $this->assertEquals('Some lands', $results);
+    }
 
     // Test getAssignedShip
 
