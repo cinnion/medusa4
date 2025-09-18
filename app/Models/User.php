@@ -668,7 +668,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isCoAssignedShip()
+    public function isCoAssignedShip(): bool
     {
         $chapter = $this->getAssignedShip();
 
@@ -682,13 +682,12 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isCommandingOfficer($chapterId)
+    public function isCommandingOfficer($chapterId): bool
     {
         $chapterCO = Chapter::find($chapterId)->getCO();
 
         if (is_null($chapterCO) === false &&
-            ($chapterCO['id'] == $this->id ||
-                Auth::user()->hasAllPermissions() === true)) {
+            ($chapterCO['id'] == $this->id || Auth::user()->hasAllPermissions() === true)) {
             return true;
         }
 

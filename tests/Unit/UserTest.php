@@ -42,6 +42,7 @@ use Database\Seeders\MedusaConfigSeeder;
 use Database\Seeders\RatingSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Auth;
 use Mockery;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
@@ -1153,9 +1154,66 @@ class UserTest extends TestCase
         $this->assertTrue($result);
     }
 
-    // Test isCoAssignedShip
+    public function testIsCOAssignedShipNotCOExpectFalse(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $authUser = User::factory()->make();
+        Auth::shouldReceive('user')
+            ->times(3)
+            ->andReturn($authUser);
 
-    // Test isCommandingOfficer
+        // Act
+        $results = $user->isCOAssignedShip();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testIsCOAssignedShipNotCOAuthUserHasAllPrivExpectTrue(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $authUser = User::factory()->make([
+            'permissions' => [
+                'ALL_PERMS'
+            ]
+        ]);
+        Auth::shouldReceive('user')
+            ->times(3)
+            ->andReturn($authUser);
+
+        // Act
+        $results = $user->isCOAssignedShip();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testIsCOAssignedShipCOExpectTrue(): void
+    {
+        // Arrange
+        $this->seed(MedusaConfigSeeder::class);
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'scott@example.com')->first();
+        $authUser = User::factory()->make();
+        Auth::shouldReceive('user')
+            ->never()
+            ->andReturn($authUser);
+
+        // Act
+        $results = $user->isCOAssignedShip();
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     // Test findAssignment
 
