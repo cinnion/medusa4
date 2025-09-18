@@ -487,7 +487,6 @@ class UserSeeder extends Seeder
                 'date_of_rank' => '2019-10-22',
             ],
         ]);
-
         User::factory()->create([
             'last_name' => 'Anderson',
             'member_id' => 'A0000015',
@@ -510,10 +509,10 @@ class UserSeeder extends Seeder
                 'date_of_rank' => '2019-10-22',
             ],
         ]);
-
         User::factory()->create([
             'id' => 'A00000016',
             'email_address' => 'peter@example.com',
+            'state_province' => 'GA',
             'assignment' => [
                 [
                     'chapter_id' => '55fa1800e4bed82e078b4772',
@@ -523,8 +522,8 @@ class UserSeeder extends Seeder
                     'primary' => true
                 ],
                 [
-                    'chapter_id' => '55fa1833e4bed832078b45dc',
-                    'chapter_name' => 'HSM Achilles',
+                    'chapter_id' => '55fa1833e4bed832078b4580',
+                    'chapter_name' => 'HSM Excalibur',
                     'billet' => 'Embarked Flag Officer',
                     'data_assigned' => '2015-12-05',
                     'primary' => true

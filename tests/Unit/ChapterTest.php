@@ -1497,7 +1497,7 @@ class ChapterTest extends TestCase
 
         // Expects
         Auth::expects('user')
-            ->times(2)
+            ->times(3)
             ->andReturn($co);
 
         // Act
@@ -1517,7 +1517,7 @@ class ChapterTest extends TestCase
 
         // Expects
         Auth::expects('user')
-            ->times(2)
+            ->times(3)
             ->andReturn($co);
 
         // Act
