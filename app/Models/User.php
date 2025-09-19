@@ -727,7 +727,7 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    public function getAssignmentId($position = 'primary')
+    public function getAssignmentId($position = 'primary'): bool|string
     {
         return $this->getIndividualAssignmentAttribute($position, 'chapter_id');
     }
@@ -760,7 +760,7 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    private function getIndividualAssignmentAttribute($position, $attr)
+    private function getIndividualAssignmentAttribute($position, $attr): bool|string
     {
         $assignment = $this->getFullAssignmentInfo($position);
         if (empty($assignment[$attr]) === true) {

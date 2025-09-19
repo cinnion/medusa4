@@ -1261,7 +1261,63 @@ class UserTest extends TestCase
         $this->assertEquals($expectedAssignment, $results);
     }
 
-    // Test getAssignmentId
+    public function testGetAssignmentIdDefaultPrimaryAssignmentReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'secondary' => true,
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getAssignmentId();
+
+        // Assert
+        $this->assertEquals('abc', $results);
+    }
+
+    public function testGetAssignmentIdSecondaryRequestedSecondaryAssignmentReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'secondary' => true,
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getAssignmentId('secondary');
+
+        // Assert
+        $this->assertEquals('def', $results);
+    }
 
     public function testGetFullAssignmentInfoNoAssignmentsFalseReturned(): void
     {
@@ -1370,8 +1426,6 @@ class UserTest extends TestCase
         // Assert
         $this->assertEquals($expectedAssignment, $results);
     }
-
-    // Test getIndividualAssignmentAttribute
 
     // Test getPrimaryAssignmentId
 
