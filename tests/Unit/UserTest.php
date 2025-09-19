@@ -1251,7 +1251,7 @@ class UserTest extends TestCase
             'chapter_name' => 'HSM Excalibur',
             'billet' => 'Embarked Flag Officer',
             'data_assigned' => '2015-12-05',
-            'primary' => true
+            'secondary' => true
         ];
 
         // Act
