@@ -1215,7 +1215,51 @@ class UserTest extends TestCase
         $this->assertTrue($results);
     }
 
-    // Test findAssignment
+    public function testFindAssignmentEmptyAssignmentReturnsFalse(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->findAssignment('');
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testFindAssignmentInvalidAssignmentReturnsFalse(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->findAssignment('abc123');
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testFindAssignmentValidAssignmentReturnsAssignment(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+        $expectedAssignment = [
+            'chapter_id' => '55fa1833e4bed832078b4580',
+            'chapter_name' => 'HSM Excalibur',
+            'billet' => 'Embarked Flag Officer',
+            'data_assigned' => '2015-12-05',
+            'primary' => true
+        ];
+
+        // Act
+        $results = $user->findAssignment('55fa1833e4bed832078b4580');
+
+        // Assert
+        $this->assertEquals($expectedAssignment, $results);
+    }
 
     // Test getAssignmentId
 

@@ -699,9 +699,9 @@ class User extends Authenticatable
      *
      * @param $chapterID - The chapter ID of the chapter we want to look for
      *
-     * @return array
+     * @return bool|array
      */
-    public function findAssignment($chapterID)
+    public function findAssignment($chapterID): bool|array
     {
         if (empty($chapterID) === true) {
             return false;
