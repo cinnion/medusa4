@@ -1263,7 +1263,113 @@ class UserTest extends TestCase
 
     // Test getAssignmentId
 
-    // Test getFullAssignmentInfo
+    public function testGetFullAssignmentInfoNoAssignmentsFalseReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => null,
+        ]);
+
+        // Act
+        $results = $user->getFullAssignmentInfo();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testGetFullAssignmentInfoNoPrimaryFieldFalseReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'secondary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'tertiary' => true,
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getFullAssignmentInfo();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testGetFullAssignmentInfoPrimaryEmptyFieldAssignmentReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'secondary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'primary' => '',
+                ]
+            ]
+        ]);
+
+        // Act
+        $results = $user->getFullAssignmentInfo();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testGetFullAssignmentInfoWantingTertiaryFieldAssignmentReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'secondary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'tertiary' => true,
+                ]
+            ]
+        ]);
+        $expectedAssignment = [
+            'chapter_id' => 'def',
+            'chapter_name' => 'DEF',
+            'date_assigned' => '2025-09-02',
+            'billet' => 'Some other billet',
+            'tertiary' => true,
+        ];
+
+        // Act
+        $results = $user->getFullAssignmentInfo('tertiary');
+
+        // Assert
+        $this->assertEquals($expectedAssignment, $results);
+    }
 
     // Test getIndividualAssignmentAttribute
 

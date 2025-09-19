@@ -737,9 +737,9 @@ class User extends Authenticatable
      *
      * @param $position
      *
-     * @return bool
+     * @return bool|array
      */
-    public function getFullAssignmentInfo($position = 'primary')
+    public function getFullAssignmentInfo($position = 'primary'): bool|array
     {
         if (isset($this->assignment) == true) {
             foreach ($this->assignment as $assignment) {
@@ -747,11 +747,8 @@ class User extends Authenticatable
                     return $assignment;
                 }
             }
-
-            return false;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
