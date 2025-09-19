@@ -1427,9 +1427,61 @@ class UserTest extends TestCase
         $this->assertEquals($expectedAssignment, $results);
     }
 
-    // Test getPrimaryAssignmentId
+    public function testGetPrimaryAssignmentIdReturnsExpectedId(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'secondary' => true,
+                ]
+            ]
+        ]);
+        // Act
+        $results = $user->getPrimaryAssignmentId();
 
-    // Test getSecondaryAssignmentId
+        // Assert
+        $this->assertEquals('abc', $results);
+    }
+
+    public function testGetSecondaryAssignmentIdReturnsExpectedId(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'assignment' => [
+                [
+                    'chapter_id' => 'abc',
+                    'chapter_name' => 'HMS ABC',
+                    'date_assigned' => '2025-09-01',
+                    'billet' => 'Some billet',
+                    'primary' => true,
+                ],
+                [
+                    'chapter_id' => 'def',
+                    'chapter_name' => 'DEF',
+                    'date_assigned' => '2025-09-02',
+                    'billet' => 'Some other billet',
+                    'secondary' => true,
+                ]
+            ]
+        ]);
+        // Act
+        $results = $user->getSecondaryAssignmentId();
+
+        // Assert
+        $this->assertEquals('def', $results);
+    }
 
     // Test getAssignmentName
 

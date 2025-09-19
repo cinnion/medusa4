@@ -776,7 +776,7 @@ class User extends Authenticatable
      * @return bool|string
      * @deprecated
      */
-    public function getPrimaryAssignmentId()
+    public function getPrimaryAssignmentId(): bool|string
     {
         // Maintain backward compatibility
 
@@ -789,7 +789,7 @@ class User extends Authenticatable
      * @return bool|string
      * @deprecated
      */
-    public function getSecondaryAssignmentId()
+    public function getSecondaryAssignmentId(): bool|string
     {
         // Maintain backward compatibility
 
