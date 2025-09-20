@@ -1448,6 +1448,7 @@ class UserTest extends TestCase
                 ]
             ]
         ]);
+
         // Act
         $results = $user->getPrimaryAssignmentId();
 
@@ -1476,6 +1477,7 @@ class UserTest extends TestCase
                 ]
             ]
         ]);
+
         // Act
         $results = $user->getSecondaryAssignmentId();
 
@@ -1483,7 +1485,64 @@ class UserTest extends TestCase
         $this->assertEquals('def', $results);
     }
 
-    // Test getAssignmentName
+    public function testGetAssignmentNameDefaultPositionReturnsPrimaryName(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getAssignmentName();
+
+        // Assert
+        $this->assertEquals('San Martino Fleet', $results);
+    }
+
+
+    public function testGetAssignmentNameSecondaryPositionReturnsSecondaryName(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getAssignmentName('secondary');
+
+        // Assert
+        $this->assertEquals('HMS Excalibur', $results);
+    }
+
+    public function testGetPrimaryAssignmentNameReturnsPrimaryName(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getPrimaryAssignmentName();
+
+        // Assert
+        $this->assertEquals('San Martino Fleet', $results);
+    }
+
+
+    public function testGetSecondaryAssignmentNameReturnsSecondaryName(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getSecondaryAssignmentName();
+
+        // Assert
+        $this->assertEquals('HMS Excalibur', $results);
+    }
+
 
     // Test getPrimaryAssignmentName
 

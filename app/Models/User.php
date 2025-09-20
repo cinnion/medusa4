@@ -801,18 +801,18 @@ class User extends Authenticatable
      *
      * @param $position
      *
-     * @return bool|mixed
+     * @return bool|string
      */
-    public function getAssignmentName($position = 'primary')
+    public function getAssignmentName($position = 'primary'): bool|string
     {
         return $this->getChapterAssignmentAttribute($position, 'chapter_name');
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getPrimaryAssignmentName()
+    public function getPrimaryAssignmentName(): bool|string
     {
         // Maintain backward compatibility
 
@@ -820,10 +820,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getSecondaryAssignmentName()
+    public function getSecondaryAssignmentName(): bool|string
     {
         // Maintain backward compatibility
 
