@@ -1569,7 +1569,7 @@ class UserTest extends TestCase
         $this->assertEquals('BC-749', $results);
     }
 
-    public function testGetAssignmentTypeDefaultReturnsPrimaryDesignation(): void
+    public function testGetAssignmentTypeDefaultReturnsPrimaryType(): void
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
@@ -1583,7 +1583,7 @@ class UserTest extends TestCase
         $this->assertEquals('fleet', $results);
     }
 
-    public function testGetAssignmentTypeSecondaryReturnsSecondaryDesignation(): void
+    public function testGetAssignmentTypeSecondaryReturnsSecondaryType(): void
     {
         // Arrange
         $this->seed(ChapterSeeder::class);
