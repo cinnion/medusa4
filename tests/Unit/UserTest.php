@@ -1499,7 +1499,6 @@ class UserTest extends TestCase
         $this->assertEquals('San Martino Fleet', $results);
     }
 
-
     public function testGetAssignmentNameSecondaryPositionReturnsSecondaryName(): void
     {
         // Arrange
@@ -1528,7 +1527,6 @@ class UserTest extends TestCase
         $this->assertEquals('San Martino Fleet', $results);
     }
 
-
     public function testGetSecondaryAssignmentNameReturnsSecondaryName(): void
     {
         // Arrange
@@ -1543,12 +1541,34 @@ class UserTest extends TestCase
         $this->assertEquals('HMS Excalibur', $results);
     }
 
+    public function testGetAssignmentDesignationDefaultReturnsPrimaryDesignation(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
 
-    // Test getPrimaryAssignmentName
+        // Act
+        $results = $user->getAssignmentDesignation();
 
-    // Test getSecondaryAssignmentName
+        // Assert
+        $this->assertEquals('3', $results);
+    }
 
-    // Test getAssignmentDesignation
+    public function testGetAssignmentDesignationSecondaryReturnsSecondaryDesignation(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getAssignmentDesignation('secondary');
+
+        // Assert
+        $this->assertEquals('BC-749', $results);
+    }
+
 
     // Test getAssignmentType
 
