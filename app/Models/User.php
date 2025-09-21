@@ -835,9 +835,9 @@ class User extends Authenticatable
      *
      * @param $position
      *
-     * @return bool|mixed
+     * @return bool|string
      */
-    public function getAssignmentDesignation($position = 'primary')
+    public function getAssignmentDesignation($position = 'primary'): bool|string
     {
         return $this->getChapterAssignmentAttribute($position, 'hull_number');
     }
