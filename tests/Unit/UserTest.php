@@ -1569,8 +1569,33 @@ class UserTest extends TestCase
         $this->assertEquals('BC-749', $results);
     }
 
+    public function testGetAssignmentTypeDefaultReturnsPrimaryDesignation(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
 
-    // Test getAssignmentType
+        // Act
+        $results = $user->getAssignmentType();
+
+        // Assert
+        $this->assertEquals('fleet', $results);
+    }
+
+    public function testGetAssignmentTypeSecondaryReturnsSecondaryDesignation(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getAssignmentType('secondary');
+
+        // Assert
+        $this->assertEquals('ship', $results);
+    }
 
     // Test getChapterAssignmentAttribute
 
