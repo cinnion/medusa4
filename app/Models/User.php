@@ -847,9 +847,9 @@ class User extends Authenticatable
      *
      * @param $position
      *
-     * @return bool|mixed
+     * @return bool|string
      */
-    public function getAssignmentType($position = 'primary')
+    public function getAssignmentType($position = 'primary'): bool|string
     {
         return $this->getChapterAssignmentAttribute($position, 'chapter_type');
     }
@@ -860,9 +860,9 @@ class User extends Authenticatable
      * @param $position
      * @param $attribute
      *
-     * @return bool|mixed
+     * @return bool|string
      */
-    private function getChapterAssignmentAttribute($position, $attribute)
+    private function getChapterAssignmentAttribute($position, $attribute): bool|string
     {
         $chapter = Chapter::find($this->getAssignmentId($position));
         if (empty($chapter) === false) {
@@ -873,10 +873,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getPrimaryAssignmentDesignation()
+    public function getPrimaryAssignmentDesignation(): bool|string
     {
         // Maintain backward compatibility
 
@@ -884,10 +884,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getSecondaryAssignmentDesignation()
+    public function getSecondaryAssignmentDesignation(): bool|string
     {
         // Maintain backward compatibility
 
@@ -901,7 +901,7 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    public function getBillet($position = 'primary')
+    public function getBillet($position = 'primary'): bool|string
     {
         return $this->getIndividualAssignmentAttribute($position, 'billet');
     }
