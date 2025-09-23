@@ -1737,6 +1737,32 @@ class UserTest extends TestCase
         $this->assertEquals('2015-12-06', $results);
     }
 
+    public function testGetBilletForChapterValidChapterCorrectBilletReturned(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getBilletForChapter('55fa1800e4bed82e078b4772');
+
+        // Assert
+        $this->assertEquals('Commanding Officer', $results);
+    }
+
+    public function testGetBilletForChapterInvalidChapterFalseReturned(): void
+    {
+        // Arrange
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getBilletForChapter('bad-chapter-id');
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
     // Test getBilletForChapter
 
     // Test getTimeInGrade

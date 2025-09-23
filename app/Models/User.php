@@ -970,9 +970,9 @@ class User extends Authenticatable
      *
      * @param $chapterId
      *
-     * @return bool
+     * @return bool|string
      */
-    public function getBilletForChapter($chapterId)
+    public function getBilletForChapter($chapterId): bool|string
     {
         if (isset($this->assignment) == true) {
             foreach ($this->assignment as $assignment) {
@@ -980,11 +980,9 @@ class User extends Authenticatable
                     return $assignment['billet'];
                 }
             }
-
-            return false;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
