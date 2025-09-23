@@ -518,14 +518,14 @@ class UserSeeder extends Seeder
                     'chapter_id' => '55fa1800e4bed82e078b4772',
                     'chapter_name' => 'San Martino Fleet',
                     'billet' => 'Commanding Officer',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-05',
                     'primary' => true
                 ],
                 [
                     'chapter_id' => '55fa1833e4bed832078b4580',
                     'chapter_name' => 'HSM Excalibur',
                     'billet' => 'Embarked Flag Officer',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-06',
                     'secondary' => true
                 ]
             ]

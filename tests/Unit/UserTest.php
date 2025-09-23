@@ -1051,7 +1051,7 @@ class UserTest extends TestCase
                     'chapter_id' => '55fa1800e4bed82e078b4794',
                     'chapter_name' => 'HMSS Hephaestus',
                     'billet' => 'Crewman',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-05',
                     'primary' => true
                 ]
             ]
@@ -1075,7 +1075,7 @@ class UserTest extends TestCase
                     'chapter_id' => '55fa1833e4bed832078b45dc',
                     'chapter_name' => 'HMS Achilles',
                     'billet' => 'Crewman',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-05',
                     'primary' => true
                 ]
             ]
@@ -1099,7 +1099,7 @@ class UserTest extends TestCase
                     'chapter_id' => '55fa1800e4bed82e078b478a',
                     'chapter_name' => 'BuComm',
                     'billet' => 'Crewman',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-05',
                     'primary' => true
                 ]
             ]
@@ -1125,7 +1125,7 @@ class UserTest extends TestCase
                     'chapter_id' => '55fa1833e4bed832078b45dc',
                     'chapter_name' => 'HMS Achilles',
                     'billet' => 'Crewman',
-                    'data_assigned' => '2015-12-05',
+                    'date_assigned' => '2015-12-05',
                     'primary' => true
                 ]
             ]
@@ -1250,7 +1250,7 @@ class UserTest extends TestCase
             'chapter_id' => '55fa1833e4bed832078b4580',
             'chapter_name' => 'HSM Excalibur',
             'billet' => 'Embarked Flag Officer',
-            'data_assigned' => '2015-12-05',
+            'date_assigned' => '2015-12-06',
             'secondary' => true
         ];
 
@@ -1681,11 +1681,61 @@ class UserTest extends TestCase
         $this->assertEquals('Embarked Flag Officer', $results);
     }
 
-    // Test getDateAssigned
+    public function testGetDateAssignedDefaultReturnsPrimaryDateAssigned(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
 
-    // Test getPrimaryDateAssigned
+        // Act
+        $results = $user->getDateAssigned();
 
-    // Test getSecondaryDateAssigned
+        // Assert
+        $this->assertEquals('2015-12-05', $results);
+    }
+
+    public function testGetDateAssignedSecondarySpecifiedReturnsSecondaryDateAssigned(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getDateAssigned('secondary');
+
+        // Assert
+        $this->assertEquals('2015-12-06', $results);
+    }
+
+    public function testGetPrimaryDateAssignedReturnsPrimaryDateAssigned(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getPrimaryDateAssigned();
+
+        // Assert
+        $this->assertEquals('2015-12-05', $results);
+    }
+
+    public function testGetSecondaryDateAssignedReturnsSecondaryDateAssigned(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getSecondaryDateAssigned();
+
+        // Assert
+        $this->assertEquals('2015-12-06', $results);
+    }
 
     // Test getBilletForChapter
 

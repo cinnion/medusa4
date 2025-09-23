@@ -935,7 +935,7 @@ class User extends Authenticatable
      *
      * @return bool|string
      */
-    public function getDateAssigned($position = 'primary')
+    public function getDateAssigned($position = 'primary'): bool|string
     {
         return $this->getIndividualAssignmentAttribute(
             $position,
@@ -944,10 +944,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getPrimaryDateAssigned()
+    public function getPrimaryDateAssigned(): bool|string
     {
         // Maintain backward compatibility
 
@@ -955,10 +955,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getSecondaryDateAssigned()
+    public function getSecondaryDateAssigned(): bool|string
     {
         // Maintain backward compatibility
 
