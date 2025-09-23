@@ -1653,9 +1653,33 @@ class UserTest extends TestCase
         $this->assertEquals('Embarked Flag Officer', $results);
     }
 
-    // Test getPrimaryBillet
+    public function testGetPrimaryBilletReturnsPrimaryBillet(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
 
-    // Test getSecondaryBillet
+        // Act
+        $results = $user->getPrimaryBillet();
+
+        // Assert
+        $this->assertEquals('Commanding Officer', $results);
+    }
+
+    public function testGetSecondaryBilletReturnsSecondaryBillet(): void
+    {
+        // Arrange
+        $this->seed(ChapterSeeder::class);
+        $this->seed(UserSeeder::class);
+        $user = User::where('email_address', 'peter@example.com')->first();
+
+        // Act
+        $results = $user->getSecondaryBillet();
+
+        // Assert
+        $this->assertEquals('Embarked Flag Officer', $results);
+    }
 
     // Test getDateAssigned
 

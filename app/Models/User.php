@@ -907,10 +907,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getPrimaryBillet()
+    public function getPrimaryBillet(): bool|string
     {
         // Maintain backward compatibility
 
@@ -918,10 +918,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool|mixed
+     * @return bool|string
      * @deprecated
      */
-    public function getSecondaryBillet()
+    public function getSecondaryBillet(): bool|string
     {
         // Maintain backward compatibility
 
