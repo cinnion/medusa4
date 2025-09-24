@@ -48,16 +48,12 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
 use Tests\TestCase;
 
-#[PreserveGlobalState(false)]
-#[RunClassInSeparateProcess]
 class UserTest extends TestCase
 {
-    use DatabaseMigrations;
-
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-
+        shell_exec('php artisan migrate:fresh --seed');
         Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
     }
 
@@ -156,8 +152,6 @@ class UserTest extends TestCase
     public function testGetByBilletIdPresidentIdReturnsPresident(): void
     {
         // Arrange
-        $this->seed(BilletSeeder::class);
-        $this->seed(UserSeeder::class);
 
         // Act
         $results = User::getByBilletId('55fa1800e4bed82e078b4972');
@@ -170,8 +164,6 @@ class UserTest extends TestCase
     public function testGetByBilletIdBadIdReturnsNull(): void
     {
         // Arrange
-        $this->seed(BilletSeeder::class);
-        $this->seed(UserSeeder::class);
 
         // Act
         $results = User::getByBilletId('bad-id');
@@ -183,10 +175,6 @@ class UserTest extends TestCase
     public function testGetGreetingAndNameByBilletIdValidBilletGreetingAndNameReturned(): void
     {
         // Arrange
-        $this->seed(BilletSeeder::class);
-        $this->seed(GradeSeeder::class);
-        $this->seed(RatingSeeder::class);
-        $this->seed(UserSeeder::class);
 
         // Act
         $results = User::getGreetingAndNameByBilletId('55fa1800e4bed82e078b4972');
@@ -199,10 +187,6 @@ class UserTest extends TestCase
     public function testGetGreetingAndNameByBilletIdInvalidBilletBlankStringReturned(): void
     {
         // Arrange
-        $this->seed(BilletSeeder::class);
-        $this->seed(GradeSeeder::class);
-        $this->seed(RatingSeeder::class);
-        $this->seed(UserSeeder::class);
 
         // Act
         $results = User::getGreetingAndNameByBilletId('bad-id');
@@ -305,8 +289,6 @@ class UserTest extends TestCase
     public function testGetGreetingNoRatingGetRank(): void
     {
         // Arrange
-        $this->seed(GradeSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', '4sl@example.com')->first();
 
         // Act
@@ -319,9 +301,6 @@ class UserTest extends TestCase
     public function testGetGreetingWithRatingGet(): void
     {
         // Arrange
-        $this->seed(GradeSeeder::class);
-        $this->seed(UserSeeder::class);
-        $this->seed(RatingSeeder::class);
         $user = User::where('email_address', 'robin1@example.com')->first();
         $user->rating = 'SRN-05';
 
@@ -350,6 +329,10 @@ class UserTest extends TestCase
         $this->assertEquals($array['last_name'], 'Spock', 'Last name is incorrect');
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testGetDisplayRankNoBranchRankNoRatingExpectedResult(): void
     {
         // Arrange
@@ -384,6 +367,10 @@ class UserTest extends TestCase
         $this->assertEquals('RMN', $mockUser->branch);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testGetDisplayRankCivilianNoRatingExpectedResult(): void
     {
         // Arrange
@@ -441,6 +428,10 @@ class UserTest extends TestCase
         $this->assertEquals(['rate' => 'DIPLOMATIC', 'description' => 'Some description'], $mockUser->rating);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testGetDisplayRankRMNRatingExpectedResult(): void
     {
         // Arrange
@@ -573,7 +564,6 @@ class UserTest extends TestCase
     public function testGetRateTitleRatingArrayTitleFoundReturnsTitle(): void
     {
         // Arrange
-        $this->seed(RatingSeeder::class);
         $user = User::factory()->make([
             'branch' => 'RMN',
             'rating' => [
@@ -592,7 +582,6 @@ class UserTest extends TestCase
     public function testGetRateTitleRatingStringTitleFoundReturnsTitle(): void
     {
         // Arrange
-        $this->seed(RatingSeeder::class);
         $user = User::factory()->make([
             'branch' => 'RMN',
             'rating' => 'SRN-05',
@@ -608,7 +597,6 @@ class UserTest extends TestCase
     public function testGetRateTitleRatingStringTitleNotFoundReturnsFalse(): void
     {
         // Arrange
-        $this->seed(RatingSeeder::class);
         $user = User::factory()->make([
             'branch' => 'RMN',
             'rating' => 'SRN-XX',
@@ -638,6 +626,10 @@ class UserTest extends TestCase
         $this->assertEquals('2025-09-01', $results);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testGetPostnominalsHasAwardsReturnsAwardPostnominals(): void
     {
         // Arrange
@@ -688,6 +680,10 @@ class UserTest extends TestCase
         $this->assertEquals(', ABC, XYZ', $results);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testGetPostnominalsHasAwardsNoPostnominalsReturnsNull(): void
     {
         // Arrange
@@ -1043,8 +1039,6 @@ class UserTest extends TestCase
     public function testGetAssignedShipStationExpectedChapterIdReturned(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
         $user = User::factory()->make([
             'assignment' => [
                 [
@@ -1067,8 +1061,6 @@ class UserTest extends TestCase
     public function testGetAssignedShipShipExpectedChapterIdReturned(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
         $user = User::factory()->make([
             'assignment' => [
                 [
@@ -1091,8 +1083,6 @@ class UserTest extends TestCase
     public function testGetAssignedShipBureauExpectedFalseReturned(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
         $user = User::factory()->make([
             'assignment' => [
                 [
@@ -1115,9 +1105,6 @@ class UserTest extends TestCase
     public function testIsFleetCONotCOReturnFalse(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::factory()->make([
             'id' => 'ABC123',
             'assignment' => [
@@ -1142,9 +1129,6 @@ class UserTest extends TestCase
     public function testIsFleetCOIsCOReturnTrue(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1157,9 +1141,6 @@ class UserTest extends TestCase
     public function testIsCOAssignedShipNotCOExpectFalse(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'doug@example.com')->first();
         $authUser = User::factory()->make();
         Auth::shouldReceive('user')
@@ -1176,9 +1157,6 @@ class UserTest extends TestCase
     public function testIsCOAssignedShipNotCOAuthUserHasAllPrivExpectTrue(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'doug@example.com')->first();
         $authUser = User::factory()->make([
             'permissions' => [
@@ -1199,9 +1177,6 @@ class UserTest extends TestCase
     public function testIsCOAssignedShipCOExpectTrue(): void
     {
         // Arrange
-        $this->seed(MedusaConfigSeeder::class);
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'scott@example.com')->first();
         $authUser = User::factory()->make();
         Auth::shouldReceive('user')
@@ -1218,7 +1193,6 @@ class UserTest extends TestCase
     public function testFindAssignmentEmptyAssignmentReturnsFalse(): void
     {
         // Arrange
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1231,7 +1205,6 @@ class UserTest extends TestCase
     public function testFindAssignmentInvalidAssignmentReturnsFalse(): void
     {
         // Arrange
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1244,7 +1217,6 @@ class UserTest extends TestCase
     public function testFindAssignmentValidAssignmentReturnsAssignment(): void
     {
         // Arrange
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
         $expectedAssignment = [
             'chapter_id' => '55fa1833e4bed832078b4580',
@@ -1488,8 +1460,6 @@ class UserTest extends TestCase
     public function testGetAssignmentNameDefaultPositionReturnsPrimaryName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1502,8 +1472,6 @@ class UserTest extends TestCase
     public function testGetAssignmentNameSecondaryPositionReturnsSecondaryName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1516,8 +1484,6 @@ class UserTest extends TestCase
     public function testGetPrimaryAssignmentNameReturnsPrimaryName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1530,8 +1496,6 @@ class UserTest extends TestCase
     public function testGetSecondaryAssignmentNameReturnsSecondaryName(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1544,8 +1508,6 @@ class UserTest extends TestCase
     public function testGetAssignmentDesignationDefaultReturnsPrimaryDesignation(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1558,8 +1520,6 @@ class UserTest extends TestCase
     public function testGetAssignmentDesignationSecondaryReturnsSecondaryDesignation(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1572,8 +1532,6 @@ class UserTest extends TestCase
     public function testGetAssignmentTypeDefaultReturnsPrimaryType(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1586,8 +1544,6 @@ class UserTest extends TestCase
     public function testGetAssignmentTypeSecondaryReturnsSecondaryType(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1600,8 +1556,6 @@ class UserTest extends TestCase
     public function testGetPrimaryAssignmentDesignationReturnsPrimaryDesignation(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1614,8 +1568,6 @@ class UserTest extends TestCase
     public function testGetSecondaryAssignmentDesignationReturnsSecondaryDesignation(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1628,8 +1580,6 @@ class UserTest extends TestCase
     public function testGetBilletDefaultReturnsPrimaryBillet(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1642,8 +1592,6 @@ class UserTest extends TestCase
     public function testGetBilletSecondarySpecifiedReturnsSecondaryBillet(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1656,8 +1604,6 @@ class UserTest extends TestCase
     public function testGetPrimaryBilletReturnsPrimaryBillet(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1670,8 +1616,6 @@ class UserTest extends TestCase
     public function testGetSecondaryBilletReturnsSecondaryBillet(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1684,8 +1628,6 @@ class UserTest extends TestCase
     public function testGetDateAssignedDefaultReturnsPrimaryDateAssigned(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1698,8 +1640,6 @@ class UserTest extends TestCase
     public function testGetDateAssignedSecondarySpecifiedReturnsSecondaryDateAssigned(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1712,8 +1652,6 @@ class UserTest extends TestCase
     public function testGetPrimaryDateAssignedReturnsPrimaryDateAssigned(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1726,8 +1664,6 @@ class UserTest extends TestCase
     public function testGetSecondaryDateAssignedReturnsSecondaryDateAssigned(): void
     {
         // Arrange
-        $this->seed(ChapterSeeder::class);
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1740,7 +1676,6 @@ class UserTest extends TestCase
     public function testGetBilletForChapterValidChapterCorrectBilletReturned(): void
     {
         // Arrange
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
@@ -1753,7 +1688,6 @@ class UserTest extends TestCase
     public function testGetBilletForChapterInvalidChapterFalseReturned(): void
     {
         // Arrange
-        $this->seed(UserSeeder::class);
         $user = User::where('email_address', 'peter@example.com')->first();
 
         // Act
