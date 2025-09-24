@@ -54,6 +54,11 @@ class UserTest extends TestCase
     {
         parent::setUpBeforeClass();
         shell_exec('php artisan migrate:fresh --seed');
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
         Carbon::setTestNow(Carbon::create(2025, 9, 1, 10, 0, 0));
     }
 
@@ -1697,9 +1702,70 @@ class UserTest extends TestCase
         $this->assertFalse($results);
     }
 
-    // Test getBilletForChapter
+    public function testGetTimeInGradeNoDORExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $rank = [];
+        $user->rank = $rank;
 
-    // Test getTimeInGrade
+        // Act
+        $results = $user->getTimeInGrade();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetTimeInGradeDefaultExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+
+        // Act
+        $results = $user->getTimeInGrade();
+
+        // Assert
+        $this->assertEquals('6 Year(s), 9 Month(s), 19 Day(s)', $results);
+    }
+
+    public function testGetTimeInGradeShortRoundWithCarryExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $rank = $user->rank;
+        $rank['date_of_rank'] = '2018-09-02';
+        $user->rank = $rank;
+
+        // Act
+        $results = $user->getTimeInGrade(true);
+
+        // Assert
+        $this->assertEquals('7 Yr 0 Mo', $results);
+    }
+
+    public function testGetTimeInGradeShortMonthsExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+
+        // Act
+        $results = $user->getTimeInGrade('months');
+
+        // Assert
+        $this->assertEquals(81, $results);
+    }
+
+    public function testGetTimeInGradeShortExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+
+        // Act
+        $results = $user->getTimeInGrade(true);
+
+        // Assert
+        $this->assertEquals('6 Yr 9 Mo', $results);
+    }
 
     // Test getTimeInService
 

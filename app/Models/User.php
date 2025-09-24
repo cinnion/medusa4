@@ -988,28 +988,25 @@ class User extends Authenticatable
     /**
      * Get a users time in grade.
      *
-     * @TODO Refactor to use Carbon
+     * @param bool|string|null $short
      *
-     * @param null|bool|string $short
-     *
-     * @return int|null|string
+     * @return int|string|null
      *
      * @throws \Exception
      */
-    public function getTimeInGrade($short = null)
+    public function getTimeInGrade(bool|string|null $short = null): int|string|null
     {
         if (empty($this->rank['date_of_rank']) === false) {
-            $dorObj = new DateTime();
-            [
-                $year, $month, $day] =
-                explode('-', $this->rank['date_of_rank']);
-            $dorObj->setDate($year, $month, $day);
+            $today = Carbon::today('America/New_York');
 
-            $timeInGrade = $dorObj->diff(new DateTime('now'));
+            $promoted = Carbon::createFromFormat('Y-m-d', $this->rank['date_of_rank']);
+
+            $timeInGrade = $promoted->diff($today);
 
             if (is_null($short) === false) {
                 $years = $timeInGrade->format('%y');
                 $months = $timeInGrade->format('%m');
+                $x = $timeInGrade->format('%d');
 
                 if ($timeInGrade->format('%d') > 25) {
                     $months += 1;
@@ -1027,9 +1024,9 @@ class User extends Authenticatable
             } else {
                 return $timeInGrade->format('%y Year(s), %m Month(s), %d Day(s)');
             }
-        } else {
-            return;
         }
+
+        return null;
     }
 
     /**
