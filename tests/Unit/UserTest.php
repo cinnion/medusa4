@@ -1767,7 +1767,122 @@ class UserTest extends TestCase
         $this->assertEquals('6 Yr 9 Mo', $results);
     }
 
-    // Test getTimeInService
+    public function testGetTimeInServiceEmptyRegistrationDateDefaultExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '';
+
+        // Act
+        $results = $user->getTimeInService();
+
+        // Assert
+        $this->assertNull($results);
+    }
+
+    public function testGetTimeInServiceDefaultExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-23';
+
+        // Act
+        $results = $user->getTimeInService();
+
+        // Assert
+        $this->assertEquals('10 Year(s), 11 Month(s), 8 Day(s)', $results);
+    }
+
+    public function testGetTimeInServiceShortExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(true);
+
+        // Assert
+        $this->assertEquals('11 Yr 0 Mo', $results);
+    }
+
+    public function testGetTimeInServiceFormatMonthsExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(['format' => 'M']);
+
+        // Assert
+        $this->assertEquals(131.92741935483872, $results);
+    }
+
+    public function testGetTimeInServiceFormatYearsExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(['format' => 'Y']);
+
+        // Assert
+        $this->assertEquals(10.993835616438357, $results);
+    }
+
+    public function testGetTimeInServiceFormatDaysExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(['format' => 'D']);
+
+        // Assert
+        $this->assertEquals(4015.75, $results);
+    }
+
+    public function testGetTimeInServiceFormatHoursExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(['format' => 'H']);
+
+        // Assert
+        $this->assertEquals(96378.0, $results);
+    }
+
+    public function testGetTimeInServiceFormatMinsExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-03';
+
+        // Act
+        $results = $user->getTimeInService(['format' => 'm']);
+
+        // Assert
+        $this->assertEquals(5782680.0, $results);
+    }
+
+    public function testGetTimeInServiceShortRolloverExpectedValueReturned(): void
+    {
+        // Arrange
+        $user = User::where('email_address', 'doug@example.com')->first();
+        $user->registration_date = '2014-09-23';
+
+        // Act
+        $results = $user->getTimeInService(true);
+
+        // Assert
+        $this->assertEquals('10 Yr 11 Mo', $results);
+    }
 
     // Test getExamList
 

@@ -1032,11 +1032,11 @@ class User extends Authenticatable
     /**
      * Get Time in Service formated per the options provided.
      *
-     * @param null $options
+     * @param null|bool|array $options
      *
-     * @return int|null|string
+     * @return null|string|float
      */
-    public function getTimeInService($options = null)
+    public function getTimeInService($options = null): null|string|float
     {
         $short = false;
 
@@ -1087,6 +1087,8 @@ class User extends Authenticatable
 
             return $timeInService->format('%y Year(s), %m Month(s), %d Day(s)');
         }
+
+        return null;
     }
 
     /**
