@@ -31,21 +31,15 @@ function date(string $format, ?int $timestamp = null): string
 namespace Tests\Unit;
 
 use App\Models\Award;
+use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\Rating;
 use App\Models\User;
 use Carbon\Carbon;
-use Database\Seeders\BilletSeeder;
-use Database\Seeders\ChapterSeeder;
-use Database\Seeders\GradeSeeder;
-use Database\Seeders\MedusaConfigSeeder;
-use Database\Seeders\RatingSeeder;
-use Database\Seeders\UserSeeder;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 use Mockery;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -1884,7 +1878,618 @@ class UserTest extends TestCase
         $this->assertEquals('10 Yr 11 Mo', $results);
     }
 
-    // Test getExamList
+    public function testGetExamListNoExamsEmptyArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000001')->first();
+
+        // Act
+        $results = $user->getExamList();
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertCount(0, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ]
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList();
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($examList, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsPatternSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList('/SIA-RMN-/');
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsPatternOptionSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'pattern' => '/SIA-RMA-/' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsAfterSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'after' => '2015-09-01' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsAfter2MoSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'after' => '2015-08-01' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsSinceSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMA-0002' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'since' => '2015-01-01' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsExceptSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'except' => '/SIA-RMA/' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsOnlyPassingSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMA-0001' => [
+                'score' => '60%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'onlyPassing' => 'foo' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsEnlistedSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'class' => 'enlisted' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsWarrantSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'class' => 'warrant' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsOfficerSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'class' => 'officer' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsFlagSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->once()
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'class' => 'flag' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetExamListExamsOfficerFlagSuppliedExpectedArrayReturned(): void
+    {
+        // Arrange
+        $user = User::where('member_id', 'A0000002')->first();
+        $examList = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-12-01',
+            ],
+            'SIA-RMN-0011' => [
+                'score' => '90%',
+                'date' => '2015-10-01',
+                'date_entered' => '2015-10-01',
+            ],
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $expectedExams = [
+            'SIA-RMN-0101' => [
+                'score' => '90%',
+                'date' => '2016-10-01',
+                'date_entered' => '2016-10-01',
+            ],
+            'SIA-RMN-1001' => [
+                'score' => '90%',
+                'date' => '2017-10-01',
+                'date_entered' => '2017-10-01',
+            ],
+        ];
+        $mockExams = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $mockExams->exams = $examList;
+        $mockExams->shouldReceive('where')
+            ->times(3)
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $mockExams->shouldReceive('first')
+            ->times(3)
+            ->andReturnSelf();
+
+        // Act
+        $results = $user->getExamList([ 'class' => 'officer+flag' ]);
+
+        // Assert
+        $this->assertIsArray($results);
+        $this->assertEquals($expectedExams, $results);
+    }
 
     // Test getHighestExamFromList
 

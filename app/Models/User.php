@@ -1097,9 +1097,10 @@ class User extends Authenticatable
      *
      * @param null $options
      *
-     * @return array|mixed
+     * @return array
      */
-    public function getExamList($options = null)
+    public function getExamList(string|array|null $options = null): array
+
     {
         $pattern = $except = $after = $since = $class = $onlyPassing = null;
 
@@ -1135,7 +1136,7 @@ class User extends Authenticatable
             $pattern = null;
         }
 
-        $exams = Exam::where('member_id', '=', $this->member_id)->first();
+        $exams = Exam::where('member_id', $this->member_id)->first();
 
         if (empty($exams) === false) {
             if (is_null($pattern) === true) {
