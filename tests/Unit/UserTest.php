@@ -2481,9 +2481,241 @@ class UserTest extends TestCase
         $this->assertEquals($expectedExams, $results);
     }
 
-    // Test getHighestExamFromList
+    public function testGetHighestMainLineExamForBranchCivilIntelExamsExpectedExamIDReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-KC-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+            'SIA-KC-0101' => [
+                'score' => '80%',
+                'date' => '2014-11-01',
+                'date_entered' => '2014-11-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'CIVIL';
+        $userMock->rating = 'INTEL';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-KC-.*/',
+                'except' => '/^.*-KC-0113|^.*-KC-0115/'
+            ])
+            ->andReturn($exams);
 
-    // Test getHighestMainLineExamForBranch
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch();
+
+        // Assert
+        $this->assertEquals('SIA-KC-0101', $results);
+    }
+
+    public function testGetHighestMainLineExamForBranchDiploExamsExpectedExamIDReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-QC-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+            'SIA-QC-0101' => [
+                'score' => '80%',
+                'date' => '2014-11-01',
+                'date_entered' => '2014-11-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'CIVIL';
+        $userMock->rating = 'DIPLOMATIC';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-QC-.*/',
+                'except' => '/^.*-QC-0113|^.*-QC-0115/'
+            ])
+            ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch();
+
+        // Assert
+        $this->assertEquals('SIA-QC-0101', $results);
+    }
+
+    public function testGetHighestMainLineExamForBranchCivilNoCollegeButCoreExamsExpectedExamIDReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SKU-CORE-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'CIVIL';
+        $userMock->rating = 'DIPLOMATIC';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-QC-.*/',
+                'except' => '/^.*-QC-0113|^.*-QC-0115/'
+            ])
+            ->andReturn([]);
+
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^SKU-CORE-.*/',
+                'except' => '/^.*-QC-0113|^.*-QC-0115/'
+            ])
+            ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch();
+
+        // Assert
+        $this->assertEquals('SKU-CORE-0001', $results);
+    }
+
+    public function testGetHighestMainLineExamForBranchCivilNoCollegeNoCoreButRMNExamsExpectedExamIDReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'CIVIL';
+        $userMock->rating = 'DIPLOMATIC';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-QC-.*/',
+                'except' => '/^.*-QC-0113|^.*-QC-0115/'
+            ])
+            ->andReturn([]);
+
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^SKU-CORE-.*/',
+                'except' => '/^.*-QC-0113|^.*-QC-0115/'
+            ])
+            ->andReturn([]);
+
+        $userMock->shouldReceive('getExamList')
+        ->once()
+        ->with([
+            'pattern'=>'/^SIA-RMN-.*/',
+            'except' => '/^SIA-RMN-0113|^SIA-RMN-0115/'
+        ])
+        ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch();
+
+        // Assert
+        $this->assertEquals('SIA-RMN-0001', $results);
+    }
+
+    public function testGetHighestMainLineExamForBranchRMMMNoCollegeButRMNExamsExpectedExamIDReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'RMMM';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-RMMM-.*/',
+                'except' => '/^.*-RMMM-0113|^.*-RMMM-0115/',
+                'class' => 'officer'
+            ])
+            ->andReturn([]);
+
+        $userMock->shouldReceive('getExamList')
+            ->never()
+            ->with([
+                'pattern'=>'/^SKU-CORE-.*/',
+                'except' => '/^.*-RMMM-0113|^.*-RMMM-0115/',
+                'class' => 'officer'
+            ]);
+
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^SIA-RMN-.*/',
+                'except' => '/^SIA-RMN-0113|^SIA-RMN-0115/',
+                'class' => 'officer'
+            ])
+            ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch('officer');
+
+        // Assert
+        $this->assertEquals('SIA-RMN-0001', $results);
+    }
+
+    public function testGetHighestMainLineExamForBranchRMMMNoCollegeNoRMNExamsExpectedNullReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-RMN-0001' => [
+                'score' => '80%',
+                'date' => '2014-10-01',
+                'date_entered' => '2014-10-01',
+            ],
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->branch = 'RMMM';
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^.*-RMMM-.*/',
+                'except' => '/^.*-RMMM-0113|^.*-RMMM-0115/',
+                'class' => 'officer'
+            ])
+            ->andReturn([]);
+
+        $userMock->shouldReceive('getExamList')
+            ->never()
+            ->with([
+                'pattern'=>'/^SKU-CORE-.*/',
+                'except' => '/^.*-RMMM-0113|^.*-RMMM-0115/',
+                'class' => 'officer'
+            ]);
+
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'pattern'=>'/^SIA-RMN-.*/',
+                'except' => '/^SIA-RMN-0113|^SIA-RMN-0115/',
+                'class' => 'officer'
+            ])
+            ->andReturn([]);
+
+        // Act
+        $results = $userMock->getHighestMainLineExamForBranch('officer');
+
+        // Assert
+        $this->assertNull($results);
+    }
 
     // Test getHighestEnlistedExam
 

@@ -1267,11 +1267,11 @@ class User extends Authenticatable
     /**
      * Get the highest main line exam for the users branch.
      *
-     * @param null|string $class
+     * @param ?string $class
      *
-     * @return int|null|string
+     * @return ?string
      */
-    public function getHighestMainLineExamForBranch($class = null)
+    public function getHighestMainLineExamForBranch($class = null): ?string
     {
         switch ($this->branch) {
             case 'CIVIL':
