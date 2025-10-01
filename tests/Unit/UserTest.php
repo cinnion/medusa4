@@ -328,10 +328,8 @@ class UserTest extends TestCase
         $this->assertEquals($array['last_name'], 'Spock', 'Last name is incorrect');
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetDisplayRankNoBranchRankNoRatingExpectedResult(): void
     {
         // Arrange
@@ -366,10 +364,8 @@ class UserTest extends TestCase
         $this->assertEquals('RMN', $mockUser->branch);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetDisplayRankCivilianNoRatingExpectedResult(): void
     {
         // Arrange
@@ -427,10 +423,8 @@ class UserTest extends TestCase
         $this->assertEquals(['rate' => 'DIPLOMATIC', 'description' => 'Some description'], $mockUser->rating);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetDisplayRankRMNRatingExpectedResult(): void
     {
         // Arrange
@@ -625,10 +619,8 @@ class UserTest extends TestCase
         $this->assertEquals('2025-09-01', $results);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetPostnominalsHasAwardsReturnsAwardPostnominals(): void
     {
         // Arrange
@@ -679,10 +671,8 @@ class UserTest extends TestCase
         $this->assertEquals(', ABC, XYZ', $results);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetPostnominalsHasAwardsNoPostnominalsReturnsNull(): void
     {
         // Arrange
