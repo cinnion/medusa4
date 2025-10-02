@@ -1348,7 +1348,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getHighestOfficerExam()
+    public function getHighestOfficerExam(): array
     {
         $exams = $this->getExamList(['class' => 'officer+flag']);
 
