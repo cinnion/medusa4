@@ -1334,7 +1334,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getHighestWarrantExam()
+    public function getHighestWarrantExam(): array
     {
         $exams = $this->getExamList(['class' => 'warrant']);
 
