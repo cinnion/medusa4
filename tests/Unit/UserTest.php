@@ -2769,7 +2769,6 @@ class UserTest extends TestCase
         $this->assertEquals(['SIA-RMN-0012' => ['more exam data']], $results);
     }
 
-
     public function testGetHighestOfficerExamExpectedCallsAndResultsReturned(): void
     {
         // Arrange
@@ -2796,7 +2795,31 @@ class UserTest extends TestCase
         $this->assertEquals(['SIA-RMN-0102' => ['more exam data']], $results);
     }
 
-    // Test getHighestFlagExam
+    public function testGetHighestFlagExamExpectedCallsAndResultsReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-RMN-1001' => [
+                'exam data'
+            ],
+            'SIA-RMN-1002' => [
+                'more exam data'
+            ]
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'class'=>'flag'
+            ])
+            ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestFlagExam();
+
+        // Assert
+        $this->assertEquals(['SIA-RMN-1002' => ['more exam data']], $results);
+    }
 
     // Test getHighestExams
 

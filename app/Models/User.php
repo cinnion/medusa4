@@ -1362,7 +1362,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getHighestFlagExam()
+    public function getHighestFlagExam(): array
     {
         $exams = $this->getExamList(['class' => 'flag']);
 
