@@ -1372,12 +1372,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the higest enlisted, warrant officer and officer (including flag)
+     * Get the highest enlisted, warrant officer and officer (including flag)
      * exams taken by a member.
      *
      * @return array
      */
-    public function getHighestExams()
+    public function getHighestExams(): array
     {
         $classes = ['enlisted', 'warrant', 'officer+flag'];
 

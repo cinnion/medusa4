@@ -2821,7 +2821,65 @@ class UserTest extends TestCase
         $this->assertEquals(['SIA-RMN-1002' => ['more exam data']], $results);
     }
 
-    // Test getHighestExams
+    public function testGetHighestExamsExpectedCallsAndResultsReturned(): void
+    {
+        // Arrange
+        $enlistedExams = [
+            'SIA-RMN-0001' => [
+                'exam data'
+            ],
+            'SIA-RMN-0002' => [
+                'more exam data'
+            ]
+        ];
+        $warrantExams = [
+            'SIA-RMN-0011' => [
+                'exam data'
+            ],
+            'SIA-RMN-0012' => [
+                'more exam data'
+            ]
+        ];
+        $officerExams = [
+            'SIA-RMN-0101' => [
+                'exam data'
+            ],
+            'SIA-RMN-0102' => [
+                'more exam data'
+            ]
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'class'=>'enlisted'
+            ])
+            ->andReturn($enlistedExams);
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'class'=>'warrant'
+            ])
+            ->andReturn($warrantExams);
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'class'=>'officer+flag'
+            ])
+            ->andReturn($officerExams);
+
+        $expectedResults = [
+            'E' => 'SIA-RMN-0002',
+            'W' => 'SIA-RMN-0012',
+            'O' => 'SIA-RMN-0102',
+        ];
+
+        // Act
+        $results = $userMock->getHighestExams();
+
+        // Assert
+        $this->assertEquals($expectedResults, $results);
+    }
 
     // Test getCompletedExams
 
