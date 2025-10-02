@@ -1320,7 +1320,7 @@ class User extends Authenticatable
      *
      * @return array $exam
      */
-    public function getHighestEnlistedExam()
+    public function getHighestEnlistedExam(): array
     {
         $exams = $this->getExamList(['class' => 'enlisted']);
 

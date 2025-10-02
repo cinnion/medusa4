@@ -2717,7 +2717,31 @@ class UserTest extends TestCase
         $this->assertNull($results);
     }
 
-    // Test getHighestEnlistedExam
+    public function testGetHighestEnlistedExamExpectedCallsAndResultsReturned(): void
+    {
+        // Arrange
+        $exams = [
+            'SIA-RMN-0001' => [
+                'exam data'
+            ],
+            'SIA-RMN-0002' => [
+                'more exam data'
+            ]
+        ];
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'class'=>'enlisted'
+            ])
+            ->andReturn($exams);
+
+        // Act
+        $results = $userMock->getHighestEnlistedExam();
+
+        // Assert
+        $this->assertEquals(['SIA-RMN-0002' => ['more exam data']], $results);
+    }
 
     // Test getHighestWarrantExam
 
