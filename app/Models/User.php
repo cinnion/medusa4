@@ -1535,7 +1535,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function assignSpaceLordPerms()
+    public function assignSpaceLordPerms(): bool
     {
         $this->assignCoPerms();
         $this->updatePerms(['VIEW_CHAPTER_REPORTS']);

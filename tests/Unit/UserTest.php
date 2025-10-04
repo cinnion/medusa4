@@ -3143,7 +3143,25 @@ class UserTest extends TestCase
         $this->assertTrue($results);
     }
 
-    // Test assignSpaceLordPerms
+    public function testAssignSpaceLordPermsExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('assignCoPerms')
+            ->once();
+        $mockUser->shouldReceive('updatePerms')
+            ->once()
+            ->with([
+                'VIEW_CHAPTER_REPORTS'
+            ])
+            ->andReturn(true);
+
+        // Act
+        $results = $mockUser->assignSpaceLordPerms();
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     // Test updatePerms
 
