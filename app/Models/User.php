@@ -1485,7 +1485,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function assignAllPerms()
+    public function assignAllPerms(): bool
     {
         $this->updatePerms(['ALL_PERMS']);
 
