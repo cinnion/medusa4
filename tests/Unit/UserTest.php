@@ -2933,7 +2933,49 @@ class UserTest extends TestCase
         $this->assertEquals('', $results);
     }
 
-    // Test getExamLastUpdated
+    public function testGetExamLastUpdatedExamReturnedLastUpdatedReturns(): void
+    {
+        // Arrange
+        $examMock = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $examMock->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $examMock->shouldReceive('first')
+            ->once()
+            ->andReturn([
+                'updated_at' => '2025-08-15 12:34:56'
+            ]);
+        $this->app->instance(Exam::class, $examMock);
+        $user = User::factory()->make(['member_id' => 'A0000002']);
+
+        // Act
+        $results = $user->getExamLastUpdated();
+
+        // Assert
+        $this->assertEquals('2025-08-15 12:34:56', $results);
+    }
+
+    public function testGetExamLastUpdatedNoExamReturnedReturnsFalse(): void
+    {
+        // Arrange
+        $examMock = Mockery::mock('alias:' . Exam::class)->makePartial();
+        $examMock->shouldReceive('where')
+            ->once()
+            ->with('member_id', 'A0000002')
+            ->andReturnSelf();
+        $examMock->shouldReceive('first')
+            ->once()
+            ->andReturn(null);
+        $this->app->instance(Exam::class, $examMock);
+        $user = User::factory()->make(['member_id' => 'A0000002']);
+
+        // Act
+        $results = $user->getExamLastUpdated();
+
+        // Assert
+        $this->assertFalse($results);
+    }
 
     // Test hasNewExams
 

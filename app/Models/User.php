@@ -1423,11 +1423,11 @@ class User extends Authenticatable
     /**
      * Get the date of the last update for exams.
      *
-     * @return bool|mixed
+     * @return bool|string
      */
-    public function getExamLastUpdated()
+    public function getExamLastUpdated(): bool|string
     {
-        $exams = Exam::where('member_id', '=', $this->member_id)->first();
+        $exams = Exam::where('member_id', $this->member_id)->first();
 
         if (isset($exams) === true) {
             return $exams['updated_at'];
