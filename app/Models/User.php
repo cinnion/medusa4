@@ -1465,17 +1465,15 @@ class User extends Authenticatable
      */
     public function assignCoPerms(): bool
     {
-        $this->updatePerms(
-            [
-                'DUTY_ROSTER',
-                'EXPORT_ROSTER',
-                'EDIT_WEBSITE',
-                'ASSIGN_NONCOMMAND_BILLET',
-                'PROMOTE_E6O1',
-                'REQUEST_PROMOTION',
-                'CHAPTER_REPORT',
-            ]
-        );
+        $this->updatePerms([
+            'DUTY_ROSTER',
+            'EXPORT_ROSTER',
+            'EDIT_WEBSITE',
+            'ASSIGN_NONCOMMAND_BILLET',
+            'PROMOTE_E6O1',
+            'REQUEST_PROMOTION',
+            'CHAPTER_REPORT',
+        ]);
 
         return true;
     }
@@ -1499,15 +1497,13 @@ class User extends Authenticatable
      */
     public function assignBuShipPerms(): bool
     {
-        $this->updatePerms(
-            [
-                'COMMISSION_SHIP',
-                'DECOMMISSION_SHIP',
-                'EDIT_SHIP',
-                'VIEW_DSHIPS',
-                'VIEW_SU',
-            ]
-        );
+        $this->updatePerms([
+            'COMMISSION_SHIP',
+            'DECOMMISSION_SHIP',
+            'EDIT_SHIP',
+            'VIEW_DSHIPS',
+            'VIEW_SU',
+        ]);
 
         return true;
     }
