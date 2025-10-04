@@ -2977,7 +2977,77 @@ class UserTest extends TestCase
         $this->assertFalse($results);
     }
 
-    // Test hasNewExams
+    public function testHasNewExamsNoRegexNoExamsReturnsFalse(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('getPreviousLogin')
+            ->once()
+            ->andReturn('2025-08-01 12:34:56');
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn($mockUser);
+
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->with(['since' => '2025-08-01 12:34:56'])
+            ->andReturn([]);
+
+        // Act
+        $results = $mockUser->hasNewExams();
+
+        // Assert
+        $this->assertFalse($results);
+    }
+
+    public function testHasNewExamsNoRegexHasExamsReturnsTrue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('getPreviousLogin')
+            ->once()
+            ->andReturn('2025-08-01 12:34:56');
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn($mockUser);
+
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->with(['since' => '2025-08-01 12:34:56'])
+            ->andReturn([1, 2, 3]);
+
+        // Act
+        $results = $mockUser->hasNewExams();
+
+        // Assert
+        $this->assertTrue($results);
+    }
+
+    public function testHasNewExamsWithRegexHasExamsReturnsTrue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('getPreviousLogin')
+            ->once()
+            ->andReturn('2025-08-01 12:34:56');
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn($mockUser);
+
+        $mockUser->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'since' => '2025-08-01 12:34:56',
+                'pattern' => '/^SIA-RMN-.*/',
+            ])
+            ->andReturn([1, 2, 2]);
+
+        // Act
+        $results = $mockUser->hasNewExams('/^SIA-RMN-.*/');
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     // Test assignCOPerms
 

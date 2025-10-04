@@ -1439,11 +1439,11 @@ class User extends Authenticatable
     /**
      * Does the user have new exams.
      *
-     * @param string|null $regex
+     * @param ?string $regex
      *
      * @return bool
      */
-    public function hasNewExams($regex = null)
+    public function hasNewExams(?string $regex = null): bool
     {
         $options['since'] = Auth::user()->getPreviousLogin();
 
