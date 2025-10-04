@@ -2933,6 +2933,8 @@ class UserTest extends TestCase
         $this->assertEquals('', $results);
     }
 
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetExamLastUpdatedExamReturnedLastUpdatedReturns(): void
     {
         // Arrange
@@ -2956,6 +2958,8 @@ class UserTest extends TestCase
         $this->assertEquals('2025-08-15 12:34:56', $results);
     }
 
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testGetExamLastUpdatedNoExamReturnedReturnsFalse(): void
     {
         // Arrange
