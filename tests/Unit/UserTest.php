@@ -3053,7 +3053,29 @@ class UserTest extends TestCase
         $this->assertTrue($results);
     }
 
-    // Test assignCOPerms
+    public function testAssignCOPermsExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('updatePerms')
+            ->once()
+            ->with([
+                    'DUTY_ROSTER',
+                    'EXPORT_ROSTER',
+                    'EDIT_WEBSITE',
+                    'ASSIGN_NONCOMMAND_BILLET',
+                    'PROMOTE_E6O1',
+                    'REQUEST_PROMOTION',
+                    'CHAPTER_REPORT',
+                ])
+            ->andReturn(true);
+
+        // Act
+        $results = $mockUser->assignCOPerms();
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     // Test assignAllPerms
 
@@ -3081,7 +3103,7 @@ class UserTest extends TestCase
 
     // Test getReminderEmail
 
-    // Test getAuthIdentifer
+    // Test getAuthIdentifier
 
     // Test getAuthPassword
 

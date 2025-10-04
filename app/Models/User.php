@@ -1463,7 +1463,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function assignCoPerms()
+    public function assignCoPerms(): bool
     {
         $this->updatePerms(
             [
