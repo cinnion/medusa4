@@ -1517,21 +1517,19 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function assignBuPersPerms()
+    public function assignBuPersPerms(): bool
     {
-        $this->updatePerms(
-            [
-                'ADD_MEMBER',
-                'DEL_MEMBER',
-                'EDIT_MEMBER',
-                'VIEW_MEMBERS',
-                'PROC_APPLICATIONS',
-                'PROC_XFERS',
-                'ADD_BILLET',
-                'DEL_BILLET',
-                'EDIT_BILLET',
-            ]
-        );
+        $this->updatePerms([
+            'ADD_MEMBER',
+            'DEL_MEMBER',
+            'EDIT_MEMBER',
+            'VIEW_MEMBERS',
+            'PROC_APPLICATIONS',
+            'PROC_XFERS',
+            'ADD_BILLET',
+            'DEL_BILLET',
+            'EDIT_BILLET',
+        ]);
 
         return true;
     }
