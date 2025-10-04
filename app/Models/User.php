@@ -1589,7 +1589,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function deletePerm($perm)
+    public function deletePerm($perm): bool
     {
         $this->permissions = Arr::where(
             $this->permissions,

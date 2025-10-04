@@ -3252,7 +3252,89 @@ class UserTest extends TestCase
         $this->assertEquals(['OLDPERM1', 'OLDPERM2', 3 => 'NEWPERM1'], $mockUser->permissions);
     }
 
-    // Test deletePerm
+    public function testDeletePermAdminUserExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldAllowMockingProtectedMethods();
+        $mockUser->permissions = [
+            'OLDPERM1',
+            'OLDPERM2',
+        ];
+        $mockUser->id = 'DEF456';
+        $mockUser->osa = true;
+        $mockUser->lastUpdate = 0;
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+        $mockUser->shouldReceive('writeAuditTrail')
+            ->once()
+            ->with(
+                'ABC123',
+                'update',
+                'users',
+                'DEF456',
+                '{"1":"OLDPERM2"}',
+                'User@deletePerms'
+            )
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->twice()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+
+        // Act
+        $results = $mockUser->deletePerm('OLDPERM1');
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertFalse($mockUser->osa);
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+        $this->assertEquals([1 => 'OLDPERM2'], $mockUser->permissions);
+    }
+
+    public function testDeletePermSystemUserExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldAllowMockingProtectedMethods();
+        $mockUser->permissions = [
+            'OLDPERM1',
+            'OLDPERM2',
+        ];
+        $mockUser->id = 'DEF456';
+        $mockUser->osa = true;
+        $mockUser->lastUpdate = 0;
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+        $mockUser->shouldReceive('writeAuditTrail')
+            ->once()
+            ->with(
+                'system user',
+                'update',
+                'users',
+                'DEF456',
+                '{"1":"OLDPERM2"}',
+                'User@deletePerms'
+            )
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn(null);
+
+        // Act
+        $results = $mockUser->deletePerm('OLDPERM1');
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertFalse($mockUser->osa);
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+        $this->assertEquals([1 => 'OLDPERM2'], $mockUser->permissions);
+    }
 
     // Test deletePeerage
 
