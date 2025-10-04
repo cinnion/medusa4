@@ -3095,7 +3095,27 @@ class UserTest extends TestCase
         $this->assertTrue($results);
     }
 
-    // Test assignBuShipPerms
+    public function testAssignBuShipPermsExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('updatePerms')
+            ->once()
+            ->with([
+                'COMMISSION_SHIP',
+                'DECOMMISSION_SHIP',
+                'EDIT_SHIP',
+                'VIEW_DSHIPS',
+                'VIEW_SU',
+            ])
+            ->andReturn(true);
+
+        // Act
+        $results = $mockUser->assignBuShipPerms();
+
+        // Assert
+        $this->assertTrue($results);
+    }
 
     // Test assignBuPersPerms
 

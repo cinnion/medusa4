@@ -1497,7 +1497,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function assignBuShipPerms()
+    public function assignBuShipPerms(): bool
     {
         $this->updatePerms(
             [
