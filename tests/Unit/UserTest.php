@@ -2881,7 +2881,57 @@ class UserTest extends TestCase
         $this->assertEquals($expectedResults, $results);
     }
 
-    // Test getCompletedExams
+    public function testGetCompletedExamsPassingExamsReturnsNewPassingExams(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'after' => 'after timestamp',
+            ])
+            ->andReturn([
+                'SIA-RMA-0001' => [
+                    'score' => 'PASS',
+                    'date' => '2015-10-01',
+                    'date_entered' => '2015-10-01',
+                ],
+                'SIA-RMN-0001' => [
+                    'score' => '70%',
+                    'date' => '2014-10-01',
+                    'date_entered' => '2014-12-01',
+                ],
+                'SIA-RMN-0002' => [
+                    'score' => '69%',
+                    'date' => '2015-10-01',
+                    'date_entered' => '2015-10-01',
+                ],
+            ]);
+
+        // Act
+        $results = $userMock->getCompletedExams('after timestamp');
+
+        // Assert
+        $this->assertEquals('SIA-RMA-0001, SIA-RMN-0001', $results);
+    }
+
+    public function testGetCompletedExamsNoExamsReturnsEmptyString(): void
+    {
+        // Arrange
+        $userMock = Mockery::mock(User::class)->makePartial();
+        $userMock->shouldReceive('getExamList')
+            ->once()
+            ->with([
+                'after' => 'after timestamp',
+            ])
+            ->andReturn([]);
+
+        // Act
+        $results = $userMock->getCompletedExams('after timestamp');
+
+        // Assert
+        $this->assertEquals('', $results);
+    }
 
     // Test getExamLastUpdated
 

@@ -1401,14 +1401,14 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getCompletedExams($after)
+    public function getCompletedExams($after): string
     {
         $exams = $this->getExamList(['after' => $after]);
 
         $list = Arr::where(
             $exams,
             function ($value, $key) use ($after) {
-                if (intval($value['score']) > 70 ||
+                if (intval($value['score']) >= 70 ||
                     strtoupper($value['score'] == 'PASS')) {
                     return $value;
                 }
