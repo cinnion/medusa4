@@ -1552,10 +1552,9 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function updatePerms(array $perms)
+    public function updatePerms(array $perms): bool
     {
-        $this->permissions =
-            array_unique(array_merge($this->permissions, $perms));
+        $this->permissions = array_unique(array_merge($this->permissions, $perms));
 
         if (is_null(Auth::user())) {
             $user = 'system user';

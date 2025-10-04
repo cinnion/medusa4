@@ -28,6 +28,11 @@ function date(string $format, ?int $timestamp = null): string
     }
 }
 
+function time(): int
+{
+    return 1234567890;
+}
+
 namespace Tests\Unit;
 
 use App\Models\Award;
@@ -3163,7 +3168,89 @@ class UserTest extends TestCase
         $this->assertTrue($results);
     }
 
-    // Test updatePerms
+    public function testUpdatePermsAdminUserExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldAllowMockingProtectedMethods();
+        $mockUser->permissions = [
+            'OLDPERM1',
+            'OLDPERM2',
+        ];
+        $mockUser->id = 'DEF456';
+        $mockUser->osa = true;
+        $mockUser->lastUpdate = 0;
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+        $mockUser->shouldReceive('writeAuditTrail')
+            ->once()
+            ->with(
+                'ABC123',
+                'update',
+                'users',
+                'DEF456',
+                '{"0":"OLDPERM1","1":"OLDPERM2","3":"NEWPERM1"}',
+                'User@updatePerms'
+            )
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->twice()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+
+        // Act
+        $results = $mockUser->updatePerms(['OLDPERM1', 'NEWPERM1']);
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertFalse($mockUser->osa);
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+        $this->assertEquals(['OLDPERM1', 'OLDPERM2', 3 => 'NEWPERM1'], $mockUser->permissions);
+    }
+
+    public function testUpdatePermsSystemUserExpectedCallMadeAndTrueReturned(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldAllowMockingProtectedMethods();
+        $mockUser->permissions = [
+            'OLDPERM1',
+            'OLDPERM2',
+        ];
+        $mockUser->id = 'DEF456';
+        $mockUser->osa = true;
+        $mockUser->lastUpdate = 0;
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+        $mockUser->shouldReceive('writeAuditTrail')
+            ->once()
+            ->with(
+                'system user',
+                'update',
+                'users',
+                'DEF456',
+                '{"0":"OLDPERM1","1":"OLDPERM2","3":"NEWPERM1"}',
+                'User@updatePerms'
+            )
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn(null);
+
+        // Act
+        $results = $mockUser->updatePerms(['OLDPERM1', 'NEWPERM1']);
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertFalse($mockUser->osa);
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+        $this->assertEquals(['OLDPERM1', 'OLDPERM2', 3 => 'NEWPERM1'], $mockUser->permissions);
+    }
 
     // Test deletePerm
 
