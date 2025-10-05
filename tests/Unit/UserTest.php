@@ -3336,7 +3336,52 @@ class UserTest extends TestCase
         $this->assertEquals([1 => 'OLDPERM2'], $mockUser->permissions);
     }
 
-    // Test deletePeerage
+    public function testDeletePeeragePeerageDeletedExpectedCallsAndReturns(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldAllowMockingProtectedMethods();
+        $mockUser->peerages = [
+            [
+                'peerage_id' => '1',
+            ],
+            [
+                'peerage_id' => '2',
+            ],
+        ];
+        $mockUser->id = 'DEF456';
+        $mockUser->osa = true;
+        $mockUser->lastUpdate = 0;
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+        $mockUser->shouldReceive('writeAuditTrail')
+            ->once()
+            ->with(
+                'ABC123',
+                'update',
+                'users',
+                'DEF456',
+                '{"peerages":[{"peerage_id":"2"}],"id":"DEF456","osa":true,"lastUpdate":1234567890}',
+                'User@deletePeerage'
+            )
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+
+        // Act
+        $results = $mockUser->deletePeerage('1');
+
+        // Assert
+        $this->assertTrue($results);
+        $this->assertTrue($mockUser->osa);
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+        $this->assertEquals([['peerage_id' => '2']], $mockUser->peerages);
+    }
 
     // Test buildIdCard
 

@@ -1624,11 +1624,11 @@ class User extends Authenticatable
     /**
      * Delete a peerage from a users record.
      *
-     * @param $peerage_id
+     * @param string $peerage_id
      *
      * @return bool
      */
-    public function deletePeerage($peerage_id)
+    public function deletePeerage(string $peerage_id): bool
     {
         $peerages = Arr::where(
             $this->peerages,
