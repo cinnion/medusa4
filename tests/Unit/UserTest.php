@@ -3385,7 +3385,77 @@ class UserTest extends TestCase
 
     // Test buildIdCard
 
-    // Test normalizeStateProvince
+    public function testNormalizeStateProvinceStateAbbreviationPassedCapitalizedReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('ca');
+
+        // Assert
+        $this->assertEquals('CA', $result);
+    }
+
+    public function testNormalizeStateProvinceStateAbbreviationWithPeriodPassedCapitalizedReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('Ca.');
+
+        // Assert
+        $this->assertEquals('CA', $result);
+    }
+
+    public function testNormalizeStateProvinceDCAbbreviationWithPeriodsPassedCapitalizedReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('d.c.');
+
+        // Assert
+        $this->assertEquals('DC', $result);
+    }
+
+    public function testNormalizeStateProvinceAbbreviationWithNamePassedCapitalizedReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('ca - california');
+
+        // Assert
+        $this->assertEquals('CA', $result);
+    }
+
+    public function testNormalizeStateProvinceNamePassedCapitalizedReturned(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('california');
+
+        // Assert
+        $this->assertEquals('CA', $result);
+    }
+
+    public function testNormalizeStateProvinceUnmatchedPassedReturnedAsIs(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $user->normalizeStateProvince('xyz');
+
+        // Assert
+        $this->assertEquals('xyz', $result);
+    }
 
     // Test getNextAvailableMemberId
 

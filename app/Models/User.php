@@ -1891,11 +1891,11 @@ class User extends Authenticatable
     /**
      * Try and standardize and normalize State and Province.
      *
-     * @param $state
+     * @param string $state
      *
      * @return string
      */
-    public static function normalizeStateProvince($state)
+    public static function normalizeStateProvince(string $state): string
     {
         if (strlen($state) == 2) {
             /* No need to validate, we don't know all 2 letter state and province abbreviations */
@@ -1907,41 +1907,27 @@ class User extends Authenticatable
             return strtoupper(substr($state, 0, 2));
         }
 
-        if (strlen($state) == 4 && substr($state, -1) == '.' && substr(
-                                                                    $state,
-                                                                    -3,
-                                                                    1
-                                                                ) == '.'
-        ) {
+        if (strlen($state) == 4 && substr($state, -1) == '.' && substr($state, -3, 1) == '.') {
             // We have a 2 letter abbreviation with periods between the letters, like D.C. or B.C.
             return strtoupper(substr($state, 0, 1) . substr($state, -2, 1));
         }
 
         if (substr($state, 2, 2) == ' -') {
             // We may have a 2 letter abbreviation followed by the full name, try and validate
-            if (array_key_exists(
-                    strtoupper(substr($state, 0, 2)),
-                    MedusaDefaults::STATES_BY_ABREVIATION
-                ) === true
-            ) {
+            if (array_key_exists(strtoupper(substr($state, 0, 2)), MedusaDefaults::STATES_BY_ABREVIATION) === true) {
                 return strtoupper(substr($state, 0, 2));
             }
         }
 
         // Nothing else hits, check and see if we know the 2 letter abbreviation
 
-        if (array_key_exists(
-                strtoupper($state),
-                MedusaDefaults::STATES_BY_NAME
-            ) === true
-        ) {
+        if (array_key_exists(strtoupper($state), MedusaDefaults::STATES_BY_NAME) === true) {
             $tmp = MedusaDefaults::STATES_BY_NAME;
 
             return $tmp[strtoupper($state)];
         }
 
         // No hits, return it un altered
-
         return $state;
     }
 
