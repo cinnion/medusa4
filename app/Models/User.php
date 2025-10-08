@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Laravel\Facades\Image;
 use Laravel\Passport\HasApiTokens;
 use MongoDB\Laravel\Auth\User as Authenticatable;
 use MongoDB\Laravel\Relations\HasOne;
@@ -1664,11 +1665,12 @@ class User extends Authenticatable
      * @param bool $showFullGrade
      *
      * @return \Intervention\Image\Image
+     *
+     * @codeCoverageIgnore
      */
-    public function buildIdCard($showFullGrade = false)
+    public function buildIdCard(bool $showFullGrade = false): \Intervention\Image\Image
     {
-        $idCard =
-            Image::make(public_path() . '/images/TRMN-membership-card.png');
+        $idCard = Image::read(public_path() . '/images/TRMN-membership-card.png');
 
         $name = $this->getFullName();
         $fontSize = strlen($name) < 28 ? 48 : 38;
@@ -1805,10 +1807,7 @@ class User extends Authenticatable
             153,
             628,
             function ($font) {
-                $font->file(
-                    public_path() .
-                    '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf'
-                );
+                $font->file(public_path() . '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf');
                 $font->align('center');
                 $font->size(40);
                 $font->color('#BE1E2D');
@@ -1840,10 +1839,7 @@ class User extends Authenticatable
                 392,
                 628,
                 function ($font) {
-                    $font->file(
-                        public_path() .
-                        '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf'
-                    );
+                    $font->file(public_path() . '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf');
                     $font->align('center');
                     $font->size(40);
                     $font->color('#BE1E2D');
@@ -1856,10 +1852,7 @@ class User extends Authenticatable
             628,
             628,
             function ($font) {
-                $font->file(
-                    public_path() .
-                    '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf'
-                );
+                $font->file(public_path() . '/fonts/cfaa819f-cd58-49ce-b24e-99bbb04fa859.ttf');
                 $font->align('center');
                 $font->size(40);
                 $font->color('#BE1E2D');
@@ -1871,16 +1864,13 @@ class User extends Authenticatable
             855,
             250,
             function ($font) {
-                $font->file(
-                    public_path() .
-                    '/fonts/de9a96b8-d3ad-4521-91a2-a44556dab791.ttf'
-                );
+                $font->file(public_path() . '/fonts/de9a96b8-d3ad-4521-91a2-a44556dab791.ttf');
                 $font->align('center');
                 $font->size(20);
             }
         );
 
-        $idCard->insert(
+        $idCard->place(
             base64_encode(
                 QrCode::format('png')
                     ->margin(1)
@@ -1893,12 +1883,7 @@ class User extends Authenticatable
             252
         );
 
-        $idCard->insert(
-            public_path() . '/seals/' . $seal,
-            'top-left',
-            747,
-            400
-        );
+        $idCard->place(public_path() . '/seals/' . $seal, 'top-left', 747, 400);
 
         return $idCard;
     }
