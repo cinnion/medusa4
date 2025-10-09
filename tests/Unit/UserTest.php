@@ -3562,7 +3562,34 @@ class UserTest extends TestCase
         $this->assertEquals('2025-07-11', $result, 'Previous login value is incorrect');
     }
 
-    // Test getLastUpdated
+    public function testGetLastUpdatedLastUpdateSetReturnsLastUpdate(): void
+    {
+        // Arrange
+        $user = User::factory()->create([
+            'lastUpdate' => 1692614400, // 2023-08-21 00:00:00
+        ]);
+
+        // Act
+        $result = $user->getLastUpdated();
+
+        // Assert
+        $this->assertEquals(1692614400, $result, 'Last updated value is incorrect');
+    }
+
+    public function testGetLastUpdatedNullLastUpdateReturnsLastUpdated(): void
+    {
+        // Arrange
+        $user = User::factory()->create([
+            'lastUpdate' => null,
+            'updated_at' => '2023-08-21T00:00:00Z'
+        ]);
+
+        // Act
+        $result = $user->getLastUpdated();
+
+        // Assert
+        $this->assertEquals(1692576000, $result, 'Last updated value is incorrect');
+    }
 
     // Test updateLastUpdated
 

@@ -2041,7 +2041,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function getLastUpdated()
+    public function getLastUpdated(): int
     {
         if (empty($this->lastUpdate) == true) {
             return strtotime($this->updated_at->toDateTimeString());
