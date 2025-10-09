@@ -3477,7 +3477,19 @@ class UserTest extends TestCase
         $this->assertEquals('foo@example.com', $results);
     }
 
-    // Test getAuthIdentifier
+    public function testGetAuthIdentifierReturnsId(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'id' => 'ABC123'
+        ]);
+
+        // Act
+        $results = $user->getAuthIdentifier();
+
+        // Assert
+        $this->assertEquals('ABC123', $results);
+    }
 
     // Test getAuthPassword
 

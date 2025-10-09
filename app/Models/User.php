@@ -1993,11 +1993,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get field to use for authetication.
+     * Get field to use for authentication.
      *
-     * @return mixed
+     * @return string
      */
-    public function getAuthIdentifier()
+    public function getAuthIdentifier(): string
     {
         return $this->id;
     }
