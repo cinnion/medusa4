@@ -3491,7 +3491,18 @@ class UserTest extends TestCase
         $this->assertEquals('ABC123', $results);
     }
 
-    // Test getAuthPassword
+    public function testGetAuthPasswordReturnsPassword(): void
+    {
+        // Arrange
+        $user = User::factory()->make();
+        $user->password = '$2y$04$bYQYH/rUTOstQfnzJR0mZueBUaZSglU5I6vWq8Vh3UZhWdpVjUQby';
+
+        // Act
+        $results = $user->getAuthPassword();
+
+        // Assert
+        $this->assertEquals('$2y$04$bYQYH/rUTOstQfnzJR0mZueBUaZSglU5I6vWq8Vh3UZhWdpVjUQby', $results);
+    }
 
     public function testUpdateLastLoginUpdatesRecordInDatabase(): void
     {

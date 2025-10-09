@@ -2005,9 +2005,9 @@ class User extends Authenticatable
     /**
      * Get password for user, used by auth routines.
      *
-     * @return mixed
+     * @return string
      */
-    public function getAuthPassword()
+    public function getAuthPassword(): string
     {
         return $this->password;
     }
