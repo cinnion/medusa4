@@ -3591,7 +3591,20 @@ class UserTest extends TestCase
         $this->assertEquals(1692576000, $result, 'Last updated value is incorrect');
     }
 
-    // Test updateLastUpdated
+    public function testUpdateLastUpdatedExpectedCalls(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+
+        // Act
+        $result = $mockUser->updateLastUpdated();
+
+        // Assert
+        $this->assertEquals(1234567890, $mockUser->lastUpdate);
+    }
 
     // Test checkRostersForNewExams
 

@@ -2053,7 +2053,7 @@ class User extends Authenticatable
     /**
      * Update the last updated field.
      */
-    public function updateLastUpdated()
+    public function updateLastUpdated(): void
     {
         $this->lastUpdate = time();
         $this->save();
