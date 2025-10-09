@@ -1985,9 +1985,9 @@ class User extends Authenticatable
     /**
      * Get email address for reminder emails.
      *
-     * @return mixed
+     * @return string
      */
-    public function getReminderEmail()
+    public function getReminderEmail(): string
     {
         return $this->email_address;
     }

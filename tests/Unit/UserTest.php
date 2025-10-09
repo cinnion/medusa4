@@ -3463,7 +3463,19 @@ class UserTest extends TestCase
 
     // Test getMemberIds
 
-    // Test getReminderEmail
+    public function testGetReminderEmailReturnsEmailAddress(): void
+    {
+        // Arrange
+        $user = User::factory()->make([
+            'email_address' => 'foo@example.com'
+        ]);
+
+        // Act
+        $results = $user->getReminderEmail();
+
+        // Assert
+        $this->assertEquals('foo@example.com', $results);
+    }
 
     // Test getAuthIdentifier
 
