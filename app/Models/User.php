@@ -2064,7 +2064,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function checkRostersForNewExams()
+    public function checkRostersForNewExams(): bool
     {
         if ($this->id != Auth::user()->id ||
             empty($this->duty_roster) === true) {
@@ -2077,6 +2077,7 @@ class User extends Authenticatable
             foreach ($rosters as $roster) {
                 if (Chapter::find($roster)->crewHasNewExams()) {
                     $newExams = true;
+                    break;
                 }
             }
         }

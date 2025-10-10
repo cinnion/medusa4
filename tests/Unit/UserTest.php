@@ -36,6 +36,7 @@ function time(): int
 namespace Tests\Unit;
 
 use App\Models\Award;
+use App\Models\Chapter;
 use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\Rating;
@@ -3606,7 +3607,144 @@ class UserTest extends TestCase
         $this->assertEquals(1234567890, $mockUser->lastUpdate);
     }
 
-    // Test checkRostersForNewExams
+    public function testCheckRostersForNewExamsNotSameUserReturnsFalse(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->id = 'DEF456';
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+
+        // Act
+        $result = $mockUser->checkRostersForNewExams();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    public function testCheckRostersForNewExamsEmptyRosterReturnsFalse(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->id = 'ABC123';
+        $mockUser->duty_roster = '';
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+
+        // Act
+        $result = $mockUser->checkRostersForNewExams();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    public function testCheckRostersForNewExamsRosterOfOneFalseReturnsFalse(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->id = 'ABC123';
+        $mockUser->duty_roster = 'XYZ123';
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+        $mockChapter = Mockery::mock('alias:' . Chapter::class)->makePartial();
+        $mockChapter->shouldReceive('find')
+            ->once()
+            ->with('XYZ123')
+            ->andReturnSelf();
+        $mockChapter->shouldReceive('crewHasNewExams')
+            ->once()
+            ->andReturn(false);
+        $this->app->instance(Chapter::class, $mockChapter);
+
+        // Act
+        $result = $mockUser->checkRostersForNewExams();
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    public function testCheckRostersForNewExamsRosterOfTwoSecondTrueReturnsTrue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->id = 'ABC123';
+        $mockUser->duty_roster = 'XYZ123,ABC987';
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+        $mockChapter = Mockery::mock('alias:' . Chapter::class)->makePartial();
+        $mockChapter->shouldReceive('find')
+            ->once()
+            ->with('XYZ123')
+            ->andReturnSelf();
+        $mockChapter->shouldReceive('crewHasNewExams')
+            ->once()
+            ->andReturn(false);
+
+        $mockChapter->shouldReceive('find')
+            ->once()
+            ->with('ABC987')
+            ->andReturnSelf();
+        $mockChapter->shouldReceive('crewHasNewExams')
+            ->once()
+            ->andReturn(true);
+        $this->app->instance(Chapter::class, $mockChapter);
+
+        // Act
+        $result = $mockUser->checkRostersForNewExams();
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    public function testCheckRostersForNewExamsRosterOfTwoFirstTrueOneCallReturnsTrue(): void
+    {
+        // Arrange
+        $mockUser = Mockery::mock(User::class)->makePartial();
+        $mockUser->id = 'ABC123';
+        $mockUser->duty_roster = 'XYZ123,ABC987';
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn((object)[
+                'id' => 'ABC123',
+            ]);
+        $mockChapter = Mockery::mock('alias:' . Chapter::class)->makePartial();
+        $mockChapter->shouldReceive('find')
+            ->once()
+            ->with('XYZ123')
+            ->andReturnSelf();
+        $mockChapter->shouldReceive('crewHasNewExams')
+            ->once()
+            ->andReturn(true);
+
+        $mockChapter->shouldReceive('find')
+            ->never()
+            ->with('ABC987');
+        $this->app->instance(Chapter::class, $mockChapter);
+
+        // Act
+        $result = $mockUser->checkRostersForNewExams();
+
+        // Assert
+        $this->assertTrue($result);
+    }
 
     // Test getScheduledEvents
 
